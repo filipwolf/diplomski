@@ -42,6 +42,7 @@ class YeastDataset(DGLDataset):
                                            save_dir=save_dir,
                                            force_reload=force_reload,
                                            verbose=verbose)
+        self.edge_features = None
         self.test_mask = None
         self.train_mask = None
         self.labels = None
@@ -96,15 +97,16 @@ class YeastDataset(DGLDataset):
         # self._g = g
 
         nodes_data = pd.read_csv(self.raw_dir + 'graph_nodes.csv')
-
         edges_data = pd.read_csv(self.raw_dir + 'graph_edges.csv')
 
         src = edges_data['node1'].to_numpy()
         dst = edges_data['node2'].to_numpy()
+        lengths = edges_data['node_length'].to_numpy()
+        lengths_tensor = torch.tensor(lengths)
 
         g = dgl.graph((src, dst))
-        sg = dgl.to_simple(g)
-        g = dgl.to_bidirected(sg)
+
+        g.edata['edge_lengths'] = lengths_tensor
 
         mut = nodes_data['node_class'].to_numpy()
         mut_tensor = torch.tensor(mut)
@@ -126,16 +128,17 @@ class YeastDataset(DGLDataset):
 
         self.node_degrees = node_degree_list_tensor
         self.labels = mut_tensor
+        self.edge_features = g.edata
 
         g.ndata.update({'node_degrees': node_degree_list_tensor})
 
-        idx_train = range(len(mut_onehot) - 500)
-        idx_test = range(len(mut_onehot) - 500, len(mut_onehot))
-
-        train_mask = generate_mask_tensor(_sample_mask(idx_train, len(mut_onehot)))
-        test_mask = generate_mask_tensor(_sample_mask(idx_test, len(mut_onehot)))
-        self.train_mask = train_mask
-        self.test_mask = test_mask
+        # idx_train = range(len(mut_onehot) - 500)
+        # idx_test = range(len(mut_onehot) - 500, len(mut_onehot))
+        #
+        # train_mask = generate_mask_tensor(_sample_mask(idx_train, len(mut_onehot)))
+        # test_mask = generate_mask_tensor(_sample_mask(idx_test, len(mut_onehot)))
+        # self.train_mask = train_mask
+        # self.test_mask = test_mask
 
         # # splitting mask
         # g.edata['train_mask'] = train_mask
