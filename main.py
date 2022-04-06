@@ -23,7 +23,7 @@ if __name__ == "__main__":
     edge_features = yeast_dataset.edge_features[0]
     n_labels = 2
 
-    model = Model(2, 1, 32, 64, 32, 2)
+    model = Model(2, 1, 128, 64, 64, 2)
     opt = torch.optim.Adam(model.parameters())
 
     for epoch in range(50):

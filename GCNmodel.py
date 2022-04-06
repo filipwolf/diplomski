@@ -14,8 +14,10 @@ class Model(nn.Module):
         super(Model, self).__init__()
         self.lin_n = nn.Linear(node_features, lin_dim)
         #self.lin_e = nn.Linear(edge_features, lin_dim)
-        self.conv1 = GraphConv(lin_dim, hidden_dim)
-        self.conv2 = GraphConv(hidden_dim, out_dim)
+        self.conv1 = GraphConv(lin_dim, 512)
+        self.conv2 = GraphConv(512, 256)
+        self.conv2 = GraphConv(256, 128)
+        self.conv2 = GraphConv(128, out_dim)
         self.classify = MLPPredictor(out_dim, n_classes)
 
     def forward(self, graph, node_features, edge_features):
