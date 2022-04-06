@@ -1,6 +1,7 @@
 import time
 import numpy as np
 import torch
+from torch.autograd import Variable
 
 from GCNmodel import evaluate, construct_negative_graph, compute_loss, Model
 from dataset import YeastDataset, load_cora_data
@@ -25,23 +26,23 @@ if __name__ == "__main__":
     model = Model(2, 1, 32, 64, 32, 2)
     opt = torch.optim.Adam(model.parameters())
 
-    for epoch in range(10):
-        for i, graph in enumerate(graph_list[:10]):
-            graph = dgl.add_self_loop(graph)
+    for epoch in range(50):
+        for i, graph in enumerate(graph_list[:100]):
             node_in_degrees = yeast_dataset.node_in_degrees[i]
             node_out_degrees = yeast_dataset.node_out_degrees[i]
             node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
             #edge_features = yeast_dataset.edge_features[i]
             #edge_features = edge_features.resize(19841, 1)
             edge_labels = yeast_dataset.edge_labels[i]
-            model.train()
             logits = model(graph, node_features, edge_features)
-            loss = ((logits - edge_labels)**2).mean()
+            pred = logits.max(1).indices
+            loss = F.cross_entropy(logits, edge_labels)
             # compute validation accuracy
             # backward propagation
             opt.zero_grad()
             loss.backward()
             opt.step()
-            print(loss.item())
+            print('Train loss: ' + str(loss.item()))
+            print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
         acc = evaluate(model, graph_list, yeast_dataset)
-        print('Eval acc: ' + acc)
+        print('Eval loss: ' + str(acc))

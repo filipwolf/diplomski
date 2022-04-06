@@ -108,7 +108,7 @@ class YeastDataset(DGLDataset):
         self.edge_features = []
         self.edge_labels = []
 
-        for i in range(0, 12):
+        for i in range(0, 101):
             print(i)
             nodes_data = pd.read_csv(self.raw_dir + 'node_features/node_features' + str(i) + '.csv')
             edges_data = pd.read_csv(self.raw_dir + 'edge_features/edge_features' + str(i) + '.csv')
@@ -119,9 +119,9 @@ class YeastDataset(DGLDataset):
             lengths_tensor = torch.FloatTensor(lengths)
 
             g = dgl.graph((src, dst))
-    
+
             g.edata['edge_lengths'] = lengths_tensor
-    
+
             mut = nodes_data['node_class'].to_numpy()
             mut_tensor = torch.tensor(mut)
     
@@ -133,7 +133,8 @@ class YeastDataset(DGLDataset):
             edge_tensor = torch.tensor(edge_labels)
             edge_tensor_onehot = F.one_hot(edge_tensor)
             g.edata.update({'mut_tensor': edge_tensor, 'mut_onehot': edge_tensor_onehot})
-    
+            g = dgl.add_self_loop(g)
+
             self.num_nodes.append(g.number_of_nodes())
             self.num_edges.append(g.number_of_edges())
     
@@ -148,11 +149,11 @@ class YeastDataset(DGLDataset):
             node_in_degree_list = np.array(node_in_degree_list)
             node_out_degree_list_tensor = torch.FloatTensor(node_out_degree_list)
             node_in_degree_list_tensor = torch.FloatTensor(node_in_degree_list)
-    
+
             self.node_out_degrees.append(node_out_degree_list_tensor)
             self.node_in_degrees.append(node_in_degree_list_tensor)
             self.node_labels.append(mut_tensor)
-            self.edge_labels.append(edge_tensor)
+            self.edge_labels.append(g.edata['mut_tensor'])
             self.edge_features.append(g.edata['edge_lengths'])
 
             g.ndata.update({'node_out_degrees': node_out_degree_list_tensor, 'node_in_degrees': node_in_degree_list_tensor})
@@ -175,22 +176,22 @@ class YeastDataset(DGLDataset):
             # g.ndata['ntype'] = ntype
             self.graph_list.append(g)
 
-    def __getitem__(self, idx):
-        assert idx == 0, "This dataset has only one graph"
-        return self.g
-
-    def __len__(self):
-        return 1
-
-    def save(self):
-        # save graphs and labels
-        graph_path = os.path.join(self.save_path + '_dgl_graph.bin')
-        save_graphs(graph_path, self.g)
-
-    def load(self):
-        # load processed data from directory `self.save_path`
-        graph_path = os.path.join(self.save_path + '_dgl_graph.bin')
-        self.g = load_graphs(graph_path)
+        # def __getitem__(self, idx):
+        #     assert idx == 0, "This dataset has only one graph"
+        #     return self.g
+        #
+        # def __len__(self):
+        #     return 1
+        #
+        # def save(self):
+        #     # save graphs and labels
+        #     graph_path = os.path.join(self.save_path + '_dgl_graph.bin')
+        #     save_graphs(graph_path, self.g)
+        #
+        # def load(self):
+        #     # load processed data from directory `self.save_path`
+        #     graph_path = os.path.join(self.save_path + '_dgl_graph.bin')
+        #     self.g = load_graphs(graph_path)
 
     def has_cache(self):
         # check whether there are processed data in `self.save_path`

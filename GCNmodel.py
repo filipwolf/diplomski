@@ -1,7 +1,6 @@
 import dgl
 import dgl.function as fn
 import torch
-import torch as th
 import torch.nn as nn
 import torch.nn.functional as F
 from dgl.nn.pytorch.conv import GraphConv
@@ -17,37 +16,49 @@ class Model(nn.Module):
         #self.lin_e = nn.Linear(edge_features, lin_dim)
         self.conv1 = GraphConv(lin_dim, hidden_dim)
         self.conv2 = GraphConv(hidden_dim, out_dim)
-        self.classify = DotProductPredictor()
+        self.classify = MLPPredictor(out_dim, n_classes)
 
     def forward(self, graph, node_features, edge_features):
         node_f = self.lin_n(node_features)
         #edge_f = self.lin_e(edge_features)
-       # cat_features = torch.stack((node_f, edge_f))
+        # cat_features = torch.stack((node_f, edge_f))
         h = F.relu(self.conv1(graph, node_f))
         h = F.relu(self.conv2(graph, h))
         h = self.classify(graph, h)
         return h
 
 
-class DotProductPredictor(nn.Module):
+class MLPPredictor(nn.Module):
+    def __init__(self, in_features, out_classes):
+        super().__init__()
+        self.W = nn.Linear(in_features * 2, out_classes)
+
+    def apply_edges(self, edges):
+        h_u = edges.src['h']
+        h_v = edges.dst['h']
+        score = self.W(torch.cat([h_u, h_v], 1))
+        return {'score': score}
+
     def forward(self, graph, h):
         # h contains the node representations computed from the GNN defined
         # in the node classification section (Section 5.1).
         graph.ndata['h'] = h
-        graph.apply_edges(fn.u_dot_v('h', 'h', 'score'))
+        graph.apply_edges(self.apply_edges)
         return graph.edata['score']
 
 
 def evaluate(model, graph_list, dataset):
     model.eval()
     with torch.no_grad():
-        graph = dgl.add_self_loop(graph_list[11])
-        node_in_degrees = dataset.node_in_degrees[11]
-        node_out_degrees = dataset.node_out_degrees[11]
+        graph = graph_list[100]
+        node_in_degrees = dataset.node_in_degrees[100]
+        node_out_degrees = dataset.node_out_degrees[100]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
-        edge_labels = dataset.edge_labels[11]
+        edge_labels = dataset.edge_labels[100]
         logits = model(graph, node_features, 0)
-        loss = ((logits - edge_labels) ** 2).mean()
+        pred = logits.max(1).indices
+        loss = F.cross_entropy(logits, edge_labels)
+        print('Train acc: ' + str(torch.sum(pred == edge_labels) / len(edge_labels)))
         return loss
 
 
