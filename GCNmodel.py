@@ -4,6 +4,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from dgl.nn.pytorch.conv import GraphConv
+from sklearn.metrics import f1_score
 
 gcn_msg = fn.copy_u(u='h', out='m')
 gcn_reduce = fn.sum(msg='m', out='h')
@@ -63,7 +64,7 @@ def evaluate(model, graph_list, dataset):
         logits = model(graph, node_features, 0)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
-        print('Train acc: ' + str(torch.sum(pred == edge_labels) / len(edge_labels)))
+        print('Eval acc: ' + str(torch.sum(pred == edge_labels) / len(edge_labels)))
         return loss
 
 

@@ -12,6 +12,7 @@ import torch.nn as nn
 import torch.nn.functional as F
 from dgl import DGLGraph
 from dgl.dataloading import GraphDataLoader
+from sklearn.metrics import f1_score
 
 if __name__ == "__main__":
     yeast_dataset = YeastDataset('/media/filip/DA2A5AE02A5AB8E9/diplomski/yeast_data/graphs/',
@@ -35,7 +36,8 @@ if __name__ == "__main__":
             #edge_features = edge_features.resize(19841, 1)
             edge_labels = yeast_dataset.edge_labels[i]
             logits = model(graph, node_features, edge_features)
-            pred = logits.max(1).indices
+
+            pred = torch.softmax(logits, dim=1).max(1).indices
             loss = F.cross_entropy(logits, edge_labels)
             # compute validation accuracy
             # backward propagation
@@ -44,5 +46,6 @@ if __name__ == "__main__":
             opt.step()
             print('Train loss: ' + str(loss.item()))
             print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
+            print('Train F1: ' + str(f1_score(edge_labels, pred)))
         acc = evaluate(model, graph_list, yeast_dataset)
         print('Eval loss: ' + str(acc))
