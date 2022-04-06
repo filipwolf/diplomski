@@ -16,8 +16,8 @@ class Model(nn.Module):
         #self.lin_e = nn.Linear(edge_features, lin_dim)
         self.conv1 = GraphConv(lin_dim, 512)
         self.conv2 = GraphConv(512, 256)
-        self.conv2 = GraphConv(256, 128)
-        self.conv2 = GraphConv(128, out_dim)
+        self.conv3 = GraphConv(256, 128)
+        self.conv4 = GraphConv(128, out_dim)
         self.classify = MLPPredictor(out_dim, n_classes)
 
     def forward(self, graph, node_features, edge_features):
@@ -26,6 +26,8 @@ class Model(nn.Module):
         # cat_features = torch.stack((node_f, edge_f))
         h = F.relu(self.conv1(graph, node_f))
         h = F.relu(self.conv2(graph, h))
+        h = F.relu(self.conv3(graph, h))
+        h = F.relu(self.conv4(graph, h))
         h = self.classify(graph, h)
         return h
 
