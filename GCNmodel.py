@@ -10,39 +10,45 @@ gcn_msg = fn.copy_u(u='h', out='m')
 gcn_reduce = fn.sum(msg='m', out='h')
 
 
-class Classifier(nn.Module):
-    def __init__(self, in_dim, hidden_dim, n_classes):
-        super(Classifier, self).__init__()
-        self.conv1 = GraphConv(in_dim, hidden_dim)
-        self.conv2 = GraphConv(hidden_dim, hidden_dim)
-        self.classify = nn.Linear(hidden_dim, n_classes)
+class Model(nn.Module):
+    def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes):
+        super(Model, self).__init__()
+        self.lin_n = nn.Linear(node_features, lin_dim)
+        #self.lin_e = nn.Linear(edge_features, lin_dim)
+        self.conv1 = GraphConv(lin_dim, hidden_dim)
+        self.conv2 = GraphConv(hidden_dim, out_dim)
+        self.classify = DotProductPredictor()
 
-    def forward(self, g, h):
-        # Apply graph convolution and activation.
-        h = F.relu(self.conv1(g, h))
-        h = F.relu(self.conv2(g, h))
-        return self.classify(h)
+    def forward(self, graph, node_features, edge_features):
+        node_f = self.lin_n(node_features)
+        #edge_f = self.lin_e(edge_features)
+       # cat_features = torch.stack((node_f, edge_f))
+        h = F.relu(self.conv1(graph, node_f))
+        h = F.relu(self.conv2(graph, h))
+        h = self.classify(graph, h)
+        return h
 
 
 class DotProductPredictor(nn.Module):
     def forward(self, graph, h):
         # h contains the node representations computed from the GNN defined
         # in the node classification section (Section 5.1).
-        with graph.local_scope():
-            graph.ndata['h'] = h
-            graph.apply_edges(fn.u_dot_v('h', 'h', 'score'))
-            return graph.edata['score']
+        graph.ndata['h'] = h
+        graph.apply_edges(fn.u_dot_v('h', 'h', 'score'))
+        return graph.edata['score']
 
 
-def evaluate(model, graph, features, labels, mask):
+def evaluate(model, graph_list, dataset):
     model.eval()
     with torch.no_grad():
-        logits = model(graph, features)
-        logits = logits[mask]
-        labels = labels[mask]
-        _, indices = torch.max(logits, dim=1)
-        correct = torch.sum(indices == labels)
-        return correct.item() * 1.0 / len(labels)
+        graph = dgl.add_self_loop(graph_list[11])
+        node_in_degrees = dataset.node_in_degrees[11]
+        node_out_degrees = dataset.node_out_degrees[11]
+        node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
+        edge_labels = dataset.edge_labels[11]
+        logits = model(graph, node_features, 0)
+        loss = ((logits - edge_labels) ** 2).mean()
+        return loss
 
 
 def construct_negative_graph(graph, k):

@@ -42,14 +42,17 @@ class YeastDataset(DGLDataset):
                                            save_dir=save_dir,
                                            force_reload=force_reload,
                                            verbose=verbose)
+        self.edge_labels = None
+        self.node_labels = None
+        self.node_features = None
+        self.node_in_degrees = None
+        self.node_out_degrees = None
+        self.graph_list = None
         self.edge_features = None
         self.test_mask = None
         self.train_mask = None
-        self.labels = None
-        self.node_degrees = None
         self.num_edges = None
         self.num_nodes = None
-        self.g = None
 
     def process(self):
         # """
@@ -96,59 +99,81 @@ class YeastDataset(DGLDataset):
         # g.ndata['ntype'] = ntype
         # self._g = g
 
-        nodes_data = pd.read_csv(self.raw_dir + 'graph_nodes.csv')
-        edges_data = pd.read_csv(self.raw_dir + 'graph_edges.csv')
+        self.graph_list = []
+        self.num_nodes = []
+        self.num_edges = []
+        self.node_out_degrees = []
+        self.node_in_degrees = []
+        self.node_labels = []
+        self.edge_features = []
+        self.edge_labels = []
 
-        src = edges_data['node1'].to_numpy()
-        dst = edges_data['node2'].to_numpy()
-        lengths = edges_data['node_length'].to_numpy()
-        lengths_tensor = torch.tensor(lengths)
+        for i in range(0, 12):
+            print(i)
+            nodes_data = pd.read_csv(self.raw_dir + 'node_features/node_features' + str(i) + '.csv')
+            edges_data = pd.read_csv(self.raw_dir + 'edge_features/edge_features' + str(i) + '.csv')
+    
+            src = edges_data['node1'].to_numpy()
+            dst = edges_data['node2'].to_numpy()
+            lengths = edges_data['edge_length'].to_numpy()
+            lengths_tensor = torch.FloatTensor(lengths)
 
-        g = dgl.graph((src, dst))
+            g = dgl.graph((src, dst))
+    
+            g.edata['edge_lengths'] = lengths_tensor
+    
+            mut = nodes_data['node_class'].to_numpy()
+            mut_tensor = torch.tensor(mut)
+    
+            mut_onehot = F.one_hot(mut_tensor)
+    
+            g.ndata.update({'mut_tensor': mut_tensor, 'mut_onehot': mut_onehot})
 
-        g.edata['edge_lengths'] = lengths_tensor
+            edge_labels = edges_data['edge_class'].to_numpy()
+            edge_tensor = torch.tensor(edge_labels)
+            edge_tensor_onehot = F.one_hot(edge_tensor)
+            g.edata.update({'mut_tensor': edge_tensor, 'mut_onehot': edge_tensor_onehot})
+    
+            self.num_nodes.append(g.number_of_nodes())
+            self.num_edges.append(g.number_of_edges())
+    
+            node_out_degree_list = []
+            node_in_degree_list = []
+    
+            for j in range(self.num_nodes[i]):
+                node_out_degree_list.append(g.out_degrees(j))
+                node_in_degree_list.append(g.in_degrees(j))
+    
+            node_out_degree_list = np.array(node_out_degree_list)
+            node_in_degree_list = np.array(node_in_degree_list)
+            node_out_degree_list_tensor = torch.FloatTensor(node_out_degree_list)
+            node_in_degree_list_tensor = torch.FloatTensor(node_in_degree_list)
+    
+            self.node_out_degrees.append(node_out_degree_list_tensor)
+            self.node_in_degrees.append(node_in_degree_list_tensor)
+            self.node_labels.append(mut_tensor)
+            self.edge_labels.append(edge_tensor)
+            self.edge_features.append(g.edata['edge_lengths'])
 
-        mut = nodes_data['node_class'].to_numpy()
-        mut_tensor = torch.tensor(mut)
-
-        mut_onehot = F.one_hot(mut_tensor)
-
-        g.ndata.update({'mut_tensor': mut_tensor, 'mut_onehot': mut_onehot})
-
-        self.num_nodes = g.number_of_nodes()
-        self.num_edges = g.number_of_edges()
-
-        node_degree_list = []
-
-        for i in range(self.num_nodes):
-            node_degree_list.append(g.out_degrees(i))
-
-        node_degree_list = np.array(node_degree_list)
-        node_degree_list_tensor = torch.tensor(node_degree_list)
-
-        self.node_degrees = node_degree_list_tensor
-        self.labels = mut_tensor
-        self.edge_features = g.edata
-
-        g.ndata.update({'node_degrees': node_degree_list_tensor})
-
-        # idx_train = range(len(mut_onehot) - 500)
-        # idx_test = range(len(mut_onehot) - 500, len(mut_onehot))
-        #
-        # train_mask = generate_mask_tensor(_sample_mask(idx_train, len(mut_onehot)))
-        # test_mask = generate_mask_tensor(_sample_mask(idx_test, len(mut_onehot)))
-        # self.train_mask = train_mask
-        # self.test_mask = test_mask
-
-        # # splitting mask
-        # g.edata['train_mask'] = train_mask
-        # g.edata['val_mask'] = val_mask
-        # g.edata['test_mask'] = test_mask
-        # # edge type
-        # g.edata['etype'] = etype
-        # # node type
-        # g.ndata['ntype'] = ntype
-        self.g = g
+            g.ndata.update({'node_out_degrees': node_out_degree_list_tensor, 'node_in_degrees': node_in_degree_list_tensor})
+    
+            # idx_train = range(len(mut_onehot) - 500)
+            # idx_test = range(len(mut_onehot) - 500, len(mut_onehot))
+            #
+            # train_mask = generate_mask_tensor(_sample_mask(idx_train, len(mut_onehot)))
+            # test_mask = generate_mask_tensor(_sample_mask(idx_test, len(mut_onehot)))
+            # self.train_mask = train_mask
+            # self.test_mask = test_mask
+    
+            # # splitting mask
+            # g.edata['train_mask'] = train_mask
+            # g.edata['val_mask'] = val_mask
+            # g.edata['test_mask'] = test_mask
+            # # edge type
+            # g.edata['etype'] = etype
+            # # node type
+            # g.ndata['ntype'] = ntype
+            self.graph_list.append(g)
 
     def __getitem__(self, idx):
         assert idx == 0, "This dataset has only one graph"
