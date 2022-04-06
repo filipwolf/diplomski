@@ -10,15 +10,18 @@ gcn_msg = fn.copy_u(u='h', out='m')
 gcn_reduce = fn.sum(msg='m', out='h')
 
 
-class Net(nn.Module):
-    def __init__(self, in_features, out_features):
-        super().__init__()
-        self.sage = GraphConv(in_features, out_features)
-        self.pred = DotProductPredictor()
+class Classifier(nn.Module):
+    def __init__(self, in_dim, hidden_dim, n_classes):
+        super(Classifier, self).__init__()
+        self.conv1 = GraphConv(in_dim, hidden_dim)
+        self.conv2 = GraphConv(hidden_dim, hidden_dim)
+        self.classify = nn.Linear(hidden_dim, n_classes)
 
-    def forward(self, g, neg_g, x):
-        h = self.sage(g, x)
-        return self.pred(g, h), self.pred(neg_g, h)
+    def forward(self, g, h):
+        # Apply graph convolution and activation.
+        h = F.relu(self.conv1(g, h))
+        h = F.relu(self.conv2(g, h))
+        return self.classify(h)
 
 
 class DotProductPredictor(nn.Module):
@@ -31,14 +34,14 @@ class DotProductPredictor(nn.Module):
             return graph.edata['score']
 
 
-def evaluate(model, g, features, labels, mask):
+def evaluate(model, graph, features, labels, mask):
     model.eval()
-    with th.no_grad():
-        logits = model(g, features)
+    with torch.no_grad():
+        logits = model(graph, features)
         logits = logits[mask]
         labels = labels[mask]
-        _, indices = th.max(logits, dim=1)
-        correct = th.sum(indices == labels)
+        _, indices = torch.max(logits, dim=1)
+        correct = torch.sum(indices == labels)
         return correct.item() * 1.0 / len(labels)
 
 
