@@ -18,7 +18,12 @@ if __name__ == "__main__":
     yeast_dataset = YeastDataset('/media/filip/DA2A5AE02A5AB8E9/diplomski/yeast_data/graphs/',
                                  '/media/filip/DA2A5AE02A5AB8E9/diplomski/yeast_data/graphs/')
 
-    yeast_dataset.process()
+    if yeast_dataset.has_cache():
+        yeast_dataset.load()
+    else:
+        yeast_dataset.process()
+        yeast_dataset.save()
+
     graph_list = yeast_dataset.graph_list
     node_features = yeast_dataset.node_out_degrees[0]
     edge_features = yeast_dataset.edge_features[0]
