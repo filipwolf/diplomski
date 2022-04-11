@@ -42,12 +42,13 @@ for i in range(0, 101):
     nodes_list = {}
     trans_list = {}
 
-    for i, (key, value) in enumerate(od.items()):
-        nodes_list[i] = value
-        trans_list[key] = i
+    for j, (key, value) in enumerate(od.items()):
+        nodes_list[j] = value
+        trans_list[key] = j
 
     for edge in edge_list:
-        f3.write(str(trans_list[edge[0]]) + ',' + str(trans_list[edge[1]]) + ',' + str(edge[2]) + ',' + str(edge[3]) + '\n')
+        f3.write(str(trans_list[edge[0]]) + ',' + str(trans_list[edge[1]]) + ',' + str(edge[2]) + ',' + str(edge[3])
+                 + '\n')
 
     for key, value in nodes_list.items():
         f2.write(str(key) + ',' + str(value) + '\n')

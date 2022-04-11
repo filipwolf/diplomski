@@ -1,20 +1,14 @@
-import time
-import numpy as np
 import torch
-from torch.autograd import Variable
-
-from GCNmodel import evaluate, construct_negative_graph, compute_loss, Model
-from dataset import YeastDataset, load_cora_data
-import dgl
-import dgl.function as fn
-import torch as th
-import torch.nn as nn
 import torch.nn.functional as F
-from dgl import DGLGraph
-from dgl.dataloading import GraphDataLoader
 from sklearn.metrics import f1_score
 
+from GCNmodel import evaluate, Model
+from dataset import YeastDataset
+
 if __name__ == "__main__":
+
+    # device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
     yeast_dataset = YeastDataset('/media/filip/DA2A5AE02A5AB8E9/diplomski/yeast_data/graphs/',
                                  '/media/filip/DA2A5AE02A5AB8E9/diplomski/yeast_data/graphs/')
 
@@ -30,6 +24,7 @@ if __name__ == "__main__":
     n_labels = 2
 
     model = Model(2, 1, 128, 64, 64, 2)
+    # model = model.to(device)
     opt = torch.optim.Adam(model.parameters())
 
     for epoch in range(50):
@@ -37,8 +32,9 @@ if __name__ == "__main__":
             node_in_degrees = yeast_dataset.node_in_degrees[i]
             node_out_degrees = yeast_dataset.node_out_degrees[i]
             node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
-            #edge_features = yeast_dataset.edge_features[i]
-            #edge_features = edge_features.resize(19841, 1)
+            # node_features = node_features.to(device)
+            # edge_features = yeast_dataset.edge_features[i]
+            # edge_features = edge_features.resize(19841, 1)
             edge_labels = yeast_dataset.edge_labels[i]
             logits = model(graph, node_features, edge_features)
 

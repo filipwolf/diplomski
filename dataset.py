@@ -4,13 +4,11 @@ import dgl
 import numpy as np
 import pandas as pd
 import torch
-from dgl import save_graphs, load_graphs
-from dgl.data import DGLDataset
 import torch.nn.functional as F
-from dgl.data.citation_graph import _sample_mask
-from dgl.data.knowledge_graph import _read_triplets_as_list, build_knowledge_graph
-from dgl.data.utils import generate_mask_tensor, save_info, load_info
+from dgl import save_graphs, load_graphs
 from dgl.data import CoraGraphDataset
+from dgl.data import DGLDataset
+from dgl.data.utils import save_info, load_info
 
 
 class YeastDataset(DGLDataset):

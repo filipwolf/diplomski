@@ -1,20 +1,15 @@
 import dgl
-import dgl.function as fn
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from dgl.nn.pytorch.conv import GraphConv
-from sklearn.metrics import f1_score
-
-gcn_msg = fn.copy_u(u='h', out='m')
-gcn_reduce = fn.sum(msg='m', out='h')
 
 
 class Model(nn.Module):
     def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes):
         super(Model, self).__init__()
         self.lin_n = nn.Linear(node_features, lin_dim)
-        #self.lin_e = nn.Linear(edge_features, lin_dim)
+        # self.lin_e = nn.Linear(edge_features, lin_dim)
         self.conv1 = GraphConv(lin_dim, 512)
         self.conv2 = GraphConv(512, 256)
         self.conv3 = GraphConv(256, 128)
@@ -24,7 +19,7 @@ class Model(nn.Module):
 
     def forward(self, graph, node_features, edge_features):
         node_f = self.lin_n(node_features)
-        #edge_f = self.lin_e(edge_features)
+        # edge_f = self.lin_e(edge_features)
         # cat_features = torch.stack((node_f, edge_f))
         h = self.dp(F.relu(self.conv1(graph, node_f)))
         h = self.dp(F.relu(self.conv2(graph, h)))
