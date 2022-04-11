@@ -19,9 +19,6 @@ if __name__ == "__main__":
         yeast_dataset.save()
 
     graph_list = yeast_dataset.graph_list
-    node_features = yeast_dataset.node_out_degrees[0]
-    edge_features = yeast_dataset.edge_features[0]
-    n_labels = 2
 
     model = Model(2, 1, 128, 64, 64, 2)
     # model = model.to(device)
@@ -33,7 +30,8 @@ if __name__ == "__main__":
             node_out_degrees = yeast_dataset.node_out_degrees[i]
             node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
             # node_features = node_features.to(device)
-            # edge_features = yeast_dataset.edge_features[i]
+            edge_features = yeast_dataset.edge_features[i]
+            edge_features = edge_features.resize(len(edge_features), 1)
             # edge_features = edge_features.resize(19841, 1)
             edge_labels = yeast_dataset.edge_labels[i]
             logits = model(graph, node_features, edge_features)
