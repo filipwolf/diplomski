@@ -87,6 +87,7 @@ class YeastDataset(DGLDataset):
             edge_tensor_onehot = F.one_hot(edge_tensor)
             g.edata.update({'mut_tensor': edge_tensor, 'mut_onehot': edge_tensor_onehot})
             g = dgl.add_self_loop(g)
+            g.edata['edge_lengths'][g.edata['edge_lengths'] == 0] = 1
 
             self.num_nodes.append(g.number_of_nodes())
             self.num_edges.append(g.number_of_edges())
