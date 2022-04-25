@@ -2,7 +2,7 @@ import dgl
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from dgl.nn.pytorch import EdgeWeightNorm
+from dgl.nn.pytorch import EdgeWeightNorm, GATConv
 from dgl.nn.pytorch.conv import GraphConv
 from sklearn.metrics import f1_score
 
@@ -29,6 +29,25 @@ class GCNModel(nn.Module):
         h = self.dp(F.relu(self.conv2(graph, h)))
         h = self.dp(F.relu(self.conv3(graph, h)))
         h = self.dp(F.relu(self.conv4(graph, h)))
+        h = self.classify(graph, h)
+        return h
+
+
+class GATModel(nn.Module):
+    def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes, num_heads):
+        super(GATModel, self).__init__()
+        self.lin_n = nn.Linear(node_features, lin_dim)
+        self.lin_e = nn.Linear(edge_features, lin_dim)
+        self.layer1 = GATConv(lin_dim, hidden_dim, num_heads)
+        self.layer2 = GATConv(hidden_dim * num_heads, out_dim, 1)
+        self.classify = MLPPredictor(out_dim, n_classes)
+        self.dp = nn.Dropout(p=0.3)
+
+    def forward(self, graph, h):
+        node_f = self.lin_n(h)
+        h = self.layer1(graph, node_f)
+        h = F.elu(h)
+        h = self.layer2(graph, h)
         h = self.classify(graph, h)
         return h
 
