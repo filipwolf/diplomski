@@ -47,10 +47,10 @@ class GATModel(nn.Module):
 
     def forward(self, graph, h):
         node_f = self.lin_n(h)
-        h = torch.flatten(F.elu(self.gat1(graph, node_f)), start_dim=1)
-        h = torch.flatten(F.elu(self.gat2(graph, h)), start_dim=1)
-        h = F.elu(self.conv1(graph, h))
-        h = F.elu(self.conv2(graph, h))
+        h = torch.flatten(self.dp(F.elu(self.gat1(graph, node_f))), start_dim=1)
+        h = torch.flatten(self.dp(F.elu(self.gat2(graph, h))), start_dim=1)
+        h = self.dp(F.elu(self.conv1(graph, h)))
+        h = self.dp(F.elu(self.conv2(graph, h)))
         h = self.classify(graph, h)
         return h
 
@@ -82,7 +82,7 @@ def evaluate(model, graph_list, dataset, edge_features):
         node_out_degrees = dataset.node_out_degrees[100]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
         edge_labels = dataset.edge_labels[100]
-        logits = model(graph, node_features, edge_features)
+        logits = model(graph, node_features)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
         print('Eval acc: ' + str(torch.sum(pred == edge_labels) / len(edge_labels)))
