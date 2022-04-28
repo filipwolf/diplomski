@@ -17,7 +17,7 @@ class GCNModel(nn.Module):
         self.conv3 = GraphConv(256, 128)
         self.conv4 = GraphConv(128, out_dim)
         self.classify = MLPPredictor(out_dim, n_classes)
-        self.dp = nn.Dropout(p=0.3)
+        self.dp = nn.Dropout(p=0.5)
         self.norm = EdgeWeightNorm(norm='right')
 
     def forward(self, graph, node_features, edge_features):
@@ -43,7 +43,7 @@ class GATModel(nn.Module):
         self.conv1 = GraphConv(out_dim, int(out_dim / 2))
         self.conv2 = GraphConv(int(out_dim / 2), int(out_dim / 4))
         self.classify = MLPPredictor(int(out_dim / 4), n_classes)
-        self.dp = nn.Dropout(p=0.3)
+        self.dp = nn.Dropout(p=0.5)
 
     def forward(self, graph, h):
         node_f = self.lin_n(h)
@@ -82,7 +82,7 @@ def evaluate(model, graph_list, dataset, edge_features):
         node_out_degrees = dataset.node_out_degrees[100]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
         edge_labels = dataset.edge_labels[100]
-        logits = model(graph, node_features)
+        logits = model(graph, node_features, edge_features)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
         print('Eval acc: ' + str(torch.sum(pred == edge_labels) / len(edge_labels)))
