@@ -4,15 +4,13 @@ from sklearn.metrics import f1_score
 
 from GCNmodel import evaluate, GCNModel, GATModel
 from dataset import YeastDataset
+from path_utils import PATH
 
 if __name__ == "__main__":
 
     # device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
-    yeast_dataset = YeastDataset(
-        "/media/filip/DA2A5AE02A5AB8E92/diplomski/yeast_data/graphs/",
-        "/media/filip/DA2A5AE02A5AB8E92/diplomski/yeast_data/graphs/",
-    )
+    yeast_dataset = YeastDataset(PATH, PATH)
 
     if yeast_dataset.has_cache():
         yeast_dataset.load()
