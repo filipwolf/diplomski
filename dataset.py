@@ -65,7 +65,7 @@ class YeastDataset(DGLDataset):
             src = edges_data["node1"].to_numpy()
             dst = edges_data["node2"].to_numpy()
             lengths = edges_data["edge_length"].to_numpy()
-            overlap = edges_data["edge_overlap"]
+            overlap = edges_data["edge_overlap"].to_numpy()
             lengths_tensor = torch.FloatTensor(lengths)
             overlaps_tensor = torch.FloatTensor(overlap)
 

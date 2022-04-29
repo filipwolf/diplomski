@@ -25,7 +25,7 @@ class GCNModel(nn.Module):
         node_f = self.lin_n(node_features)
         # edge_f = self.lin_e(edge_features)
         # cat_features = torch.stack((node_f, edge_f))
-        h = self.dp(F.relu(self.conv1(graph, node_f, edge_weight=norm_edge_weight)))
+        h = self.dp(F.relu(self.conv1(graph, node_f)))
         h = self.dp(F.relu(self.conv2(graph, h)))
         h = self.dp(F.relu(self.conv3(graph, h)))
         h = self.dp(F.relu(self.conv4(graph, h)))
@@ -82,11 +82,12 @@ def evaluate(model, graph_list, dataset, edge_features):
         node_out_degrees = dataset.node_out_degrees[100]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
         edge_labels = dataset.edge_labels[100]
-        logits = model(graph, node_features, edge_features)
+        # logits = model(graph, node_features, edge_features)
+        logits = model(graph, node_features)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
         print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
-        print("Eval F1: " + str(f1_score(edge_labels, pred)))
+        print("Eval F1: " + str(f1_score(edge_labels, pred, average="macro")))
         return loss
 
 
