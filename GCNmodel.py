@@ -18,14 +18,14 @@ class GCNModel(nn.Module):
         self.conv4 = GraphConv(128, out_dim)
         self.classify = MLPPredictor(out_dim, n_classes)
         self.dp = nn.Dropout(p=0.5)
-        self.norm = EdgeWeightNorm(norm='right')
+        self.norm = EdgeWeightNorm(norm="right")
 
     def forward(self, graph, node_features, edge_features):
         norm_edge_weight = self.norm(graph, edge_features)
         node_f = self.lin_n(node_features)
         # edge_f = self.lin_e(edge_features)
         # cat_features = torch.stack((node_f, edge_f))
-        h = self.dp(F.relu(self.conv1(graph, node_f)))
+        h = self.dp(F.relu(self.conv1(graph, node_f, edge_weight=norm_edge_weight)))
         h = self.dp(F.relu(self.conv2(graph, h)))
         h = self.dp(F.relu(self.conv3(graph, h)))
         h = self.dp(F.relu(self.conv4(graph, h)))
@@ -61,17 +61,17 @@ class MLPPredictor(nn.Module):
         self.W = nn.Linear(in_features * 2, out_classes)
 
     def apply_edges(self, edges):
-        h_u = edges.src['h']
-        h_v = edges.dst['h']
+        h_u = edges.src["h"]
+        h_v = edges.dst["h"]
         score = self.W(torch.cat([h_u, h_v], 1))
-        return {'score': score}
+        return {"score": score}
 
     def forward(self, graph, h):
         # h contains the node representations computed from the GNN defined
         # in the node classification section (Section 5.1).
-        graph.ndata['h'] = h
+        graph.ndata["h"] = h
         graph.apply_edges(self.apply_edges)
-        return graph.edata['score']
+        return graph.edata["score"]
 
 
 def evaluate(model, graph_list, dataset, edge_features):
@@ -85,8 +85,8 @@ def evaluate(model, graph_list, dataset, edge_features):
         logits = model(graph, node_features, edge_features)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
-        print('Eval acc: ' + str(torch.sum(pred == edge_labels) / len(edge_labels)))
-        print('Eval F1: ' + str(f1_score(edge_labels, pred)))
+        print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
+        print("Eval F1: " + str(f1_score(edge_labels, pred)))
         return loss
 
 

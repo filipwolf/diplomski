@@ -34,3 +34,5 @@ for i in range(0, 101):
             print(gfa_sign)
             continue
         mapping_dict[idx] = (gfa[int(idx)].split()[1].split(',')[0].split('=')[1])
+
+    print(mapping_dict)
