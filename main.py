@@ -26,8 +26,6 @@ if __name__ == "__main__":
     #     model = model.to(device)
     opt = torch.optim.Adam(model.parameters())
 
-    min_loss = float("inf")
-    max_acc = 0
     max_f1 = 0
 
     for epoch in range(1000):
@@ -59,6 +57,6 @@ if __name__ == "__main__":
         if f1 > max_f1:
             print("Eval acc: " + str(acc / len(edge_labels)))
             print("Eval F1: " + str(f1))
-            print("Eval loss: " + str(acc))
+            print("Eval loss: " + str(loss))
 
         max_f1 = max(f1, max_f1)
