@@ -4,7 +4,7 @@ from statistics import mean
 
 import numpy as np
 
-for i in range(0, 100):
+for i in range(0, 101):
     print(i)
 
     path = "/media/filip/DA2A5AE02A5AB8E92/diplomski/yeast_data/graphs/"
