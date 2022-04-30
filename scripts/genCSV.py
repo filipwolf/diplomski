@@ -4,7 +4,7 @@ from statistics import mean
 
 import numpy as np
 
-for i in range(0, 101):
+for i in range(0, 100):
     print(i)
 
     path = "/media/filip/DA2A5AE02A5AB8E92/diplomski/yeast_data/graphs/"
@@ -74,7 +74,6 @@ for i in range(0, 101):
 
     nodes_list = {}
     edge_list = []
-    print(mapping_dict)
 
     f2.write("node_name,node_class\n")
     f3.write("node1,node2,edge_length,edge_overlap,edge_class\n")
