@@ -86,9 +86,9 @@ def evaluate(model, graph_list, dataset, edge_features):
         logits = model(graph, node_features)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
-        print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
-        print("Eval F1: " + str(f1_score(edge_labels, pred, average="macro")))
-        return loss
+        # print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
+        # print("Eval F1: " + str(f1_score(edge_labels, pred, average="macro")))
+        return loss, torch.sum(pred == edge_labels), f1_score(edge_labels, pred, average="macro")
 
 
 def construct_negative_graph(graph, k):

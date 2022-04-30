@@ -26,6 +26,10 @@ if __name__ == "__main__":
     #     model = model.to(device)
     opt = torch.optim.Adam(model.parameters())
 
+    min_loss = float("inf")
+    max_acc = 0
+    max_f1 = 0
+
     for epoch in range(100):
         print("Epoch: " + str(epoch))
         for i, graph in enumerate(graph_list[:100]):
@@ -50,5 +54,11 @@ if __name__ == "__main__":
             # print('Train loss: ' + str(loss.item()))
             # print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
             # print('Train F1: ' + str(f1_score(edge_labels, pred)))
-        acc = evaluate(model, graph_list, yeast_dataset, yeast_dataset.edge_features[100])
-        print("Eval loss: " + str(acc))
+        loss, acc, f1 = evaluate(model, graph_list, yeast_dataset, yeast_dataset.edge_features[100])
+
+        if f1 > max_f1:
+            print("Eval acc: " + str(acc / len(edge_labels)))
+            print("Eval F1: " + str(f1))
+            print("Eval loss: " + str(acc))
+
+        max_f1 = max(f1, max_f1)
