@@ -1,5 +1,6 @@
 import collections
 import math
+from statistics import mean
 
 import numpy as np
 
@@ -12,7 +13,7 @@ for i in range(0, 101):
     path_edge_features = path + "edge_features/edge_features" + str(i) + ".csv"
     path_edge_lengths = path + "edge_lengths/edge_lengths" + str(i) + ".txt"
 
-    path2 = "/media/filip/DA2A5AE02A5AB8E92/diplomski/yeast_data/graphs/csvs/"
+    path2 = "/media/filip/DA2A5AE02A5AB8E92/diplomski/yeast_data/graphs/larger_dataset/"
     path_csv = path2 + "graph" + str(i) + "/graph.csv"
     path_gfa = path2 + "graph" + str(i) + "/graph.gfa"
 
@@ -79,6 +80,9 @@ for i in range(0, 101):
 
     edge_lengths = f4.readlines()
 
+    edge_lengths = [int(x) for x in edge_lengths]
+    edge_lengths_avg = int(mean(edge_lengths))
+
     for j, line in enumerate(f.readlines()):
         edge_class = 0
         tab_split = line.split("\t")
@@ -100,9 +104,12 @@ for i in range(0, 101):
         elif (gfa_edge2, gfa_edge1) in overlap_dict.keys():
             edge_overlap = overlap_dict[(gfa_edge2, gfa_edge1)]
         else:
-            edge_overlap = 1
+            edge_overlap = 0
 
-        edge_list.append([semicol_split1[1], semicol_split2[1], edge_lengths[j].rstrip(), edge_overlap, edge_class])
+        if len(edge_lengths) <= j:
+            edge_list.append([semicol_split1[1], semicol_split2[1], edge_lengths_avg, edge_overlap, edge_class])
+        else:
+            edge_list.append([semicol_split1[1], semicol_split2[1], edge_lengths[j], edge_overlap, edge_class])
 
     od = collections.OrderedDict(sorted(nodes_list.items(), key=lambda x: int(x[0])))
 
