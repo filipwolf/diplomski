@@ -8,7 +8,9 @@ from path_utils import PATH
 
 if __name__ == "__main__":
 
-    # device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    torch.set_num_threads(32)
+
+    device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
     yeast_dataset = YeastDataset(PATH, PATH)
 
@@ -52,7 +54,7 @@ if __name__ == "__main__":
             # print('Train loss: ' + str(loss.item()))
             # print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
             # print('Train F1: ' + str(f1_score(edge_labels, pred)))
-        loss, acc, f1 = evaluate(model, graph_list, yeast_dataset, yeast_dataset.edge_features[100])
+        loss, acc, f1 = evaluate(model, graph_list, yeast_dataset, yeast_dataset.edge_features2[100])
 
         if f1 > max_f1:
             print("Eval acc: " + str(acc / len(edge_labels)))

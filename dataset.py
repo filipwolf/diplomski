@@ -1,4 +1,5 @@
 import os
+from statistics import mean
 
 import dgl
 import numpy as np
@@ -64,14 +65,11 @@ class YeastDataset(DGLDataset):
 
             src = edges_data["node1"].to_numpy()
             dst = edges_data["node2"].to_numpy()
-            lengths = edges_data["edge_length"].to_numpy()
             overlap = edges_data["edge_overlap"].to_numpy()
-            lengths_tensor = torch.FloatTensor(lengths)
             overlaps_tensor = torch.FloatTensor(overlap)
 
             g = dgl.graph((src, dst))
 
-            g.edata["edge_lengths"] = lengths_tensor
             g.edata["edge_overlaps"] = overlaps_tensor
 
             mut = nodes_data["node_class"].to_numpy()
@@ -86,8 +84,7 @@ class YeastDataset(DGLDataset):
             edge_tensor_onehot = F.one_hot(edge_tensor)
             g.edata.update({"mut_tensor": edge_tensor, "mut_onehot": edge_tensor_onehot})
             g = dgl.add_self_loop(g)
-            g.edata["edge_lengths"][g.edata["edge_lengths"] == 0] = 1
-            g.edata["edge_overlaps"][g.edata["edge_overlaps"] == 0] = 1
+            g.edata["edge_overlaps"][g.edata["edge_overlaps"] == 0] = mean(overlap)
 
             self.num_nodes.append(g.number_of_nodes())
             self.num_edges.append(g.number_of_edges())
@@ -108,7 +105,6 @@ class YeastDataset(DGLDataset):
             self.node_in_degrees.append(node_in_degree_list_tensor)
             self.node_labels.append(mut_tensor)
             self.edge_labels.append(g.edata["mut_tensor"])
-            self.edge_features.append(g.edata["edge_lengths"])
             self.edge_features2.append(g.edata["edge_overlaps"])
 
             g.ndata.update(
