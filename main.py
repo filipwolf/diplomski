@@ -1,6 +1,7 @@
 import torch
 import torch.nn.functional as F
 from sklearn.metrics import f1_score
+from torch.utils.tensorboard import SummaryWriter
 
 from GCNmodel import evaluate, GCNModel, GATModel
 from dataset import YeastDataset
@@ -11,6 +12,8 @@ if __name__ == "__main__":
     torch.set_num_threads(32)
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
+
+    writer = SummaryWriter()
 
     yeast_dataset = YeastDataset(PATH, PATH)
 
@@ -62,3 +65,7 @@ if __name__ == "__main__":
             print("Eval loss: " + str(loss))
 
         max_f1 = max(f1, max_f1)
+
+        writer.add_scalar('Loss/val', loss, epoch)
+        writer.add_scalar('Accuracy/val', acc / len(edge_labels), epoch)
+        writer.add_scalar('F1/val', f1, epoch)
