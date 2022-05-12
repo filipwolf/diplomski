@@ -36,8 +36,8 @@ class GATModel(nn.Module):
         super(GATModel, self).__init__()
         self.lin_n = nn.Linear(node_features, lin_dim)
         self.lin_e = nn.Linear(edge_features, lin_dim)
-        self.gat1 = GATv2Conv(lin_dim, hidden_dim, num_heads)
-        self.gat2 = GATv2Conv(hidden_dim * num_heads, out_dim, 1)
+        self.gat1 = GATv2Conv(lin_dim, hidden_dim, num_heads=num_heads, feat_drop=0.2, attn_drop=0.2)
+        self.gat2 = GATv2Conv(hidden_dim * num_heads, out_dim, num_heads=1, feat_drop=0.2, attn_drop=0.2)
         self.conv1 = GraphConv(out_dim, int(out_dim / 2))
         self.conv2 = GraphConv(int(out_dim / 2), int(out_dim / 4))
         self.classify = MLPPredictor(int(out_dim / 4), n_classes)
@@ -89,15 +89,15 @@ def evaluate(model, graph_list, dataset, edge_features):
         return loss, torch.sum(pred == edge_labels), f1_score(edge_labels, pred, average="macro")
 
 
-def construct_negative_graph(graph, k):
-    src, dst = graph.edges()
+# def construct_negative_graph(graph, k):
+#     src, dst = graph.edges()
+#
+#     neg_src = src.repeat_interleave(k)
+#     neg_dst = torch.randint(0, graph.num_nodes(), (len(src) * k,))
+#     return dgl.graph((neg_src, neg_dst), num_nodes=graph.num_nodes())
 
-    neg_src = src.repeat_interleave(k)
-    neg_dst = torch.randint(0, graph.num_nodes(), (len(src) * k,))
-    return dgl.graph((neg_src, neg_dst), num_nodes=graph.num_nodes())
 
-
-def compute_loss(pos_score, neg_score):
-    # Margin loss
-    n_edges = pos_score.shape[0]
-    return (1 - pos_score.unsqueeze(1) + neg_score.view(n_edges, -1)).clamp(min=0).mean()
+# def compute_loss(pos_score, neg_score):
+#     # Margin loss
+#     n_edges = pos_score.shape[0]
+#     return (1 - pos_score.unsqueeze(1) + neg_score.view(n_edges, -1)).clamp(min=0).mean()
