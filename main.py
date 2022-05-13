@@ -44,8 +44,7 @@ if __name__ == "__main__":
             # edge_features = edge_features.resize(len(edge_features), 1)
             # edge_features = edge_features.resize(19841, 1)
             edge_labels = yeast_dataset.edge_labels[i]
-            # logits = model(graph, node_features, edge_features)
-            logits = model(graph, node_features)
+            logits = model(graph, node_features, edge_features)
 
             pred = torch.softmax(logits, dim=1).max(1).indices
             loss = F.cross_entropy(logits, edge_labels)

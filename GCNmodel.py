@@ -36,18 +36,20 @@ class GATModel(nn.Module):
         super(GATModel, self).__init__()
         self.lin_n = nn.Linear(node_features, lin_dim)
         self.lin_e = nn.Linear(edge_features, lin_dim)
-        self.gat1 = GATv2Conv(lin_dim, hidden_dim, num_heads=num_heads, feat_drop=0.2, attn_drop=0.2)
-        self.gat2 = GATv2Conv(hidden_dim * num_heads, out_dim, num_heads=1, feat_drop=0.2, attn_drop=0.2)
+        self.gat1 = GATv2Conv(lin_dim, hidden_dim, num_heads=num_heads)
+        self.gat2 = GATv2Conv(hidden_dim * num_heads, out_dim, num_heads=1)
         self.conv1 = GraphConv(out_dim, int(out_dim / 2))
         self.conv2 = GraphConv(int(out_dim / 2), int(out_dim / 4))
         self.classify = MLPPredictor(int(out_dim / 4), n_classes)
         self.dp = nn.Dropout(p=0.5)
+        self.norm = EdgeWeightNorm(norm="right")
 
-    def forward(self, graph, h):
+    def forward(self, graph, h, edge_features):
+        norm_edge_weight = self.norm(graph, edge_features)
         node_f = self.lin_n(h)
         h = torch.flatten(self.dp(F.elu(self.gat1(graph, node_f))), start_dim=1)
         h = torch.flatten(self.dp(F.elu(self.gat2(graph, h))), start_dim=1)
-        h = self.dp(F.elu(self.conv1(graph, h)))
+        h = self.dp(F.elu(self.conv1(graph, h, edge_weight=norm_edge_weight)))
         h = self.dp(F.elu(self.conv2(graph, h)))
         h = self.classify(graph, h)
         return h
@@ -80,8 +82,7 @@ def evaluate(model, graph_list, dataset, edge_features):
         node_out_degrees = dataset.node_out_degrees[100]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
         edge_labels = dataset.edge_labels[100]
-        # logits = model(graph, node_features, edge_features)
-        logits = model(graph, node_features)
+        logits = model(graph, node_features, edge_features)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
         # print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
