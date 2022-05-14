@@ -74,22 +74,6 @@ class MLPPredictor(nn.Module):
         return graph.edata["score"]
 
 
-def evaluate(model, graph_list, dataset, edge_features):
-    model.eval()
-    with torch.no_grad():
-        graph = graph_list[100]
-        node_in_degrees = dataset.node_in_degrees[100]
-        node_out_degrees = dataset.node_out_degrees[100]
-        node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
-        edge_labels = dataset.edge_labels[100]
-        logits = model(graph, node_features, edge_features)
-        pred = logits.max(1).indices
-        loss = F.cross_entropy(logits, edge_labels)
-        # print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
-        # print("Eval F1: " + str(f1_score(edge_labels, pred, average="macro")))
-        return loss, torch.sum(pred == edge_labels), f1_score(edge_labels, pred, average="macro")
-
-
 # def construct_negative_graph(graph, k):
 #     src, dst = graph.edges()
 #
