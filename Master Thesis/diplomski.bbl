@@ -1,0 +1,49 @@
+\begin{thebibliography}{5}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Gilmer et~al.(2017)Gilmer, Schoenholz, Riley, Vinyals, and
+  Dahl]{message_passing}
+J.~Gilmer, S.~S. Schoenholz, P.~F. Riley, O.~Vinyals, and G.~E. Dahl.
+\newblock Neural message passing for quantum chemistry.
+\newblock In D.~Precup and Y.~W. Teh, editors, \emph{Proceedings of the 34th
+  International Conference on Machine Learning}, volume~70 of \emph{Proceedings
+  of Machine Learning Research}, pages 1263--1272. PMLR, 06--11 Aug 2017.
+\newblock URL \url{https://proceedings.mlr.press/v70/gilmer17a.html}.
+
+\bibitem[Hornik et~al.(1989)Hornik, Stinchcombe, and White]{uni_approx}
+K.~Hornik, M.~Stinchcombe, and H.~White.
+\newblock Multilayer feedforward networks are universal approximators.
+\newblock \emph{Neural Networks}, 2\penalty0 (5):\penalty0 359--366, 1989.
+\newblock ISSN 0893-6080.
+\newblock \doi{https://doi.org/10.1016/0893-6080(89)90020-8}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/0893608089900208}.
+
+\bibitem[Jumper(2021)]{alphafold}
+E.~R. P. A. e.~a. Jumper, J.
+\newblock Highly accurate protein structure prediction with alphafold.
+\newblock \emph{Nature}, 2021.
+\newblock \doi{10.1038/s41586-021-03819-2}.
+\newblock URL \url{https://doi.org/10.1038/s41586-021-03819-2}.
+
+\bibitem[Lecun et~al.(1998)Lecun, Bottou, Bengio, and Haffner]{CNN}
+Y.~Lecun, L.~Bottou, Y.~Bengio, and P.~Haffner.
+\newblock Gradient-based learning applied to document recognition.
+\newblock \emph{Proceedings of the IEEE}, 86\penalty0 (11):\penalty0
+  2278--2324, 1998.
+\newblock \doi{10.1109/5.726791}.
+
+\bibitem[Scarselli et~al.(2004)Scarselli, Tsoi, Gori, and Hagenbuchner]{GNN}
+F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
+\newblock Graphical-based learning environments for pattern recognition.
+\newblock In A.~Fred, T.~M. Caelli, R.~P.~W. Duin, A.~C. Campilho, and
+  D.~de~Ridder, editors, \emph{Structural, Syntactic, and Statistical Pattern
+  Recognition}, pages 42--56, Berlin, Heidelberg, 2004. Springer Berlin
+  Heidelberg.
+\newblock ISBN 978-3-540-27868-9.
+
+\end{thebibliography}

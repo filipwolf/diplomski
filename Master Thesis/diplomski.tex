@@ -1,0 +1,87 @@
+\documentclass[times, utf8, diplomski, english]{fer_eng}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{subcaption}
+\usepackage{graphicx}
+\usepackage{slashbox}
+\usepackage{natbib}
+\bibliographystyle{abbrvnat}
+\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
+\usepackage{pdfpages}
+
+\begin{document}
+
+\thesisnumber{3028}
+
+\title{Using Graph Neural Networks to Separate Haplotypes in Assembly Graphs}
+
+\author{Filip Wolf}
+
+\maketitle
+
+% Ispis stranice s napomenom o umetanju izvornika rada. Uklonite naredbu \izvornik ako želite izbaciti tu stranicu.
+\includepdf[pages=-]{"hr_0036510053_56.pdf"}
+
+% Dodavanje zahvale ili prazne stranice. Ako ne želite dodati zahvalu, naredbu ostavite radi prazne stranice.
+\zahvala{}
+
+\tableofcontents
+
+\chapter{Introduction}
+
+Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genomes. We will here however focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individuals genome is composed of both a mother's and a father's genome, each contributing about half of genetic material on average. This is called a haplotype. By separating these two haplotypes, we can distinguish which genes came from what parent, which has a wide range of applications, from ancestry tests to finding hereditary diseases.
+
+Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems it faces. This is however slowly changing. More and more research is being done using \textit{deep learning} to solve it's problems. First, it was employed only to find dense representations of the features of genomes, but it later started to completely replace the previously mentioned algorithms. Deep learning has contributed tremendously to the field in recent years and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solved for 50 years (\cite{alphafold}). Still, there is still a long way to go before it becomes completely standard within the field. Thus, this Thesis is concerned with applying recent deep learning techniques in order to solve the problem of separating the two haplotypes in an existing genome.
+
+\section{Deep Learning}
+
+\subsection{Basics}
+
+In the last decade, deep learning has grown from a niche research area to one of the largest fields withing computer science. It is now actively employed in virtually every human endeavor, from medicine to astronomy. And it is still growing day by day on its mission to become the standard way of handling almost all data.
+
+In deep learning, we use data processing structures called \textit{artificial neural networks} (ANNs) to extract useful information from our data and learn to predict an outcome, such as some feature of the data or a target class. It does this by adjusting learnable \textit{weights} defined for every neuron in our network. Due to these weights, neural networks are much denser structures when compared to previous machine learning methods and can be referred to as \textit{universal function approximators} (\cite{uni_approx}) due to their ability to, with large enough networks, approximate any function. This gives them unprecedented performance on previously unsolvable tasks, but due to their abstract structure, makes them somewhat difficult to interpret. Some networks, like \textit{convolutional neural networks} (\cite{CNN}), don't suffer from this problem as much and can produce some quite intuitive visualizations. On the other hand, some networks, like the ones we will use here, cannot be visually meaningfully interpreted.
+
+To successfully explain how ANNs work, we need to introduce two concepts: a loss function and backpropagation. When use our deep learning model to learn from data, we pass it through our network and compare the output to a previously defined true value by using a \textit{loss function}. A loss function abstracts the error of our network prediction to a single number which is then used to calculate gradients in respect to our data. These gradients are then propagated back through the network using \textit{backpropagation}. In essence, the backpropagation algorithm tells every weight in our network how to change in order to better predict our data. If we imagine our data as a 2-dimensional function on a plane, a gradient is the information of how steeps the function is at any specified point. This steepness value tells the network weights how much they should change, while its sign specifies the direction of change. By correctly propagating these gradient values back through the network, which backpropagation does, we an successfully make our network learn from data.
+
+\subsection{Graph Neural Networks}
+
+While standard ANNs are great at predicting simple data with no underlying structure (or at least one that isn't known), to successfully make our network learn from assembly graphs, we will need something more refined. Yes, it is true that we can simply represent our graph in the form of a 1-dimensional vector, but we then lose precious structural information about the contig overlaps. By using networks more tailor-made for data representation on graphs, we can take advantage of the graph's underlying structure. The networks in question are called \textit{Graph Neural Networks} (GNNs) (\cite{GNN}). Most modern graph neural networks work on the principle of \textit{message passing} (\cite{message_passing}). A node accumulates information from adjacent nodes and the edges connecting them and uses it to update its own weights. By repeating this process enough times, we can converge to a stable solution. This can be represented wit the following equation.
+
+%napisati svojim rijecima
+
+Let $x_v \in \mathbf{R}^{d_1}$ be the feature for node $v$, and $w \in \mathbf{R}^{d_2}$ be the feature for edge ($u$, $v$). The message passing paradigm defines the following node-wise and edge-wise computation at step $t+1$:
+
+Edge-wise: $m_e^{(t+1)} = \phi (x_v^{(t)}, x_u^{(t)}, w_e^{(t)}), (u, v, e) \in \mathcal{E}$.
+
+Node-wise: $x_v^{(t+1)} = \psi (x_v^{(t)}, \rho (\{m_e^{(t+1)}: (u, v, e) \in \mathcal{E}\}))$.
+
+In the above equations, $\phi$ is a message function defined on each edge to generate a message by combining the edge feature with the features of its incident nodes; $\psi$ is an update function defined on each node to update the node feature by aggregating its incoming messages using the reduce function $\rho$.
+
+The GNN can be though of as an extension of CNNs. A CNN takes an image's local neighborhood and extracts information from it. It does this using convolution \textit{filters}, which take a certain amount of pixels in a neighborhood and multiply them with weights. Now, the size of this filter is predefined and cannot be changed. For instance, it can have a size of 3 x 3 or 5 x 5. If we were to create such a filter for use on graphs, we would simply designate the central weight of the filter to be the node we are currently looking at, and the surrounding weights would be its neighboring nodes. As we can see, this would limit us to graphs where nodes had a constant number of neighbors, or graphs where we could look only at a limited number of neighbors. GNNs do not have this limitation. The $\psi$ function takes all nodes in a central node's neighborhood into account equally.
+
+\chapter{Dataset}
+
+When it comes to deep learning, data can often take a central role in the final outcome of the project. Although carefully crafting
+
+
+\chapter{Conclusion}
+
+\bibliography{literatura}
+\bibliographystyle{fer}
+
+\clearpage
+
+\title{R}
+\begin{abstract}
+
+\keywords{}
+\end{abstract}
+
+\hrtitle{}
+\begin{sazetak}
+
+\kljucnerijeci{}
+\end{sazetak}
+
+\end{document}
