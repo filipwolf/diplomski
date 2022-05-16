@@ -10,7 +10,7 @@ class GCNModel(nn.Module):
         super(GCNModel, self).__init__()
         self.lin_n = nn.Linear(node_features, lin_dim)
         self.lin_e = nn.Linear(edge_features, lin_dim)
-        self.conv1 = GraphConv(lin_dim, 512)
+        self.conv1 = GraphConv(lin_dim, 512, norm='eight')
         self.conv2 = GraphConv(512, 256)
         self.conv3 = GraphConv(256, 128)
         self.conv4 = GraphConv(128, out_dim)
