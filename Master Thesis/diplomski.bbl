@@ -1,9 +1,16 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Brody et~al.(2021)Brody, Alon, and Yahav]{GATv2}
+S.~Brody, U.~Alon, and E.~Yahav.
+\newblock How attentive are graph attention networks?
+\newblock 2021.
+\newblock \doi{10.48550/ARXIV.2105.14491}.
+\newblock URL \url{https://arxiv.org/abs/2105.14491}.
 
 \bibitem[Gilmer et~al.(2017)Gilmer, Schoenholz, Riley, Vinyals, and
   Dahl]{message_passing}
@@ -30,12 +37,69 @@ E.~R. P. A. e.~a. Jumper, J.
 \newblock \doi{10.1038/s41586-021-03819-2}.
 \newblock URL \url{https://doi.org/10.1038/s41586-021-03819-2}.
 
+\bibitem[Kipf and Welling(2016)]{GCN}
+T.~N. Kipf and M.~Welling.
+\newblock Semi-supervised classification with graph convolutional networks.
+\newblock 2016.
+\newblock \doi{10.48550/ARXIV.1609.02907}.
+\newblock URL \url{https://arxiv.org/abs/1609.02907}.
+
+\bibitem[Lander et~al.(2001)Lander, Linton, Birren, Nusbaum, Zody, Baldwin,
+  Devon, Dewar, Doyle, and FitzHugh]{HGP1}
+E.~S. Lander, L.~M. Linton, B.~Birren, C.~Nusbaum, M.~C. Zody, J.~Baldwin,
+  K.~Devon, K.~Dewar, M.~Doyle, and W.~e.~a. FitzHugh.
+\newblock Initial sequencing and analysis of the human genome.
+\newblock \emph{Nature}, 409\penalty0 (6822):\penalty0 860--921, 2001.
+\newblock \doi{10.1038/35057062}.
+
 \bibitem[Lecun et~al.(1998)Lecun, Bottou, Bengio, and Haffner]{CNN}
 Y.~Lecun, L.~Bottou, Y.~Bengio, and P.~Haffner.
 \newblock Gradient-based learning applied to document recognition.
 \newblock \emph{Proceedings of the IEEE}, 86\penalty0 (11):\penalty0
   2278--2324, 1998.
 \newblock \doi{10.1109/5.726791}.
+
+\bibitem[NIH(2021)]{genome_cost}
+NIH.
+\newblock The cost of sequencing a human genome, 2021.
+\newblock URL
+  \url{https://www.genome.gov/about-genomics/fact-sheets/Sequencing-Human-Genome-cost}.
+
+\bibitem[Nurk et~al.(2022)Nurk, Koren, Rhie, Rautiainen, Bzikadze, Mikheenko,
+  Vollger, Altemose, Uralsky, Gershman, Aganezov, Hoyt, Diekhans, Logsdon,
+  Alonge, Antonarakis, Borchers, Bouffard, Brooks, Caldas, Chen, Cheng, Chin,
+  Chow, de~Lima, Dishuck, Durbin, Dvorkina, Fiddes, Formenti, Fulton,
+  Fungtammasan, Garrison, Grady, Graves-Lindsay, Hall, Hansen, Hartley,
+  Haukness, Howe, Hunkapiller, Jain, Jain, Jarvis, Kerpedjiev, Kirsche,
+  Kolmogorov, Korlach, Kremitzki, Li, Maduro, Marschall, McCartney, McDaniel,
+  Miller, Mullikin, Myers, Olson, Paten, Peluso, Pevzner, Porubsky, Potapova,
+  Rogaev, Rosenfeld, Salzberg, Schneider, Sedlazeck, Shafin, Shew, Shumate,
+  Sims, Smit, Soto, Sović, Storer, Streets, Sullivan, Thibaud-Nissen,
+  Torrance, Wagner, Walenz, Wenger, Wood, Xiao, Yan, Young, Zarate, Surti,
+  McCoy, Dennis, Alexandrov, Gerton, O’Neill, Timp, Zook, Schatz, Eichler,
+  Miga, and Phillippy]{HGP2}
+S.~Nurk, S.~Koren, A.~Rhie, M.~Rautiainen, A.~V. Bzikadze, A.~Mikheenko, M.~R.
+  Vollger, N.~Altemose, L.~Uralsky, A.~Gershman, S.~Aganezov, S.~J. Hoyt,
+  M.~Diekhans, G.~A. Logsdon, M.~Alonge, S.~E. Antonarakis, M.~Borchers, G.~G.
+  Bouffard, S.~Y. Brooks, G.~V. Caldas, N.-C. Chen, H.~Cheng, C.-S. Chin,
+  W.~Chow, L.~G. de~Lima, P.~C. Dishuck, R.~Durbin, T.~Dvorkina, I.~T. Fiddes,
+  G.~Formenti, R.~S. Fulton, A.~Fungtammasan, E.~Garrison, P.~G.~S. Grady,
+  T.~A. Graves-Lindsay, I.~M. Hall, N.~F. Hansen, G.~A. Hartley, M.~Haukness,
+  K.~Howe, M.~W. Hunkapiller, C.~Jain, M.~Jain, E.~D. Jarvis, P.~Kerpedjiev,
+  M.~Kirsche, M.~Kolmogorov, J.~Korlach, M.~Kremitzki, H.~Li, V.~V. Maduro,
+  T.~Marschall, A.~M. McCartney, J.~McDaniel, D.~E. Miller, J.~C. Mullikin,
+  E.~W. Myers, N.~D. Olson, B.~Paten, P.~Peluso, P.~A. Pevzner, D.~Porubsky,
+  T.~Potapova, E.~I. Rogaev, J.~A. Rosenfeld, S.~L. Salzberg, V.~A. Schneider,
+  F.~J. Sedlazeck, K.~Shafin, C.~J. Shew, A.~Shumate, Y.~Sims, A.~F.~A. Smit,
+  D.~C. Soto, I.~Sović, J.~M. Storer, A.~Streets, B.~A. Sullivan,
+  F.~Thibaud-Nissen, J.~Torrance, J.~Wagner, B.~P. Walenz, A.~Wenger, J.~M.~D.
+  Wood, C.~Xiao, S.~M. Yan, A.~C. Young, S.~Zarate, U.~Surti, R.~C. McCoy,
+  M.~Y. Dennis, I.~A. Alexandrov, J.~L. Gerton, R.~J. O’Neill, W.~Timp, J.~M.
+  Zook, M.~C. Schatz, E.~E. Eichler, K.~H. Miga, and A.~M. Phillippy.
+\newblock The complete sequence of a human genome.
+\newblock \emph{Science}, 376\penalty0 (6588):\penalty0 44--53, 2022.
+\newblock \doi{10.1126/science.abj6987}.
+\newblock URL \url{https://www.science.org/doi/abs/10.1126/science.abj6987}.
 
 \bibitem[Scarselli et~al.(2004)Scarselli, Tsoi, Gori, and Hagenbuchner]{GNN}
 F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
@@ -45,5 +109,31 @@ F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
   Recognition}, pages 42--56, Berlin, Heidelberg, 2004. Springer Berlin
   Heidelberg.
 \newblock ISBN 978-3-540-27868-9.
+
+\bibitem[Vaser and {\v S}iki{\'c}(2021)]{Vaser}
+R.~Vaser and M.~{\v S}iki{\'c}.
+\newblock Raven: a de novo genome assembler for long reads.
+\newblock \emph{bioRxiv}, 2021.
+\newblock \doi{10.1101/2020.08.07.242461}.
+\newblock URL
+  \url{https://www.biorxiv.org/content/early/2021/02/22/2020.08.07.242461}.
+
+\bibitem[Veličković et~al.(2017)Veličković, Cucurull, Casanova, Romero,
+  Liò, and Bengio]{GAT}
+P.~Veličković, G.~Cucurull, A.~Casanova, A.~Romero, P.~Liò, and Y.~Bengio.
+\newblock Graph attention networks.
+\newblock 2017.
+\newblock \doi{10.48550/ARXIV.1710.10903}.
+\newblock URL \url{https://arxiv.org/abs/1710.10903}.
+
+\bibitem[Wang et~al.(2019)Wang, Zheng, Ye, Gan, Li, Song, Zhou, Ma, Yu, Gai,
+  Xiao, He, Karypis, Li, and Zhang]{DGL}
+M.~Wang, D.~Zheng, Z.~Ye, Q.~Gan, M.~Li, X.~Song, J.~Zhou, C.~Ma, L.~Yu,
+  Y.~Gai, T.~Xiao, T.~He, G.~Karypis, J.~Li, and Z.~Zhang.
+\newblock Deep graph library: A graph-centric, highly-performant package for
+  graph neural networks.
+\newblock 2019.
+\newblock \doi{10.48550/ARXIV.1909.01315}.
+\newblock URL \url{https://arxiv.org/abs/1909.01315}.
 
 \end{thebibliography}

@@ -30,9 +30,19 @@
 
 \chapter{Introduction}
 
-Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genomes. We will here however focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individuals genome is composed of both a mother's and a father's genome, each contributing about half of genetic material on average. This is called a haplotype. By separating these two haplotypes, we can distinguish which genes came from what parent, which has a wide range of applications, from ancestry tests to finding hereditary diseases.
+Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genome. We will here however focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individuals genome is composed of both a mother's and a father's genome, each contributing about half of genetic material on average. This is called a haplotype. By separating these two haplotypes, we can distinguish which genes came from what parent, which has a wide range of applications, from ancestry tests to finding hereditary diseases.
 
 Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems it faces. This is however slowly changing. More and more research is being done using \textit{deep learning} to solve it's problems. First, it was employed only to find dense representations of the features of genomes, but it later started to completely replace the previously mentioned algorithms. Deep learning has contributed tremendously to the field in recent years and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solved for 50 years (\cite{alphafold}). Still, there is still a long way to go before it becomes completely standard within the field. Thus, this Thesis is concerned with applying recent deep learning techniques in order to solve the problem of separating the two haplotypes in an existing genome.
+
+\section{Bioinformatics}
+
+Bioinformatics is an interdisciplinary field of research that has had a tremendous impact on humanity in the last few decades. Since the completion of the Human Genome Project (\cite{HGP1}, \cite{HGP2}), the cost of sequencing a human genome has fallen exponentially. We can now reliably sequence a human genome for less than a \$1000 (\cite{genome_cost}). This has been possible due to recent advances in sequencing technology as well as algorithms. We will here briefly explain the general pipeline of genome sequencing.
+
+In an ideal world, we would extract a human genome from DNA, pull it through a sequencer, and get a complete and accurate sequence which we could immediately use. However, unfortunately this is not (yet) the case and it is hard to predict when this might become possible. Due to this, we have to make due with sequencers that create shorter reads, at maximum about 10 kilobases (kb), with short read sequencers sequencing reads at lengths of around 150 base pairs. An average genome is much longer than that, e.g the yeast genome is around 12 mb long, and after sequencing, we end up with thousands of short fragments we need to assemble.
+
+To do this, we first look for overlaps on these sequences and create a graph where each node represents a read, and each edge represents overlaps between reads. We then need to find the longest possible path on this graph to from a complete genome.
+
+However, the task we are presented with here is s. lightly different. Instead of just assembling a genome, we need to remove edges on the graph in order to separate the two haplotypes that constitute the genome.
 
 \section{Deep Learning}
 
@@ -60,10 +70,74 @@ In the above equations, $\phi$ is a message function defined on each edge to gen
 
 The GNN can be though of as an extension of CNNs. A CNN takes an image's local neighborhood and extracts information from it. It does this using convolution \textit{filters}, which take a certain amount of pixels in a neighborhood and multiply them with weights. Now, the size of this filter is predefined and cannot be changed. For instance, it can have a size of 3 x 3 or 5 x 5. If we were to create such a filter for use on graphs, we would simply designate the central weight of the filter to be the node we are currently looking at, and the surrounding weights would be its neighboring nodes. As we can see, this would limit us to graphs where nodes had a constant number of neighbors, or graphs where we could look only at a limited number of neighbors. GNNs do not have this limitation. The $\psi$ function takes all nodes in a central node's neighborhood into account equally.
 
+We used two different GNNs in this thesis, which we will describe in the following sections.
+
+\subsubsection{Graph Covolutional Networks}
+
+The first network we used was the more simple of the two, and it bases its computations on Graph Convolutional Networks (GCN) (\cite{GCN}). It aggregates information from neighboring nodes and the edges connecting them and uses them to update the central node's information. It can be defined as follows:
+
+\[ h_i^{(l+1)} = \sigma (b^{(l)} + \sum_{j \in \mathcal{N}(i)} \frac{e_{ji}}{c_{ji}} h_j^{(l)} W^{(l)} ) \]
+
+Here, $\mathcal{N}(i)$ represents all the neighboring nodes of node $i$, $e_{ji}$ is the scalar weight of the edge connecting nodes $i$ and $j$, $c_{ji} = \sqrt{|\mathcal{N}(j)|} \sqrt{|\mathcal{N}(i)|}$, and $\sigma$ is an activation function. $b^{(l)}$, $h_j^{(l)}$ and $W^{(l)}$ are the networks bias at step $l$, features of node $j$ at step $l$ and weight of the network at step $l$ respectively. The aggregated information is used to update the features of node $i$ at step $(l+1)$.
+
+\subsubsection{Graph Attention Networks}
+
+The second networks we used, and the more complex of the two, was Graph Attention Networks (GAT) (\cite{GATv2}). The version we used is an updated version of the original GAT paper (\cite{GAT}) and we did notice a slight increase in performance in the newer version. It can be defined as follows:
+
+\[ h_i^{(l+1)} = \sum_{j \in \mathcal{N}(i)} \alpha_{ij}^{(l)} W_{right}^{(l)} h_j^{(l)} \]
+
+where:
+
+\[ \alpha_{ij}^{(l)} = \mathrm{softmax}_i (e_{ij}^{(l)}) \]
+
+\[ e_{ij}^{(l)} = \vec{a}^{T^{(l)}} \mathrm{LeakyReLU} (W_{left}^{(l)} h_i + W_{right}^{(l)} h_j) \]
+
+Here, $W_{right}$ is one of the two network weight matrices, $h$ is a node feature matrix, $\alpha$ is an attention weight and $\vec{a}$ is the attention weight vector. This attention weight is the main reason why this network performs better compared to the regular GCN.
+
+It differs from the original GAT only in the way $e_{ij}^{(l)}$ is calculated. Instead of using a single weight matrix $W$, we use two separate ones in the form of $W_{right}$ and $W_{left}$, giving the network more parameters and learning power.
+
 \chapter{Dataset}
 
-When it comes to deep learning, data can often take a central role in the final outcome of the project. Although carefully crafting
+When it comes to deep learning, data can often take a central role in determining the final outcome of the project. Although carefully crafting a predictive model is important, data quality can have a large impact on the model's performance. In this thesis, in order to train our model, we artificially created a dataset based on the brewer's yeast (\textit{Saccharomyces cerevisiae}) genome. For most experimentation purposes, this dataset was only created using the first chromosome of the genome, as using the entire genome required the creation of a much larger dataset that would have significantly slowed down the training and testing process of different models. The larger dataset was necessary due to the potentially different nature of each chromosome and the way we predict them. We will explain more about this later. Nevertheless, using only one chromosome proved effective enough, as we will see later in the results section.
 
+To generate the dataset, we used a multi-step process. The yeast genome was stored in a simple FASTA file with the chromosomes written down in order. In the first step, we would extract the first chromosome from the FASTA. In the next step, in order to simulate a fragmented chromosome like it was obtained in the process of sequencing, we needed to generate artificial reads from the chromosome. This was done using the \texttt{seqrequester}\footnote{https://github.com/marbl/seqrequester} package with the \texttt{generate} option. By setting the \texttt{-nreads} flag, we chose the number of reads to generate and using the \texttt{-distribution} flag, we chose the desired distribution for the reads (here set to \texttt{pacbio-hifi}). After this was done, we ended up with a file filled with simulated reads. We used a small C++ program\footnote{Courtesy of R. Vaser} to mutate these reads into new ones of the same size. If the original simulated reads were the mother's reads, these mutated ones could be thought of as the father's reads. We combined them into a single file by simply concatenating them, and we were now ready for the final sequencing process where we would obtain contigs and their overlaps which we could use for training our model.
+
+We found that generating 5000 - 10 000 reads gave satisfactory results in combination with the Raven sequencer (\cite{Vaser}). This is due to the fact that Raven's \texttt{filter} option reduces the number of edges in the graph if a smaller value for the option is specified. While setting the option to 0.99, and using the previously mentioned number of reads, Raven will generate an appropriate number of nodes and edges for training. Setting it to anything lower would create datasets too small for training. Unfortunately, this very low filter value also meant that the overlaps between our contigs were also a minimum of 99\%, making them less of a candidate for usage as edge features.
+
+After the Raven sequencer is done with the sequencing process, it outputs two files: a GFA file and CSV file. They both contain information about the contigs and their overlaps suitable in a format for generating a graph. They also contained different information in each, so to fully utilize all the graph information we have available, we needed to use both files. From the GFA file, we extract information about which contig belongs to the mutated reads and which one to the original simulated ones, as well as contig overlap length information. We extract them to a separate file for easier analyzing. Now, as we previously mentioned, our task is to separate the contigs into the father's and the mother's genome. In other words, if we are presented with a graph where nodes represent contigs and edges their overlaps, we need to remove edges between contigs that don't belong to the same parent. So for each edge, we specify if it's "correct" (i.e. it connects two contigs belonging to the same parent) or "incorrect" (it connect two contigs belonging to different parents). We now have a dataset where each edge has a label, as well as a feature in the form of overlap length. We can now use this as input to our model to generate a dataset fit for training.
+
+\chapter{Implementation}
+
+\section{Technology Stack}
+
+The main functionality for this Thesis was achieved using two Python libraries PyTorch and DGL. PyTorch\footnote{https://pytorch.org/} probably needs no introduction. It is currently the most popular deep learning library used by millions due to its simplicity and versatility. It is free and open source and maintained by Facebook's AI Research lab. In this project, it was used for its \textit{tensor} data structure, its implementation of nonlinearities such as the ReLU and ELU, loss functions such as cross entropy loss and others. It is also the main underlying architecture for all of our deep learning models which DGL is built on.
+
+The Deep Graph Library\footnote{https://www.dgl.ai/} (DGL) (\cite{DGL}) is an free and open source deep learning library primarily aimed at graph neural networks. It is maintained by a diverse team of contributors mostly from Amazon Web Services. Here, we used it for the creation of graphs from the yeast dataset that were used for learning ans its implementation of all the GNN layers we used. It is built upon multiple available deep learning libraries, but we used the version implemented on PyTorch.
+
+Aside from this, we also used a few other libraries to help us in some tasks. We will here shortly list them and describe them.
+
+\begin{itemize}
+	\item NumPy\footnote{https://numpy.org/} - useful for its large arrays
+	\item Pandas\footnote{https://pandas.pydata.org/} - for its CSV saving and loading capabilities
+	\item Scikit-learn\footnote{https://scikit-learn.org/stable/} - for its performance metrics such as F1 score
+	\item TensorBoard\footnote{https://www.tensorflow.org/tensorboard} - used for visualizing our training process
+\end{itemize}
+
+\section{Structure}
+
+The project contained three main files as well as some helper scripts. In the following sections, we will describe these.
+
+\subsection{DGLDataset}
+
+The first thing to do was generate a dataset from the data obtained after sequencing. For this, we used DGLs \texttt{dgl.data.DGLDataset} class, which we inherit. It has multiple purposes, after generating a dataset we can save it and load it by calling the \texttt{save} and \texttt{load} functions. We can also check if there already is a previously saved dataset using the \texttt{has\_cache} function. We can also get an instance of the dataset by calling the \texttt{\_\_getitem\_\_} function, as well as its length using the \texttt{\_\_len\_\_} function. But by far its most important purpose is generating the dataset we will use for training. We do this by loading the previously generated node and edge features and using them to generate a graph. We also encode label information, edge features, and node features. Node features are generated by taking the in and out degrees of every node.
+
+\subsection{Models}
+
+The models we used for training are defined by inheriting the \texttt{torch.nn.Module} class. In each model, we define the layers of the network, as well as the \texttt{forward} function.
+
+\subsection{Main}
+
+All of the previously described functions are connected in the \texttt{main} function. First, we define the function for logging parameters such as loss and accuracy for visualization using TensorBoard. Then, we define the dataset by calling the \texttt{DGLDataset} module and, if it previously hasn't been generated, create the dataset. We then define the model we will use for training with all its parameters and layer sizes. We define the optimizer, and finally, start the training process.
 
 \chapter{Conclusion}
 
@@ -72,7 +146,7 @@ When it comes to deep learning, data can often take a central role in the final 
 
 \clearpage
 
-\title{R}
+\title{Using Graph Neural Networks to Separate Haplotypes in Assembly Graphs}
 \begin{abstract}
 
 \keywords{}

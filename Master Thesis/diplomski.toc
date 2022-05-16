@@ -1,7 +1,17 @@
 \babel@toc {english}{}
 \contentsline {chapter}{\numberline {1}Introduction}{1}%
-\contentsline {section}{\numberline {1.1}Deep Learning}{1}%
-\contentsline {subsection}{\numberline {1.1.1}Basics}{1}%
-\contentsline {subsection}{\numberline {1.1.2}Graph Neural Networks}{2}%
-\contentsline {chapter}{\numberline {2}Conclusion}{4}%
-\contentsline {chapter}{Bibliography}{5}%
+\contentsline {section}{\numberline {1.1}Bioinformatics}{1}%
+\contentsline {section}{\numberline {1.2}Deep Learning}{2}%
+\contentsline {subsection}{\numberline {1.2.1}Basics}{2}%
+\contentsline {subsection}{\numberline {1.2.2}Graph Neural Networks}{3}%
+\contentsline {subsubsection}{Graph Covolutional Networks}{4}%
+\contentsline {subsubsection}{Graph Attention Networks}{4}%
+\contentsline {chapter}{\numberline {2}Dataset}{6}%
+\contentsline {chapter}{\numberline {3}Implementation}{8}%
+\contentsline {section}{\numberline {3.1}Technology Stack}{8}%
+\contentsline {section}{\numberline {3.2}Structure}{9}%
+\contentsline {subsection}{\numberline {3.2.1}DGLDataset}{9}%
+\contentsline {subsection}{\numberline {3.2.2}Models}{9}%
+\contentsline {subsection}{\numberline {3.2.3}Main}{9}%
+\contentsline {chapter}{\numberline {4}Conclusion}{10}%
+\contentsline {chapter}{Bibliography}{11}%
