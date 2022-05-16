@@ -58,60 +58,21 @@ class YeastDataset(DGLDataset):
         self.edge_features2 = []
         self.edge_labels = []
 
+        # training
+
         for i in range(0, 101):
             print(i)
             nodes_data = pd.read_csv(self.raw_dir + "node_features/node_features" + str(i) + ".csv")
             edges_data = pd.read_csv(self.raw_dir + "edge_features/edge_features" + str(i) + ".csv")
 
-            src = edges_data["node1"].to_numpy()
-            dst = edges_data["node2"].to_numpy()
-            overlap = edges_data["edge_overlap"].to_numpy()
-            overlaps_tensor = torch.FloatTensor(overlap)
+            self.generate_graphs(nodes_data, edges_data)
 
-            g = dgl.graph((src, dst))
+        # validation
 
-            g.edata["edge_overlaps"] = overlaps_tensor
+        nodes_data = pd.read_csv(self.raw_dir + "chr2/node_features.csv")
+        edges_data = pd.read_csv(self.raw_dir + "chr2/edge_features.csv")
 
-            mut = nodes_data["node_class"].to_numpy()
-            mut_tensor = torch.tensor(mut)
-
-            mut_onehot = F.one_hot(mut_tensor)
-
-            g.ndata.update({"mut_tensor": mut_tensor, "mut_onehot": mut_onehot})
-
-            edge_labels = edges_data["edge_class"].to_numpy()
-            edge_tensor = torch.tensor(edge_labels)
-            edge_tensor_onehot = F.one_hot(edge_tensor)
-            g.edata.update({"mut_tensor": edge_tensor, "mut_onehot": edge_tensor_onehot})
-            g = dgl.add_self_loop(g)
-            g.edata["edge_overlaps"][g.edata["edge_overlaps"] == 0] = mean(overlap)
-
-            self.num_nodes.append(g.number_of_nodes())
-            self.num_edges.append(g.number_of_edges())
-
-            node_out_degree_list = []
-            node_in_degree_list = []
-
-            for j in range(self.num_nodes[i]):
-                node_out_degree_list.append(g.out_degrees(j))
-                node_in_degree_list.append(g.in_degrees(j))
-
-            node_out_degree_list = np.array(node_out_degree_list)
-            node_in_degree_list = np.array(node_in_degree_list)
-            node_out_degree_list_tensor = torch.FloatTensor(node_out_degree_list)
-            node_in_degree_list_tensor = torch.FloatTensor(node_in_degree_list)
-
-            self.node_out_degrees.append(node_out_degree_list_tensor)
-            self.node_in_degrees.append(node_in_degree_list_tensor)
-            self.node_labels.append(mut_tensor)
-            self.edge_labels.append(g.edata["mut_tensor"])
-            self.edge_features2.append(g.edata["edge_overlaps"])
-
-            g.ndata.update(
-                {"node_out_degrees": node_out_degree_list_tensor, "node_in_degrees": node_in_degree_list_tensor}
-            )
-
-            self.graph_list.append(g)
+        self.generate_graphs(nodes_data, edges_data)
 
     def __getitem__(self, idx):
         return self.graph_list[idx]
@@ -156,6 +117,58 @@ class YeastDataset(DGLDataset):
         graph_path = os.path.join(self.save_dir, "dgl_graph.bin")
         info_path = os.path.join(self.save_dir, "info.pkl")
         return os.path.exists(graph_path) and os.path.exists(info_path)
+
+    def generate_graphs(self, nodes_data, edges_data):
+
+        src = edges_data["node1"].to_numpy()
+        dst = edges_data["node2"].to_numpy()
+        overlap = edges_data["edge_overlap"].to_numpy()
+        overlaps_tensor = torch.FloatTensor(overlap)
+
+        g = dgl.graph((src, dst))
+
+        g.edata["edge_overlaps"] = overlaps_tensor
+
+        mut = nodes_data["node_class"].to_numpy()
+        mut_tensor = torch.tensor(mut)
+
+        mut_onehot = F.one_hot(mut_tensor)
+
+        g.ndata.update({"mut_tensor": mut_tensor, "mut_onehot": mut_onehot})
+
+        edge_labels = edges_data["edge_class"].to_numpy()
+        edge_tensor = torch.tensor(edge_labels)
+        edge_tensor_onehot = F.one_hot(edge_tensor)
+        g.edata.update({"mut_tensor": edge_tensor, "mut_onehot": edge_tensor_onehot})
+        g = dgl.add_self_loop(g)
+        g.edata["edge_overlaps"][g.edata["edge_overlaps"] == 0] = mean(overlap)
+
+        self.num_nodes.append(g.number_of_nodes())
+        self.num_edges.append(g.number_of_edges())
+
+        node_out_degree_list = []
+        node_in_degree_list = []
+
+        for j in range(g.number_of_nodes()):
+            node_out_degree_list.append(g.out_degrees(j))
+            node_in_degree_list.append(g.in_degrees(j))
+
+        node_out_degree_list = np.array(node_out_degree_list)
+        node_in_degree_list = np.array(node_in_degree_list)
+        node_out_degree_list_tensor = torch.FloatTensor(node_out_degree_list)
+        node_in_degree_list_tensor = torch.FloatTensor(node_in_degree_list)
+
+        self.node_out_degrees.append(node_out_degree_list_tensor)
+        self.node_in_degrees.append(node_in_degree_list_tensor)
+        self.node_labels.append(mut_tensor)
+        self.edge_labels.append(g.edata["mut_tensor"])
+        self.edge_features2.append(g.edata["edge_overlaps"])
+
+        g.ndata.update(
+            {"node_out_degrees": node_out_degree_list_tensor, "node_in_degrees": node_in_degree_list_tensor}
+        )
+
+        self.graph_list.append(g)
 
 
 def load_cora_data():

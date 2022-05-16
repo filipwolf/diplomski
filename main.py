@@ -11,11 +11,11 @@ from path_utils import PATH
 def evaluate(model, graph_list, dataset, edge_features):
     model.eval()
     with torch.no_grad():
-        graph = graph_list[100]
-        node_in_degrees = dataset.node_in_degrees[100]
-        node_out_degrees = dataset.node_out_degrees[100]
+        graph = graph_list[101]
+        node_in_degrees = dataset.node_in_degrees[101]
+        node_out_degrees = dataset.node_out_degrees[101]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
-        edge_labels = dataset.edge_labels[100]
+        edge_labels = dataset.edge_labels[101]
         logits = model(graph, node_features, edge_features)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
@@ -26,7 +26,7 @@ def evaluate(model, graph_list, dataset, edge_features):
 
 if __name__ == "__main__":
 
-    torch.set_num_threads(32)
+    # torch.set_num_threads(32)
 
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
@@ -52,7 +52,7 @@ if __name__ == "__main__":
 
     for epoch in range(500):
         print("Epoch: " + str(epoch))
-        for i, graph in enumerate(graph_list[:100]):
+        for i, graph in enumerate(graph_list[:101]):
             node_in_degrees = yeast_dataset.node_in_degrees[i]
             node_out_degrees = yeast_dataset.node_out_degrees[i]
             node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
@@ -73,7 +73,7 @@ if __name__ == "__main__":
             # print('Train loss: ' + str(loss.item()))
             # print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
             # print('Train F1: ' + str(f1_score(edge_labels, pred)))
-        loss, acc, f1 = evaluate(model, graph_list, yeast_dataset, yeast_dataset.edge_features2[100])
+        loss, acc, f1 = evaluate(model, graph_list, yeast_dataset, yeast_dataset.edge_features2[101])
 
         if f1 > max_f1:
             print("Eval acc: " + str(acc / len(edge_labels)))

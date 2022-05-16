@@ -6,19 +6,8 @@ import numpy as np
 
 from path_utils import PATH
 
-for i in range(0, 101):
-    print(i)
 
-    path = PATH
-    path_graphs = path + "modified_graphs_2/graph" + str(i) + "_modified.txt"
-    path_node_features = path + "node_features/node_features" + str(i) + ".csv"
-    path_edge_features = path + "edge_features/edge_features" + str(i) + ".csv"
-    # path_edge_lengths = path + "edge_lengths/edge_lengths" + str(i) + ".txt"
-    path_edge_overlaps = path + "edge_overlaps/edge_overlaps" + str(i) + ".txt"
-
-    # path2 = "/media/filip/DA2A5AE02A5AB8E92/diplomski/yeast_data/graphs/larger_dataset/"
-    # path_csv = path2 + "graph" + str(i) + "/graph.csv"
-    # path_gfa = path2 + "graph" + str(i) + "/graph.gfa"
+def gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps):
 
     f = open(path_graphs, "r")
     f2 = open(path_node_features, "w")
@@ -142,3 +131,36 @@ for i in range(0, 101):
 
     for key, value in nodes_list.items():
         f2.write(str(key) + "," + str(value) + "\n")
+
+
+if __name__ == "__main__":
+
+    path = PATH
+
+    # training
+
+    for i in range(0, 101):
+        print(i)
+
+        path_graphs = path + "modified_graphs_2/graph" + str(i) + "_modified.txt"
+        path_node_features = path + "node_features/node_features" + str(i) + ".csv"
+        path_edge_features = path + "edge_features/edge_features" + str(i) + ".csv"
+        # path_edge_lengths = path + "edge_lengths/edge_lengths" + str(i) + ".txt"
+        path_edge_overlaps = path + "edge_overlaps/edge_overlaps" + str(i) + ".txt"
+
+        # path2 = "/media/filip/DA2A5AE02A5AB8E92/diplomski/yeast_data/graphs/larger_dataset/"
+        # path_csv = path2 + "graph" + str(i) + "/graph.csv"
+        # path_gfa = path2 + "graph" + str(i) + "/graph.gfa"
+
+        gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
+
+    # validation
+
+    path += 'chr2/'
+
+    path_graphs = path + "graph_modified.txt"
+    path_node_features = path + "node_features.csv"
+    path_edge_features = path + "edge_features.csv"
+    path_edge_overlaps = path + "edge_overlaps.txt"
+
+    gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
