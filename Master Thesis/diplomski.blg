@@ -2,7 +2,7 @@ This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: diplomski.aux
 The style file: abbrvnat.bst
-Illegal, another \bibstyle command---line 56 of file diplomski.aux
+Illegal, another \bibstyle command---line 62 of file diplomski.aux
  : \bibstyle
  :          {fer}
 I'm skipping whatever remains of this command
@@ -20,6 +20,7 @@ while executing---line 1347 of file abbrvnat.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
 while executing---line 1347 of file abbrvnat.bst
 Warning--empty journal in GATv2
+Warning--empty year in de_novo2
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
 while executing---line 1429 of file abbrvnat.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
@@ -33,47 +34,49 @@ while executing---line 1429 of file abbrvnat.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
 while executing---line 1429 of file abbrvnat.bst
 Warning--empty journal in GCN
+Warning--empty year in human
+Warning--empty year in yeast
 Warning--empty journal in GAT
 Warning--empty journal in DGL
-You've used 13 entries,
+You've used 16 entries,
             2773 wiz_defined-function locations,
-            701 strings with 9650 characters,
-and the built_in function-call counts, 12429 in all, are:
-= -- 948
-> -- 1464
-< -- 7
-+ -- 488
-- -- 475
-* -- 1267
-:= -- 2094
-add.period$ -- 62
-call.type$ -- 13
-change.case$ -- 195
-chr.to.int$ -- 13
-cite$ -- 30
-duplicate$ -- 283
-empty$ -- 489
-format.name$ -- 492
-if$ -- 2427
-int.to.chr$ -- 1
+            712 strings with 10097 characters,
+and the built_in function-call counts, 13329 in all, are:
+= -- 1025
+> -- 1494
+< -- 10
++ -- 501
+- -- 484
+* -- 1318
+:= -- 2228
+add.period$ -- 71
+call.type$ -- 16
+change.case$ -- 207
+chr.to.int$ -- 15
+cite$ -- 39
+duplicate$ -- 328
+empty$ -- 585
+format.name$ -- 504
+if$ -- 2618
+int.to.chr$ -- 2
 int.to.str$ -- 1
 missing$ -- 12
-newline$ -- 94
-num.names$ -- 56
-pop$ -- 377
+newline$ -- 109
+num.names$ -- 68
+pop$ -- 414
 preamble$ -- 1
-purify$ -- 182
+purify$ -- 191
 quote$ -- 0
-skip$ -- 341
+skip$ -- 380
 stack$ -- 0
-substring$ -- 174
-swap$ -- 31
+substring$ -- 180
+swap$ -- 36
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 143
-warning$ -- 4
-while$ -- 51
+type$ -- 176
+warning$ -- 7
+while$ -- 60
 width$ -- 0
-write$ -- 211
+write$ -- 246
 (There were 13 error messages)

@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -30,6 +30,12 @@ K.~Hornik, M.~Stinchcombe, and H.~White.
 \newblock URL
   \url{https://www.sciencedirect.com/science/article/pii/0893608089900208}.
 
+\bibitem[Illumina()]{de_novo2}
+Illumina.
+\newblock Assembling novel genomes.
+\newblock URL
+  \url{https://www.illumina.com/techniques/sequencing/dna-sequencing/whole-genome-sequencing/de-novo-sequencing.html}.
+
 \bibitem[Jumper(2021)]{alphafold}
 E.~R. P. A. e.~a. Jumper, J.
 \newblock Highly accurate protein structure prediction with alphafold.
@@ -58,6 +64,17 @@ Y.~Lecun, L.~Bottou, Y.~Bengio, and P.~Haffner.
 \newblock \emph{Proceedings of the IEEE}, 86\penalty0 (11):\penalty0
   2278--2324, 1998.
 \newblock \doi{10.1109/5.726791}.
+
+\bibitem[NCBI({\natexlab{a}})]{human}
+NCBI.
+\newblock Homo sapiens, {\natexlab{a}}.
+\newblock URL \url{https://www.ncbi.nlm.nih.gov/genome/?term=Homo+sapiens}.
+
+\bibitem[NCBI({\natexlab{b}})]{yeast}
+NCBI.
+\newblock Saccharomyces cerevisiae, {\natexlab{b}}.
+\newblock URL
+  \url{https://www.ncbi.nlm.nih.gov/genome/?term=Saccharomyces%20cerevisiae[Organism]&cmd=DetailsSearch#:~:text=The%20Saccharomyces%20cerevisiae%20genome%20is,Mb%2C%20organized%20in%2016%20chromosomes.}
 
 \bibitem[NIH(2021)]{genome_cost}
 NIH.

@@ -30,19 +30,33 @@
 
 \chapter{Introduction}
 
-Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genome. We will here however focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individuals genome is composed of both a mother's and a father's genome, each contributing about half of genetic material on average. This is called a haplotype. By separating these two haplotypes, we can distinguish which genes came from what parent, which has a wide range of applications, from ancestry tests to finding hereditary diseases.
+Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genome from its numerous broken-up fragments obtained after sequencing (\cite{de_novo2}). We will here, however, focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individual's genome is composed of both a mother's and a father's genome, each contributing about half of genetic material on average. We call these gene "halves" haplotypes. By separating the two haplotypes from the original genome, we can determine which parent contributes what genes. This has a wide range of applications, from ancestry tests to finding hereditary diseases.
 
-Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems it faces. This is however slowly changing. More and more research is being done using \textit{deep learning} to solve it's problems. First, it was employed only to find dense representations of the features of genomes, but it later started to completely replace the previously mentioned algorithms. Deep learning has contributed tremendously to the field in recent years and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solved for 50 years (\cite{alphafold}). Still, there is still a long way to go before it becomes completely standard within the field. Thus, this Thesis is concerned with applying recent deep learning techniques in order to solve the problem of separating the two haplotypes in an existing genome.
+We will try to do this using novel algorithms from the field of \textit{deep learning} (DL). Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems researchers face. This is however slowly changing. More and more research is being done using deep learning to solve problems in bioinformatics, foregoing the laborious process of feature engineering and extensive human intervention. First, DL was employed only for finding dense and abstract representations of genome features, but it later started to completely replace the previously mentioned algorithms. It has contributed tremendously to the field in recent years and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solvable for 50 years (\cite{alphafold}). Still, there remains a long way to go before DL becomes completely standard within the field. Thus, this Thesis is concerned with applying recent DL techniques in order to solve the problem of separating the two haplotypes in an existing genome. This could not only potentially improve performance and reduce the necessity for human experts, but also bring bioinformatics to a wider range of people.
 
 \section{Bioinformatics}
 
-Bioinformatics is an interdisciplinary field of research that has had a tremendous impact on humanity in the last few decades. Since the completion of the Human Genome Project (\cite{HGP1}, \cite{HGP2}), the cost of sequencing a human genome has fallen exponentially. We can now reliably sequence a human genome for less than a \$1000 (\cite{genome_cost}). This has been possible due to recent advances in sequencing technology as well as algorithms. We will here briefly explain the general pipeline of genome sequencing.
+Bioinformatics is an interdisciplinary field of research that has had a tremendous impact on humanity in the last few decades. Since the completion of the Human Genome Project (\cite{HGP1}, \cite{HGP2}), the cost of sequencing a human genome has fallen exponentially. We can now reliably sequence a human genome for less than a \$1000 (\cite{genome_cost}), all thanks to recent advances in sequencing technology, as well as the accompanying algorithms. We will here briefly explain the general pipeline of genome sequencing.
 
-In an ideal world, we would extract a human genome from DNA, pull it through a sequencer, and get a complete and accurate sequence which we could immediately use. However, unfortunately this is not (yet) the case and it is hard to predict when this might become possible. Due to this, we have to make due with sequencers that create shorter reads, at maximum about 10 kilobases (kb), with short read sequencers sequencing reads at lengths of around 150 base pairs. An average genome is much longer than that, e.g the yeast genome is around 12 mb long, and after sequencing, we end up with thousands of short fragments we need to assemble.
+In an ideal world, we would extract a human genome in the form of DNA from a cell, input it into a sequencer, and get a complete and accurate sequence as output which we could immediately use for further study. However, unfortunately this is not (yet) the case and it is hard to predict when this might become possible. Due to this, we have to make due with sequencers that can only output genomes in the form of thousands of fragmented reads, at maximum about 10 kilobases (kb), with shorter read sequencers sequencing reads at lengths of around 150 base pairs (bp). This process is called \textit{shotgun sequencing}. An average genome is much longer than that, e.g. the yeast genome is around 12 Mb long (\cite{yeast}) and the human genome is around 6.4 Gb long (\cite{human}), so after sequencing, we need to assemble these short reads before going deeper into analysis.
 
-To do this, we first look for overlaps on these sequences and create a graph where each node represents a read, and each edge represents overlaps between reads. We then need to find the longest possible path on this graph to from a complete genome.
+To do this, we first need to combine shorter reads into longer sequences called \textit{contigs}. We then look for overlaps between contigs and use that information to create a graph where each node represents a read, and each edge represents an overlap between reads. We are then tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome.
 
-However, the task we are presented with here is s. lightly different. Instead of just assembling a genome, we need to remove edges on the graph in order to separate the two haplotypes that constitute the genome.
+\section{Thesis Task}
+
+The task we are presented with here is slightly different compared to standard genome sequencing. Instead of just finding a path through the graph and assembling the genome, we instead need to remove edges in the graph that connect contigs belonging to separate parents. By doing this, we are essentially separating the two haplotypes that constitute a genome.
+
+\subsection{Graphs}
+
+Graphs are data structures defined with a set of nodes (vertices) $V$ and the edges connecting them $E$. Formally, this can be written as follows:
+
+\[ G = (V, E) \]
+
+where:
+
+\[ E \subseteq 	\{ (x, y)|(x, y) \in V^2 \mathrm{\ and\ } x \neq y \} \]
+
+The above is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps.
 
 \section{Deep Learning}
 
