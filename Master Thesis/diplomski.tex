@@ -40,7 +40,7 @@ Bioinformatics is an interdisciplinary field of research that has had a tremendo
 
 In an ideal world, we would extract a human genome in the form of DNA from a cell, input it into a sequencer, and get a complete and accurate sequence as output which we could immediately use for further study. However, unfortunately this is not (yet) the case and it is hard to predict when this might become possible. Due to this, we have to make due with sequencers that can only output genomes in the form of thousands of fragmented reads, at maximum about 10 kilobases (kb), with shorter read sequencers sequencing reads at lengths of around 150 base pairs (bp). This process is called \textit{shotgun sequencing}. An average genome is much longer than that, e.g. the yeast genome is around 12 Mb long (\cite{yeast}) and the human genome is around 6.4 Gb long (\cite{human}), so after sequencing, we need to assemble these short reads before going deeper into analysis.
 
-To do this, we first need to combine shorter reads into longer sequences called \textit{contigs}. We then look for overlaps between contigs and use that information to create a graph where each node represents a read, and each edge represents an overlap between reads. We are then tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome.
+To do this, we first need to combine shorter reads into longer sequences called \textit{contigs}. We then look for overlaps between contigs and use that information to create a graph where each node represents a read, and each edge represents an overlap between reads. An overlap can be described as a match between two contigs' \textit{ends}, that is, the contig's prefix (start) and suffix (end). The length of this overlap can indicate the strength of the connection. We are then tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome.
 
 \section{Thesis Task}
 
@@ -48,7 +48,7 @@ The task we are presented with here is slightly different compared to standard g
 
 \subsection{Graphs}
 
-Graphs are data structures defined with a set of nodes (vertices) $V$ and the edges connecting them $E$. Formally, this can be written as follows:
+Graphs are data structures that can be defined as a set of nodes (vertices) $V$ and a set of edges connecting them $E$. Formally, this can be written as follows:
 
 \[ G = (V, E) \]
 
@@ -56,7 +56,7 @@ where:
 
 \[ E \subseteq 	\{ (x, y)|(x, y) \in V^2 \mathrm{\ and\ } x \neq y \} \]
 
-The above is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps.
+The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps.
 
 \section{Deep Learning}
 
@@ -112,7 +112,7 @@ It differs from the original GAT only in the way $e_{ij}^{(l)}$ is calculated. I
 
 \chapter{Dataset}
 
-When it comes to deep learning, data can often take a central role in determining the final outcome of the project. Although carefully crafting a predictive model is important, data quality can have a large impact on the model's performance. In this thesis, in order to train our model, we artificially created a dataset based on the brewer's yeast (\textit{Saccharomyces cerevisiae}) genome. For most experimentation purposes, this dataset was only created using the first chromosome of the genome, as using the entire genome required the creation of a much larger dataset that would have significantly slowed down the training and testing process of different models. The larger dataset was necessary due to the potentially different nature of each chromosome and the way we predict them. We will explain more about this later. Nevertheless, using only one chromosome proved effective enough, as we will see later in the results section.
+When it comes to deep learning, data can often take a central role in determining the final outcome of the project. Although carefully crafting a predictive model is important, data quality can have a large impact on the model's performance. In this thesis, in order to train our model, we artificially created a dataset based on the brewer's yeast (\textit{Saccharomyces cerevisiae}) genome. For most experimentation purposes, this dataset was only created using the first chromosome of the genome, as using the entire genome required the creation of a much larger dataset that would have significantly slowed down the training and testing process of different models. This larger dataset would have been necessary due to the fact that using the same number of reads for a larger number of chromosomes than just one would essentially dilute our available information for each chromosome, making our models difficult to train. This can be mitigated by the fact that different chromosomes are somewhat similar, as we will see in further experiments. Nevertheless, using only one chromosome proved effective enough for testing out different models, as we will see later in the results section.
 
 To generate the dataset, we used a multi-step process. The yeast genome was stored in a simple FASTA file with the chromosomes written down in order. In the first step, we would extract the first chromosome from the FASTA. In the next step, in order to simulate a fragmented chromosome like it was obtained in the process of sequencing, we needed to generate artificial reads from the chromosome. This was done using the \texttt{seqrequester}\footnote{https://github.com/marbl/seqrequester} package with the \texttt{generate} option. By setting the \texttt{-nreads} flag, we chose the number of reads to generate and using the \texttt{-distribution} flag, we chose the desired distribution for the reads (here set to \texttt{pacbio-hifi}). After this was done, we ended up with a file filled with simulated reads. We used a small C++ program\footnote{Courtesy of R. Vaser} to mutate these reads into new ones of the same size. If the original simulated reads were the mother's reads, these mutated ones could be thought of as the father's reads. We combined them into a single file by simply concatenating them, and we were now ready for the final sequencing process where we would obtain contigs and their overlaps which we could use for training our model.
 
@@ -132,8 +132,11 @@ Aside from this, we also used a few other libraries to help us in some tasks. We
 
 \begin{itemize}
 	\item NumPy\footnote{https://numpy.org/} - useful for its large arrays
+
 	\item Pandas\footnote{https://pandas.pydata.org/} - for its CSV saving and loading capabilities
+
 	\item Scikit-learn\footnote{https://scikit-learn.org/stable/} - for its performance metrics such as F1 score
+
 	\item TensorBoard\footnote{https://www.tensorflow.org/tensorboard} - used for visualizing our training process
 \end{itemize}
 
