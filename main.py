@@ -52,10 +52,11 @@ if __name__ == "__main__":
 
     max_f1 = 0
 
+    print(graph_list)
+
     for epoch in range(500):
         print("Epoch: " + str(epoch))
         for i, graph in enumerate(graph_list[:100]):
-            print(i)
             node_in_degrees = yeast_dataset.node_in_degrees[i]
             node_out_degrees = yeast_dataset.node_out_degrees[i]
             node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
