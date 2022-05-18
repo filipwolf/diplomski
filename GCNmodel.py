@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from dgl.nn.pytorch import GATv2Conv, EdgeWeightNorm, GraphConv
+from dgl.nn.pytorch import GATv2Conv, EdgeWeightNorm, GraphConv, EGATConv
 from sklearn.metrics import f1_score
 
 
@@ -55,6 +55,34 @@ class GATModel(nn.Module):
         return h
 
 
+class EGATModel(nn.Module):
+    def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes, num_heads):
+        super(EGATModel, self).__init__()
+        self.lin_n = nn.Linear(node_features, lin_dim)
+        # self.lin_e = nn.Linear(edge_features, lin_dim)
+        self.egat1 = EGATConv(lin_dim, edge_features, hidden_dim, hidden_dim, num_heads=num_heads)
+        self.egat2 = EGATConv(hidden_dim * num_heads, hidden_dim * num_heads, out_dim, out_dim, num_heads=num_heads)
+        self.egat3 = EGATConv(out_dim * num_heads, out_dim * num_heads, int(out_dim / 2), int(out_dim / 2), num_heads=num_heads)
+        self.egat4 = EGATConv(int(out_dim / 2) * num_heads, int(out_dim / 2) * num_heads, int(out_dim / 4), int(out_dim / 4), num_heads=1)
+        self.classify = MLPPredictorEGAT(int(out_dim / 4), n_classes)
+        self.dp = nn.Dropout(p=0.5)
+        # self.norm = EdgeWeightNorm(norm="right")
+
+    def forward(self, graph, h, edge_features):
+        edge_features = edge_features.reshape(len(edge_features), 1)
+        node_f = self.lin_n(h)
+        hn, he = self.egat1(graph, node_f, edge_features)
+        hn, he = torch.flatten(self.dp(F.elu(hn)), start_dim=1), torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        hn, he = self.egat2(graph, hn, he)
+        hn, he = torch.flatten(self.dp(F.elu(hn)), start_dim=1), torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        hn, he = self.egat3(graph, hn, he)
+        hn, he = torch.flatten(self.dp(F.elu(hn)), start_dim=1), torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        hn, he = self.egat4(graph, hn, he)
+        hn, he = torch.flatten(self.dp(F.elu(hn)), start_dim=1), torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        h = self.classify(graph, hn, he)
+        return h
+
+
 class MLPPredictor(nn.Module):
     def __init__(self, in_features, out_classes):
         super().__init__()
@@ -70,6 +98,28 @@ class MLPPredictor(nn.Module):
         # h contains the node representations computed from the GNN defined
         # in the node classification section (Section 5.1).
         graph.ndata["h"] = h
+        graph.apply_edges(self.apply_edges)
+        return graph.edata["score"]
+
+
+class MLPPredictorEGAT(nn.Module):
+    def __init__(self, in_features, out_classes):
+        super().__init__()
+        self.W = nn.Linear(in_features * 3, out_classes)
+
+    def apply_edges(self, edges):
+        h_u = edges.src["h"]
+        h_v = edges.dst["h"]
+        e = edges.data["e"]
+        cat = torch.cat([h_u, h_v, e], 1)
+        score = self.W(cat)
+        return {"score": score}
+
+    def forward(self, graph, hn, he):
+        # h contains the node representations computed from the GNN defined
+        # in the node classification section (Section 5.1).
+        graph.ndata["h"] = hn
+        graph.edata["e"] = he
         graph.apply_edges(self.apply_edges)
         return graph.edata["score"]
 

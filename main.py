@@ -3,19 +3,20 @@ import torch.nn.functional as F
 from sklearn.metrics import f1_score
 from torch.utils.tensorboard import SummaryWriter
 
-from GCNmodel import GCNModel, GATModel
+from GCNmodel import GCNModel, GATModel, EGATModel
 from dataset import YeastDataset
 from path_utils import PATH
 
 
-def evaluate(model, graph_list, dataset, edge_features):
+def evaluate(model, graph_list, dataset, yeast_data):
     model.eval()
     with torch.no_grad():
-        graph = graph_list[101]
-        node_in_degrees = dataset.node_in_degrees[101]
-        node_out_degrees = dataset.node_out_degrees[101]
+        edge_features = yeast_data.edge_features2[100]
+        graph = graph_list[100]
+        node_in_degrees = dataset.node_in_degrees[100]
+        node_out_degrees = dataset.node_out_degrees[100]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
-        edge_labels = dataset.edge_labels[101]
+        edge_labels = dataset.edge_labels[100]
         logits = model(graph, node_features, edge_features)
         pred = logits.max(1).indices
         loss = F.cross_entropy(logits, edge_labels)
@@ -43,7 +44,8 @@ if __name__ == "__main__":
     graph_list = yeast_dataset.graph_list
 
     # model = GCNModel(2, 1, 128, 64, 64, 2)
-    model = GATModel(2, 1, 128, 512, 256, 2, 3)
+    # model = GATModel(2, 1, 128, 512, 256, 2, 3)
+    model = EGATModel(2, 1, 128, 512, 256, 2, 3)
     # if device == 'cuda':
     #     model = model.to(device)
     opt = torch.optim.Adam(model.parameters())
@@ -52,13 +54,12 @@ if __name__ == "__main__":
 
     for epoch in range(500):
         print("Epoch: " + str(epoch))
-        for i, graph in enumerate(graph_list[:101]):
+        for i, graph in enumerate(graph_list[:100]):
             node_in_degrees = yeast_dataset.node_in_degrees[i]
             node_out_degrees = yeast_dataset.node_out_degrees[i]
             node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
             # node_features = node_features.to(device)
             edge_features = yeast_dataset.edge_features2[i]
-            # edge_features = edge_features.resize(len(edge_features), 1)
             # edge_features = edge_features.resize(19841, 1)
             edge_labels = yeast_dataset.edge_labels[i]
             logits = model(graph, node_features, edge_features)
@@ -73,7 +74,7 @@ if __name__ == "__main__":
             # print('Train loss: ' + str(loss.item()))
             # print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
             # print('Train F1: ' + str(f1_score(edge_labels, pred)))
-        loss, acc, f1 = evaluate(model, graph_list, yeast_dataset, yeast_dataset.edge_features2[101])
+        loss, acc, f1 = evaluate(model, graph_list, yeast_dataset, yeast_dataset)
 
         if f1 > max_f1:
             print("Eval acc: " + str(acc / len(edge_labels)))
