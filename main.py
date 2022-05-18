@@ -45,7 +45,7 @@ if __name__ == "__main__":
 
     # model = GCNModel(2, 1, 128, 64, 64, 2)
     # model = GATModel(2, 1, 128, 512, 256, 2, 3)
-    model = EGATModel(2, 1, 128, 512, 256, 2, 3)
+    model = EGATModel(2, 1, 64, 256, 128, 2, 3)
     # if device == 'cuda':
     #     model = model.to(device)
     opt = torch.optim.Adam(model.parameters())
