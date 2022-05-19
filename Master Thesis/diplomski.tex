@@ -1,14 +1,11 @@
 \documentclass[times, utf8, diplomski, english]{fer_eng}
-\usepackage{booktabs}
-\usepackage{multirow}
-\usepackage{multicol}
-\usepackage{subcaption}
-\usepackage{graphicx}
-\usepackage{slashbox}
-\usepackage{natbib}
-\bibliographystyle{abbrvnat}
-\setcitestyle{authoryear,open={(},close={)}} %Citation-related commands
 \usepackage{pdfpages}
+\usepackage{listings}
+\lstset{
+basicstyle=\ttfamily,
+columns=fullflexible,
+breaklines=true
+}
 
 \begin{document}
 
@@ -30,7 +27,7 @@
 
 \chapter{Introduction}
 
-Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genome from its numerous broken-up fragments obtained after sequencing (\cite{de_novo2}). We will here, however, focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individual's genome is composed of both a mother's and a father's genome, each contributing about half of genetic material on average. We call these gene "halves" haplotypes. By separating the two haplotypes from the original genome, we can determine which parent contributes what genes. This has a wide range of applications, from ancestry tests to finding hereditary diseases.
+Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genome from its numerous broken-up fragments obtained after sequencing (\cite{de_novo2}). We will here, however, focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individual's genome is composed of both a mother's and a father's genome. Because we inherit both parent's chromosomes, the genetic material gets mixed between them, but some regions stay together in the form of genes. The term haplotype refers both to these inherited regions, as well as all of the genes of a parent on a chromosome (\cite{haplotype}). In this thesis, we will use the term haplotype in the latter sense. By separating the two haplotypes from a genome, we can determine which parent contributed to what genes. This has a wide range of applications, from ancestry tests to finding hereditary diseases (\cite{haplotype_usage}).         
 
 We will try to do this using novel algorithms from the field of \textit{deep learning} (DL). Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems researchers face. This is however slowly changing. More and more research is being done using deep learning to solve problems in bioinformatics, foregoing the laborious process of feature engineering and extensive human intervention. First, DL was employed only for finding dense and abstract representations of genome features, but it later started to completely replace the previously mentioned algorithms. It has contributed tremendously to the field in recent years and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solvable for 50 years (\cite{alphafold}). Still, there remains a long way to go before DL becomes completely standard within the field. Thus, this Thesis is concerned with applying recent DL techniques in order to solve the problem of separating the two haplotypes in an existing genome. This could not only potentially improve performance and reduce the necessity for human experts, but also bring bioinformatics to a wider range of people.
 
@@ -44,19 +41,68 @@ To do this, we first need to combine shorter reads into longer sequences called 
 
 \subsection{File Formats}
 
-As a specific subfield that combines computer science and genetics, bioinformatics used multiple file formats that are specific to it. Mostly used for storing and representing genomic data, they offer us an easier way to work with such data, as well as modify it. In the following sections, we will briefly describe these file formats, as well as state their usage in this project.
+As a specific subfield that combines computer science and genetics, bioinformatics uses multiple file formats that are unique to it. Mostly used for storing representations of genomic data, they offer us a simpler way to work with such data, as well as modify it. In the following sections, we will briefly describe these file formats, as well as state their usage in this project.
 
 \subsubsection{FASTA \& FASTQ}
 
-The most common file format encountered while working with genomic data is the FASTA format, designated by its .fasta or .fa file extension. It is a text-based format for storing nucleotide sequences. Base pairs of amino acids are stored using letters (A - adenine, C - cytosine, G - guanine, T - thymine) in form of a sequence. Every sequence starts with a description line, which is designated with a ">" symbol. It can contain various information, such as sequence name, sequence length, sequence statistics, etc. In our case, for the yeast gene data, it specified the species and chromosome to which the sequences belonged to. After generating the reads (\ref{dataset}), it contained data such as the read number, strain, position on the chromosome, length and the chromosome to which it belonged to, as well as if its a mutated read or not. Sometimes, we may also encounter a FASTQ file. It is the same as a FASTA file, but with added sequence quality score information.
+The most common file format encountered while working with genomic data is the FASTA format, designated by its .fasta or .fa file extension. It is a text-based format for storing nucleotide sequences and their information. Base pairs of amino acids are stored using letters (A - adenine, C - cytosine, G - guanine, T - thymine) in the form of a sequence. Every sequence starts with a description line, which is designated with a ">" symbol at the start of it. The description line can contain various information about the sequence, such as sequence name, sequence length, sequence statistics, etc. In our case, for the yeast genomic data, it specified the species and chromosome to which the sequences belonged to. After generating the reads (\ref{dataset}) for our data, the description contained data such as the read number, strand information, position on the chromosome, length and the chromosome to which it belonged to, as well as if its a mutated read or not. Sometimes, we may also encounter a FASTQ file. It is identical to a FASTA file, but with added sequence quality score information added after every sequence. In the following, we can see an example of a FASTA file filled with reads:
+
+\begin{lstlisting}
+>read=1,reverse,position=1004750-1015277,length=10527,NC_001139.9
+AAGCTTGCAGATTTATTAACAGTTCAAACGAGTTTGGCTGATAATGCTCGTGCAGGTATTG
+\end{lstlisting}
 
 \subsubsection{CSV}
 
-After generating various information about our a dataset, we would store it in a CSV (comma separated values) file. That way, it could be easily read by some of the tools we used. A CSV file can be thought of as a table, where values in a row are separated with a comma sign. The file starts with a header with column names that are also separated with commas.
+After generating various information about our dataset, we would store it in a CSV (comma separated values) file. That way, it could be easily read by some of the tools we used. A CSV file can be thought of as a table, where values in a row are separated with a comma sign. The file starts with a header with column names that are also separated with commas.
 
-The main reason we use the CSV file format is because of the Raven sequencer outputting a CSV file to store overlap data. After generating the desired sequences, their information would be stored in the file in the following way. We would start in a descending order of read name. Every line with an even index represents a read, while an odd line represents a \textit{virtual} read. Virtual reads are simply reverse complements of the original reads.
+Another reason why we use the CSV file format is because of the Raven assembler outputting a CSV file with information about sequence overlaps. It is stored in the file in the following way. We start in a descending order of read name. A line with an even index number represents an original read, while a line with an odd index number line represents a \textit{virtual} read, i.e. a \textit{reverse complement} of the original read. A reverse complement represents the same sequence as the original, but in reverse order and with the base pairs replaced with their complements (A - T, C - G). The original and the reverse complement essentially represent the same genomic data, but on different strands of the DNA. An example of such a file is in the following:
+
+\begin{lstlisting}
+6549 [3274] LN:i:9216 RC:i:1,6412 [3206] LN:i:11360 RC:i:1,1,39678 8937 0 0.992832
+6413 [3206] LN:i:11360 RC:i:1,6548 [3274] LN:i:9216 RC:i:1,1,39679 11081 0 0.992832
+6647 [3323] LN:i:10656 RC:i:1,6638 [3319] LN:i:10224 RC:i:1,1,39680 10347 0 0.990291
+6639 [3319] LN:i:10224 RC:i:1,6646 [3323] LN:i:10656 RC:i:1,1,39681 9915 0 0.990291
+\end{lstlisting}
+
+First, we have the index of the read. Then, in square brackets, we have the index of the original read (each virtual read forms a pair with an original read). Then, we have some read information, followed by the second read and its own information. Lastly, we have three fields that represent the overlap length, the weight of the overlap (here not used) and its score, measured in percentage of the overlap match respectively. Each line essentially represents an edge in our graph between two nodes. The first $n$ lines in the file, where $n$ is the number of reads, represent the overlap between the original and virtual file.
 
 \subsubsection{GFA}
+
+Another important file Raven outputs is a Graphical Fragment Assembly (GFA)\footnote{https://gfa-spec.github.io/GFA-spec/GFA1.html} file. It contains similar information to the CSV file, but with some notable additions, namely, instead of just specifying read overlaps, it also contains the whole sequences it uses in the assembly process. It also includes the original read names specified before assembly that contain mutation information. Each line in the file starts with an identifier, listed in the following table:
+
+\begin{center}
+	\begin{tabular}{ |c|c| }
+		\hline
+		\textbf{Type} & \textbf{Comment} \\
+		\hline
+		\# & Comment \\
+		\hline
+		H & Header \\
+		\hline
+		S & Segment \\
+		\hline
+		L & Link \\
+		\hline
+		C & Containment \\
+		\hline
+		P & Path \\
+		\hline
+		W & Walk \\
+		\hline
+	\end{tabular}
+\end{center}
+
+For our purposes, the file only contained lines starting with the letters S and L. S denotes a segment (sequence) used in the assembly, along with most of its information that was present before assembly (this is notable because it is missing in the CSV file). The lines starting with an L contain lines about sequence overlaps in a similar manner to the CSV file, with the addition of overlap length information and mutation info the later being crucial for specifying which edges connect what parent's haplotype. An example of lines starting with an L is in the following:
+
+\begin{lstlisting}
+L	read=4158,reverse,position=395590-406211,length=10621,NC_001139.9|mutated	+ read=4884,reverse,position=383506-395832,length=12326,NC_001139.9|mutated	+	101M
+L	read=4832,forward,position=802633-815655,length=13022,NC_001139.9|mutated	-	read=4165,reverse,position=793088-803478,length=10390,NC_001139.9|mutated	+	733M
+\end{lstlisting}
+
+\subsubsection{Miscellaneous}
+
+Aside from the mentioned file formats, we created numerous files of our own that either didn't have a suffix, or simply ended with a \textit{.txt} extension, for easier reading and writing. Those files were of an unspecified format and contained temporary information abut the graph, such as overlap lengths, parent affiliation, and similar.
 
 \section{Thesis Task}
 
@@ -129,13 +175,21 @@ It differs from the original GAT only in the way $e_{ij}^{(l)}$ is calculated. I
 \chapter{Dataset}
 \label{dataset}
 
+\section{Introduction}
+
 When it comes to deep learning, data can often take a central role in determining the final outcome of the project. Although carefully crafting a predictive model is important, data quality can have a large impact on the model's performance. In this thesis, in order to train our model, we artificially created a dataset based on the brewer's yeast (\textit{Saccharomyces cerevisiae}) genome. For most experimentation purposes, this dataset was only created using the first chromosome of the genome, as using the entire genome required the creation of a much larger dataset that would have significantly slowed down the training and testing process of different models. This larger dataset would have been necessary due to the fact that using the same number of reads for a larger number of chromosomes than just one would essentially dilute our available information for each chromosome, making our models difficult to train. This can be mitigated by the fact that different chromosomes are somewhat similar, as we will see in further experiments. Nevertheless, using only one chromosome proved effective enough for testing out different models, as we will see later in the results section.
+
+\section{Dataset Creation}
+
+\subsection{Simulating \& Mutating the Reads}
 
 To generate the dataset, we used a multi-step process. The yeast genome was stored in a simple FASTA file with the chromosomes written down in order. In the first step, we would simply extract the first chromosome from the FASTA file. In the next step, in order to simulate a fragmented chromosome like if it was obtained in the process of sequencing, we needed to generate artificial reads from the chromosome. This was done using the \texttt{seqrequester}\footnote{https://github.com/marbl/seqrequester} package and its \texttt{generate} option for generating reads. By setting the \texttt{-nreads} flag to the desired number, we could specify the number of reads the program would generate, and using the \texttt{-distribution} flag, we could choose the desired distribution for the reads (in our case \texttt{pacbio-hifi}). After this was done, we ended up with a file filled with simulated reads. We used a small C++ program\footnote{Courtesy of R. Vaser} to mutate these reads into new ones of the same length with a mutation frequency of 0.01, meaning that every 100 base pairs, a base pair would get mutated into its complement base pair. Now, if the original simulated reads represented the mother's reads, these mutated ones could be thought of as the father's reads. Lastly, we combined them into a single file by simply concatenating them, and we were now ready for the final sequencing process where we would obtain contigs and their overlaps which we could use for training our model.
 
-We found that generating 5000 - 10 000 reads gave satisfactory results in combination with the Raven sequencer (\cite{Vaser}). This is due to the fact that Raven's \texttt{filter} option reduces the number of edges in the graph if a smaller value for the option is specified. While setting the option to 0.99, and using the previously mentioned number of reads, Raven will generate an appropriate number of nodes and edges for training. Setting it to anything lower would create datasets too small for training. Unfortunately, this very low filter value also meant that the overlaps between our contigs were also a minimum of 99\%, making them less of a candidate for usage as edge features.
+\subsection{Assembling the Graph}
 
-After the Raven sequencer is done with the sequencing process, it outputs two files: a GFA file and CSV file. They both contain information about the contigs and their overlaps suitable in a format for generating a graph. They also contained different information in each, so to fully utilize all the graph information we have available, we needed to use both files. From the GFA file, we extract information about which contig belongs to the mutated reads and which one to the original simulated ones, as well as contig overlap length information. We extract them to a separate file for easier analyzing. Now, as we previously mentioned, our task is to separate the contigs into the father's and the mother's genome. In other words, if we are presented with a graph where nodes represent contigs and edges their overlaps, we need to remove edges between contigs that don't belong to the same parent. So for each edge, we specify if it's "correct" (i.e. it connects two contigs belonging to the same parent) or "incorrect" (it connect two contigs belonging to different parents). We now have a dataset where each edge has a label, as well as a feature in the form of overlap length. We can now use this as input to our model to generate a dataset fit for training.
+We found that generating 5000 - 10 000 reads gave satisfactory results in combination with the Raven assembler (\cite{Vaser}). This is due to the fact that Raven's \texttt{filter} option reduces the number of edges in the graph if a smaller value for the option is specified. While setting the option to 0.99, and using the previously mentioned number of reads, Raven will generate an appropriate number of nodes and edges for training. Setting it to anything lower would create datasets too small for training. Unfortunately, this very low filter value also meant that the overlaps between our contigs were also a minimum of 99\%, making them less of a candidate for usage as edge features.
+
+After Raven is done with the assembly process, it outputs two files: a GFA file and CSV file. They both contain information about the contigs and their overlaps suitable in a format for generating a graph. They also contained different information in each, so to fully utilize all the graph information we have available, we needed to use both files. From the GFA file, we extract information about which contig belongs to the mutated reads and which one to the original simulated ones, as well as contig overlap length information. We extract them to a separate file for easier analyzing. Now, as we previously mentioned, our task is to separate the contigs into the father's and the mother's genome. In other words, if we are presented with a graph where nodes represent contigs and edges their overlaps, we need to remove edges between contigs that don't belong to the same parent. So for each edge, we specify if it's "correct" (i.e. it connects two contigs belonging to the same parent) or "incorrect" (it connect two contigs belonging to different parents). We now have a dataset where each edge has a label, as well as a feature in the form of overlap length. We can now use this as input to our model to generate a dataset fit for training.
 
 \chapter{Implementation}
 

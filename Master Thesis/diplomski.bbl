@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{18}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -118,6 +118,12 @@ S.~Nurk, S.~Koren, A.~Rhie, M.~Rautiainen, A.~V. Bzikadze, A.~Mikheenko, M.~R.
 \newblock \doi{10.1126/science.abj6987}.
 \newblock URL \url{https://www.science.org/doi/abs/10.1126/science.abj6987}.
 
+\bibitem[PacBio()]{haplotype_usage}
+PacBio.
+\newblock Sequencing 101: ploidy, haplotypes, and phasing — how to get more
+  from your sequencing data.
+\newblock URL \url{https://www.pacb.com/blog/ploidy-haplotypes-and-phasing/}.
+
 \bibitem[Scarselli et~al.(2004)Scarselli, Tsoi, Gori, and Hagenbuchner]{GNN}
 F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
 \newblock Graphical-based learning environments for pattern recognition.
@@ -126,6 +132,12 @@ F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
   Recognition}, pages 42--56, Berlin, Heidelberg, 2004. Springer Berlin
   Heidelberg.
 \newblock ISBN 978-3-540-27868-9.
+
+\bibitem[Scitable()]{haplotype}
+Scitable.
+\newblock haplotype.
+\newblock URL
+  \url{https://www.nature.com/scitable/definition/haplotype-haplotypes-142/}.
 
 \bibitem[Vaser and {\v S}iki{\'c}(2021)]{Vaser}
 R.~Vaser and M.~{\v S}iki{\'c}.

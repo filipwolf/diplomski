@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.1)  18 MAY 2022 17:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.1)  19 MAY 2022 21:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -250,132 +250,21 @@ LaTeX Info: Redefining \cite on input line 694.
 )
 \listindentation=\dimen163
 )
-(/usr/share/texlive/texmf-dist/tex/latex/booktabs/booktabs.sty
-Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen164
-\lightrulewidth=\dimen165
-\cmidrulewidth=\dimen166
-\belowrulesep=\dimen167
-\belowbottomsep=\dimen168
-\aboverulesep=\dimen169
-\abovetopsep=\dimen170
-\cmidrulesep=\dimen171
-\cmidrulekern=\dimen172
-\defaultaddspace=\dimen173
-\@cmidla=\count198
-\@cmidlb=\count199
-\@aboverulesep=\dimen174
-\@belowrulesep=\dimen175
-\@thisruleclass=\count266
-\@lastruleclass=\count267
-\@thisrulewidth=\dimen176
-)
-(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
-Package: multirow 2019/05/31 v2.5 Span multiple rows of a table
-\multirow@colwidth=\skip55
-\multirow@cntb=\count268
-\multirow@dima=\skip56
-\bigstrutjot=\dimen177
-)
-(/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
-Package: multicol 2019/12/09 v1.8y multicolumn formatting (FMi)
-\c@tracingmulticols=\count269
-\mult@box=\box48
-\multicol@leftmargin=\dimen178
-\c@unbalance=\count270
-\c@collectmore=\count271
-\doublecol@number=\count272
-\multicoltolerance=\count273
-\multicolpretolerance=\count274
-\full@width=\dimen179
-\page@free=\dimen180
-\premulticols=\dimen181
-\postmulticols=\dimen182
-\multicolsep=\skip57
-\multicolbaselineskip=\skip58
-\partial@page=\box49
-\last@line=\box50
-\maxbalancingoverflow=\dimen183
-\mult@rightbox=\box51
-\mult@grightbox=\box52
-\mult@gfirstbox=\box53
-\mult@firstbox=\box54
-\@tempa=\box55
-\@tempa=\box56
-\@tempa=\box57
-\@tempa=\box58
-\@tempa=\box59
-\@tempa=\box60
-\@tempa=\box61
-\@tempa=\box62
-\@tempa=\box63
-\@tempa=\box64
-\@tempa=\box65
-\@tempa=\box66
-\@tempa=\box67
-\@tempa=\box68
-\@tempa=\box69
-\@tempa=\box70
-\@tempa=\box71
-\@tempa=\box72
-\@tempa=\box73
-\@tempa=\box74
-\@tempa=\box75
-\@tempa=\box76
-\@tempa=\box77
-\@tempa=\box78
-\@tempa=\box79
-\@tempa=\box80
-\@tempa=\box81
-\@tempa=\box82
-\@tempa=\box83
-\@tempa=\box84
-\@tempa=\box85
-\@tempa=\box86
-\@tempa=\box87
-\@tempa=\box88
-\@tempa=\box89
-\@tempa=\box90
-\@tempa=\box91
-\c@minrows=\count275
-\c@columnbadness=\count276
-\c@finalcolumnbadness=\count277
-\last@try=\dimen184
-\multicolovershoot=\dimen185
-\multicolundershoot=\dimen186
-\mult@nat@firstbox=\box92
-\colbreak@box=\box93
-\mc@col@check@num=\count278
-)
-(/usr/share/texlive/texmf-dist/tex/latex/caption/subcaption.sty
-Package: subcaption 2020/01/22 v1.3d Sub-captions (AR)
-\c@subfigure=\count279
-\c@subtable=\count280
-)
-(./slashbox.sty
-slashbox style by K.Yasuoka, May 1993.
-\@slashboxa=\box94
-\@slashboxb=\box95
-\@slashboxc=\box96
-\@slashboxwd=\count281
-\@slashboxht=\count282
-\@slashsepl=\dimen187
-\@slashsepr=\dimen188
-) (/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pdfpages.sty
 Package: pdfpages 2020/01/28 v0.5q Insert pages of external PDF documents (AM)
 
 (/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count283
-\calc@Bcount=\count284
-\calc@Adimen=\dimen189
-\calc@Bdimen=\dimen190
-\calc@Askip=\skip59
-\calc@Bskip=\skip60
+\calc@Acount=\count198
+\calc@Bcount=\count199
+\calc@Adimen=\dimen164
+\calc@Bdimen=\dimen165
+\calc@Askip=\skip55
+\calc@Bskip=\skip56
 LaTeX Info: Redefining \setlength on input line 80.
 LaTeX Info: Redefining \addtolength on input line 81.
-\calc@Ccount=\count285
-\calc@Cskip=\skip61
+\calc@Ccount=\count266
+\calc@Cskip=\skip57
 )
 (/usr/share/texlive/texmf-dist/tex/latex/eso-pic/eso-pic.sty
 Package: eso-pic 2018/04/12 v2.0h eso-pic (RN)
@@ -406,41 +295,66 @@ Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
 Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
 Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
 ))
-\AM@pagewidth=\dimen191
-\AM@pageheight=\dimen192
+\AM@pagewidth=\dimen166
+\AM@pageheight=\dimen167
 
 (/usr/share/texlive/texmf-dist/tex/latex/pdfpages/pppdftex.def
 File: pppdftex.def 2020/01/28 v0.5q Pdfpages driver for pdfTeX (AM)
 )
-\AM@pagebox=\box97
+\AM@pagebox=\box48
 \AM@global@opts=\toks25
-\AM@pagecnt=\count286
+\AM@pagecnt=\count267
 \AM@toc@title=\toks26
-\c@AM@survey=\count287
-\AM@templatesizebox=\box98
+\c@AM@survey=\count268
+\AM@templatesizebox=\box49
 )
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.sty
+\lst@mode=\count269
+\lst@gtempboxa=\box50
+\lst@token=\toks27
+\lst@length=\count270
+\lst@currlwidth=\dimen168
+\lst@column=\count271
+\lst@pos=\count272
+\lst@lostspace=\dimen169
+\lst@width=\dimen170
+\lst@newlines=\count273
+\lst@lineno=\count274
+\lst@maxwidth=\dimen171
+
+(/usr/share/texlive/texmf-dist/tex/latex/listings/lstmisc.sty
+File: lstmisc.sty 2019/09/10 1.8c (Carsten Heinz)
+\c@lstnumber=\count275
+\lst@skipnumbers=\count276
+\lst@framebox=\box51
+)
+(/usr/share/texlive/texmf-dist/tex/latex/listings/listings.cfg
+File: listings.cfg 2019/09/10 1.8c listings configuration
+))
+Package: listings 2019/09/10 1.8c (Carsten Heinz)
+
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
-\l__kernel_color_stack_int=\count288
-\l__pdf_internal_box=\box99
+\l__kernel_color_stack_int=\count277
+\l__pdf_internal_box=\box52
 )
 (./diplomski.aux)
 \openout1 = `diplomski.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
+LaTeX Font Info:    ... okay on input line 10.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -478,17 +392,17 @@ LaTeX Font Info:    ... okay on input line 13.
 
 (/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count289
-\scratchdimen=\dimen193
-\scratchbox=\box100
-\nofMPsegments=\count290
-\nofMParguments=\count291
-\everyMPshowfont=\toks27
-\MPscratchCnt=\count292
-\MPscratchDim=\dimen194
-\MPnumerator=\count293
-\makeMPintoPDFobject=\count294
-\everyMPtoPDFconversion=\toks28
+\scratchcounter=\count278
+\scratchdimen=\dimen172
+\scratchbox=\box53
+\nofMPsegments=\count279
+\nofMParguments=\count280
+\everyMPshowfont=\toks28
+\MPscratchCnt=\count281
+\MPscratchDim=\dimen173
+\MPnumerator=\count282
+\makeMPintoPDFobject=\count283
+\everyMPtoPDFconversion=\toks29
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -499,8 +413,9 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: listings package is loaded.
 Package caption Info: End \AtBeginDocument code.
-\AtBeginShipoutBox=\box101
+\AtBeginShipoutBox=\box54
 
 (/usr/share/texlive/texmf-dist/tex/latex/pdflscape/pdflscape.sty
 Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
@@ -510,19 +425,20 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 )
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 21
+\c@lstlisting=\count284
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 18
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 21.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 18.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 21.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 18.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -535,32 +451,32 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <hr_0036510053_56.pdf, id=11, 597.23125pt x 845.1575pt>
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf>
-Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 21.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf>
-Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 21.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 <hr_0036510053_56.pdf, id=14, page=1, 597.23125pt x 845.1575pt>
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
  [1 <./hr_0036510053_56.pdf>] [3]
 (./diplomski.toc)
@@ -573,21 +489,23 @@ Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
 Chapter 1.
 [1
 
-] [2] [3] [4] [5] [6]
-Chapter 2.
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 12
-6.
-(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+] [2]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 50
+.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [7
-
-] [8]
-Chapter 3.
+) [3] [4]
+[5] [6] [7] [8]
+Chapter 2.
 [9
 
-] [10] [11]
+] [10]
+Chapter 3.
+[11
+
+] [12] [13]
 Chapter 4.
-(./diplomski.bbl [12
+(./diplomski.bbl [14
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 34--38
@@ -600,7 +518,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 34--38
 \T1/pcr/m/n/12 illumina . com / techniques / sequencing / dna-[]sequencing /
  []
 
-[13
+[15
 
 ]
 Underfull \hbox (badness 2903) in paragraph at lines 74--78
@@ -631,17 +549,29 @@ Underfull \hbox (badness 10000) in paragraph at lines 80--84
 s /
  []
 
-[14]) [15] [16
+
+Underfull \hbox (badness 5756) in paragraph at lines 122--126
+[]\T1/ptm/m/n/12 PacBio.  Se-quenc-ing 101: ploidy, hap-lo-types, and phas-ing 
+^^V how to get
+ []
+
+
+Underfull \hbox (badness 4254) in paragraph at lines 122--126
+\T1/ptm/m/n/12 more from your se-quenc-ing data.  URL $\T1/pcr/m/n/12 https : /
+ / www . pacb . com / blog /
+ []
+
+[16]) [17] [18
 
 ] (./diplomski.aux) ) 
 Here is how much of TeX's memory you used:
- 7663 strings out of 483183
- 109054 string characters out of 5966293
- 371614 words of memory out of 5000000
- 22514 multiletter control sequences out of 15000+600000
+ 8950 strings out of 483183
+ 125467 string characters out of 5966293
+ 409982 words of memory out of 5000000
+ 23805 multiletter control sequences out of 15000+600000
  590699 words of font info for 96 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 49i,18n,46p,1588b,435s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,18n,46p,1530b,1009s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
 }</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
@@ -658,10 +588,10 @@ exlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
 mri8a.pfb>
-Output written on diplomski.pdf (21 pages, 215790 bytes).
+Output written on diplomski.pdf (23 pages, 222654 bytes).
 PDF statistics:
- 157 PDF objects out of 1000 (max. 8388607)
- 108 compressed objects within 2 object streams
+ 163 PDF objects out of 1000 (max. 8388607)
+ 112 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
