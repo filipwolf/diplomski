@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.1)  19 MAY 2022 21:23
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  20 MAY 2022 12:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -341,20 +341,20 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 (./diplomski.aux)
 \openout1 = `diplomski.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 10.
-LaTeX Font Info:    ... okay on input line 10.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
+LaTeX Font Info:    ... okay on input line 13.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -426,19 +426,19 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
 \c@lstlisting=\count284
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 18
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 21
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 18.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 21.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 18.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 21.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -451,32 +451,32 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <hr_0036510053_56.pdf, id=11, 597.23125pt x 845.1575pt>
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf>
-Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 21.
+Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 24.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf>
-Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 21.
+Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 24.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 <hr_0036510053_56.pdf, id=14, page=1, 597.23125pt x 845.1575pt>
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 21.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
  [1 <./hr_0036510053_56.pdf>] [3]
 (./diplomski.toc)
@@ -490,7 +490,7 @@ Chapter 1.
 [1
 
 ] [2]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 50
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 53
 .
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
@@ -507,70 +507,18 @@ Chapter 3.
 Chapter 4.
 (./diplomski.bbl [14
 
-]
-Underfull \hbox (badness 10000) in paragraph at lines 34--38
-[]\T1/ptm/m/n/12 Illumina.  As-sem-bling novel genomes.  URL $\T1/pcr/m/n/12 ht
-tps : / / www .
- []
+] [15
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 34--38
-\T1/pcr/m/n/12 illumina . com / techniques / sequencing / dna-[]sequencing /
- []
-
-[15
-
-]
-Underfull \hbox (badness 2903) in paragraph at lines 74--78
-[]\T1/ptm/m/n/12 NCBI.  Sac-cha-romyces cere-visiae, b.  URL $\T1/pcr/m/n/12 ht
-tps : / / www . ncbi . nlm . nih .
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 74--78
-\T1/pcr/m/n/12 gov / genome / ?term = Saccharomyces % 20cerevisiae[Organism ] &
-cmd =
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 74--78
-\T1/pcr/m/n/12 DetailsSearch# : ~ : text = The % 20Saccharomyces % 20cerevisiae
- %
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 80--84
-[]\T1/ptm/m/n/12 NIH.  The cost of se-quenc-ing a hu-man genome, 2021.  URL
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 80--84
-\T1/pcr/m/n/12 https : / / www . genome . gov / about-[]genomics / fact-[]sheet
-s /
- []
-
-
-Underfull \hbox (badness 5756) in paragraph at lines 122--126
-[]\T1/ptm/m/n/12 PacBio.  Se-quenc-ing 101: ploidy, hap-lo-types, and phas-ing 
-^^V how to get
- []
-
-
-Underfull \hbox (badness 4254) in paragraph at lines 122--126
-\T1/ptm/m/n/12 more from your se-quenc-ing data.  URL $\T1/pcr/m/n/12 https : /
- / www . pacb . com / blog /
- []
-
-[16]) [17] [18
+]) [16] [17
 
 ] (./diplomski.aux) ) 
 Here is how much of TeX's memory you used:
- 8950 strings out of 483183
- 125467 string characters out of 5966293
- 409982 words of memory out of 5000000
- 23805 multiletter control sequences out of 15000+600000
+ 8952 strings out of 483107
+ 125518 string characters out of 5964630
+ 408707 words of memory out of 5000000
+ 23816 multiletter control sequences out of 15000+600000
  590699 words of font info for 96 fonts, out of 8000000 for 9000
- 14 hyphenation exceptions out of 8191
+ 59 hyphenation exceptions out of 8191
  49i,18n,46p,1530b,1009s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
 }</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr
@@ -588,10 +536,10 @@ exlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
 e1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
 mri8a.pfb>
-Output written on diplomski.pdf (23 pages, 222654 bytes).
+Output written on diplomski.pdf (22 pages, 218663 bytes).
 PDF statistics:
- 163 PDF objects out of 1000 (max. 8388607)
- 112 compressed objects within 2 object streams
+ 160 PDF objects out of 1000 (max. 8388607)
+ 110 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

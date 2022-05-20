@@ -1,84 +1,63 @@
 This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: diplomski.aux
-The style file: abbrvnat.bst
-Illegal, another \bibstyle command---line 77 of file diplomski.aux
- : \bibstyle
- :          {fer}
-I'm skipping whatever remains of this command
+The style file: abbrv.bst
 Database file #1: literatura.bib
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1347 of file abbrvnat.bst
+while executing---line 1049 of file abbrv.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1347 of file abbrvnat.bst
+while executing---line 1049 of file abbrv.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1347 of file abbrvnat.bst
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1347 of file abbrvnat.bst
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1347 of file abbrvnat.bst
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1347 of file abbrvnat.bst
+while executing---line 1049 of file abbrv.bst
 Warning--empty journal in GATv2
-Warning--empty year in de_novo2
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1429 of file abbrvnat.bst
+while executing---line 1090 of file abbrv.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1429 of file abbrvnat.bst
+while executing---line 1090 of file abbrv.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1429 of file abbrvnat.bst
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1429 of file abbrvnat.bst
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1429 of file abbrvnat.bst
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1429 of file abbrvnat.bst
+while executing---line 1090 of file abbrv.bst
 Warning--empty journal in GCN
-Warning--empty year in human
-Warning--empty year in yeast
-Warning--empty year in haplotype_usage
-Warning--empty year in haplotype
 Warning--empty journal in GAT
 Warning--empty journal in DGL
-You've used 18 entries,
-            2773 wiz_defined-function locations,
-            719 strings with 10352 characters,
-and the built_in function-call counts, 13921 in all, are:
-= -- 1075
-> -- 1514
-< -- 12
-+ -- 509
-- -- 490
-* -- 1348
-:= -- 2316
-add.period$ -- 77
-call.type$ -- 18
-change.case$ -- 215
-chr.to.int$ -- 17
-cite$ -- 45
-duplicate$ -- 358
-empty$ -- 649
-format.name$ -- 512
-if$ -- 2744
-int.to.chr$ -- 2
-int.to.str$ -- 1
+You've used 19 entries,
+            2118 wiz_defined-function locations,
+            600 strings with 8353 characters,
+and the built_in function-call counts, 9237 in all, are:
+= -- 744
+> -- 884
+< -- 3
++ -- 352
+- -- 331
+* -- 820
+:= -- 1656
+add.period$ -- 52
+call.type$ -- 19
+change.case$ -- 219
+chr.to.int$ -- 0
+cite$ -- 23
+duplicate$ -- 200
+empty$ -- 448
+format.name$ -- 331
+if$ -- 1749
+int.to.chr$ -- 0
+int.to.str$ -- 19
 missing$ -- 12
-newline$ -- 119
-num.names$ -- 76
-pop$ -- 440
+newline$ -- 91
+num.names$ -- 42
+pop$ -- 251
 preamble$ -- 1
-purify$ -- 197
+purify$ -- 200
 quote$ -- 0
-skip$ -- 408
+skip$ -- 177
 stack$ -- 0
-substring$ -- 184
-swap$ -- 38
+substring$ -- 245
+swap$ -- 36
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 198
-warning$ -- 9
-while$ -- 66
-width$ -- 0
-write$ -- 268
-(There were 13 error messages)
+type$ -- 76
+warning$ -- 4
+while$ -- 50
+width$ -- 21
+write$ -- 178
+(There were 6 error messages)

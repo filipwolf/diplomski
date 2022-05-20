@@ -23,6 +23,6 @@
 \contentsline {section}{\numberline {3.2}Structure}{12}%
 \contentsline {subsection}{\numberline {3.2.1}DGLDataset}{12}%
 \contentsline {subsection}{\numberline {3.2.2}Models}{12}%
-\contentsline {subsection}{\numberline {3.2.3}Main}{13}%
+\contentsline {subsection}{\numberline {3.2.3}Main}{12}%
 \contentsline {chapter}{\numberline {4}Conclusion}{14}%
 \contentsline {chapter}{Bibliography}{15}%
