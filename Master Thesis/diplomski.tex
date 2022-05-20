@@ -32,15 +32,18 @@ breaklines=true
 
 Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genome from its numerous broken-up fragments obtained after sequencing \cite{de_novo2}. We will here, however, focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individual's genome is composed of both a mother's and a father's genome. Because we inherit both parent's chromosomes, the genetic material gets mixed between them, but some regions stay together in the form of genes. The term haplotype refers both to these inherited regions, as well as all of the genes of a parent on a chromosome \cite{haplotype}. In this thesis, we will use the term haplotype in the latter sense. By separating the two haplotypes from a genome, we can determine which parent contributed to what genes. This has a wide range of applications, from ancestry tests to finding hereditary diseases \cite{haplotype_usage}.         
 
-We will try to do this using novel algorithms from the field of \textit{deep learning} (DL). Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems researchers face. This is however slowly changing. More and more research is being done using deep learning to solve problems in bioinformatics, foregoing the laborious process of feature engineering and extensive human intervention. First, DL was employed only for finding dense and abstract representations of genome features, but it later started to completely replace the previously mentioned algorithms. It has contributed tremendously to the field in recent years and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solvable for 50 years \cite{alphafold}. Still, there remains a long way to go before DL becomes completely standard within the field. Thus, this Thesis is concerned with applying recent DL techniques in order to solve the problem of separating the two haplotypes in an existing genome. This could not only potentially improve performance and reduce the necessity for human experts, but also bring bioinformatics to a wider range of people.
+We will try to do this using novel algorithms from the field of \textit{deep learning} (DL). Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems researchers face. This is however slowly changing. More and more research is being done using deep learning to solve problems in bioinformatics, foregoing the laborious process of feature engineering and extensive human intervention. First, DL was employed only for finding dense and abstract representations of genome features, but it later started to completely replace the previously mentioned algorithms. It has contributed tremendously to the field in recent years and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solvable for 50 years \cite{alphafold}. Still, there remains a long way to go before DL becomes completely standard within the field. Thus, this Thesis is concerned with applying recent DL techniques in order to solve the problem of separating the two haplotypes in an existing genome. This could not only potentially improve performance and reduce the necessity for human experts, but also bring bioinformatics to a wider range of people \cite{dl_bioinformatics}.
 
 \section{Bioinformatics}
 
-Bioinformatics is an interdisciplinary field of research that has had a tremendous impact on humanity in the last few decades. Since the completion of the Human Genome Project \cite{HGP1} \cite{HGP2}, the cost of sequencing a human genome has fallen exponentially. We can now reliably sequence a human genome for less than a \$1000 \cite{genome_cost}, all thanks to recent advances in sequencing technology, as well as the accompanying algorithms. We will here briefly explain the general pipeline of genome sequencing.
+Bioinformatics is an interdisciplinary field of research that has had a tremendous impact on humanity in the last few decades. Since the completion of the Human Genome Project \cite{HGP1} \cite{HGP2}, the cost of sequencing a human genome has fallen exponentially. We can now reliably sequence a human genome for less than a \$1000 \cite{genome_cost}, all thanks to recent advances in sequencing technology, as well as the accompanying algorithms. We will here briefly explain the general pipeline of genome sequencing, as well as the file formats used in the process.
 
-In an ideal world, we would extract a human genome in the form of DNA from a cell, input it into a sequencer, and get a complete and accurate sequence as output which we could immediately use for further study. However, unfortunately this is not (yet) the case and it is hard to predict when this might become possible. Due to this, we have to make due with sequencers that can only output genomes in the form of thousands of fragmented reads, at maximum about 10 kilobases (kb), with shorter read sequencers sequencing reads at lengths of around 150 base pairs (bp). This process is called \textit{shotgun sequencing}. An average genome is much longer than that, e.g. the yeast genome is around 12 Mb long \cite{yeast} and the human genome is around 6.4 Gb long \cite{human}, so after sequencing, we need to assemble these short reads before going deeper into analysis.
+\subsection{The Process of Sequencing and Assembly}
+\label{The Process of Sequencing and Assembly}
 
-To do this, we first need to combine shorter reads into longer sequences called \textit{contigs}. We then look for overlaps between contigs and use that information to create a graph where each node represents a read, and each edge represents an overlap between reads. An overlap can be described as a match between two contigs' \textit{ends}, that is, the contig's prefix (start) and suffix (end). The length of this overlap can indicate the strength of the connection. We are then tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome.
+In an ideal world, we would extract a human genome in the form of DNA from a cell, input it into a sequencer, and get a complete and accurate sequence of DNA as output which we could immediately use for further study. However, unfortunately this is not (yet) the case and it is hard to predict when this might become possible. Due to this, we have to make due with sequencers that can only output genomes in the form of thousands of fragmented reads, at maximum about 10 kilobases (kb) long, with shorter read sequencers sequencing reads at lengths of around 150 base pairs (bp). This process is called \textit{shotgun sequencing}. An average genome is much longer than that, e.g. the yeast genome is around 12 Mb long \cite{yeast} and the human genome is around 6.4 Gb long \cite{human}, so after sequencing, we need to assemble these short reads into longer ones before going deeper into analysis.
+
+This process of finding longer reads is the first step in the process of \textit{assembly}. These longer reads are called \textit{contigs}. After this is done, we move on to looking for overlaps between the contigs which we use to create a graph in which each node represents a read, and each edge represents an overlap between reads. An overlap can be described as a match between two contigs' \textit{ends}, that is, the contig's prefix (start) and suffix (end). The length of this overlap can indicate a stronger similarity, and therefore stronger link between two contigs. Finally, we are tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome.
 
 \subsection{File Formats}
 
@@ -109,11 +112,11 @@ Aside from the mentioned file formats, we created numerous files of our own that
 
 \section{Thesis Task}
 
-The task we are presented with here is slightly different compared to standard genome sequencing. Instead of just finding a path through the graph and assembling the genome, we instead need to remove edges in the graph that connect contigs belonging to separate parents. By doing this, we are essentially separating the two haplotypes that constitute a genome.
+The task we are presented with here is slightly different compared to standard genome sequencing. Instead of just finding a path through the graph in order to assemble a complete genome, we are instead tasked with removing edges in the graph that connect contigs belonging to separate parents. By doing this, we are essentially separating the two haplotypes that constitute a genome. To give more insight into this, we will explain what graphs are and how we use them.
 
 \subsection{Graphs}
 
-Graphs are data structures that can be defined as a set of nodes (vertices) $V$ and a set of edges connecting them $E$. Formally, this can be written as follows:
+Graphs are data structures that can be defined with a set of nodes (vertices) $V$ and a set of edges connecting them $E$. Formally, this can be written as:
 
 \[ G = (V, E) \]
 
@@ -121,17 +124,19 @@ where:
 
 \[ E \subseteq 	\{ (x, y)|(x, y) \in V^2 \mathrm{\ and\ } x \neq y \} \]
 
-The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps.
+The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps, which is an useful information for us \cite{trudeau_2017}.
+
+I this thesis, after sequencing and assembly (\ref{The Process of Sequencing and Assembly}), we obtain a list of reads connected to each other via overlaps. The reads can be thought of as nodes in a graph, while edges are the links between the nodes. By building such structures, we can more easily use existing graph theory insights to remove unnecessary edges and separate the two haplotypes.
 
 \section{Deep Learning}
 
 \subsection{Basics}
 
-In the last decade, deep learning has grown from a niche research area to one of the largest fields withing computer science. It is now actively employed in virtually every human endeavor, from medicine to astronomy. And it is still growing day by day on its mission to become the standard way of handling almost all data.
+In the last decade, deep learning has grown from a niche research area to one of the largest fields withing computer science. It is now actively employed in virtually every human endeavor, from healthcare to entertainment \cite{dl_applications}. And it is still growing day by day on its mission to become the standard way of handling almost all data \cite{dl_growth}.
 
-In deep learning, we use data processing structures called \textit{artificial neural networks} (ANNs) to extract useful information from our data and learn to predict an outcome, such as some feature of the data or a target class. It does this by adjusting learnable \textit{weights} defined for every neuron in our network. Due to these weights, neural networks are much denser structures when compared to previous machine learning methods and can be referred to as \textit{universal function approximators} \cite{uni_approx} due to their ability to, with large enough networks, approximate any function. This gives them unprecedented performance on previously unsolvable tasks, but due to their abstract structure, makes them somewhat difficult to interpret. Some networks, like \textit{convolutional neural networks} \cite{CNN}, don't suffer from this problem as much and can produce some quite intuitive visualizations. On the other hand, some networks, like the ones we will use here, cannot be visually meaningfully interpreted.
+In deep learning, we use data processing structures called \textit{artificial neural networks} (ANNs) to extract useful information from our data and learn to predict an outcome, such as some feature of the data or a target class. ANNs do this by adjusting learnable \textit{weights} defined for every neuron in our network. Due to these weights, neural networks are much denser structures when compared to previous machine learning methods and can be referred to as \textit{universal function approximators} \cite{uni_approx} due to their ability to, with large enough networks, approximate any function. This gives them unprecedented performance on previously unsolvable tasks, but due to their abstract structure, makes them somewhat difficult to interpret. Some networks, like \textit{convolutional neural networks} \cite{CNN}, don't suffer from this problem as much and can produce some quite intuitive visualizations. On the other hand, some networks, like the ones we will use here, cannot be visually meaningfully interpreted.
 
-To successfully explain how ANNs work, we need to introduce two concepts: a loss function and backpropagation. When use our deep learning model to learn from data, we pass it through our network and compare the output to a previously defined true value by using a \textit{loss function}. A loss function abstracts the error of our network prediction to a single number which is then used to calculate gradients in respect to our data. These gradients are then propagated back through the network using \textit{backpropagation}. In essence, the backpropagation algorithm tells every weight in our network how to change in order to better predict our data. If we imagine our data as a 2-dimensional function on a plane, a gradient is the information of how steeps the function is at any specified point. This steepness value tells the network weights how much they should change, while its sign specifies the direction of change. By correctly propagating these gradient values back through the network, which backpropagation does, we an successfully make our network learn from data.
+To successfully explain how ANNs work, we need to introduce two concepts: a loss function and backpropagation. When use our deep learning model to learn from data, we pass it through our network and compare the output to a previously defined true value by using a \textit{loss function}. A loss function abstracts the error of our network prediction to a single number which is then used to calculate gradients in respect to our data. These gradients are then propagated back through the network using \textit{backpropagation}. In essence, the backpropagation algorithm tells every weight in our network how to change in order to better predict our data. If we imagine our data as a 2-dimensional function on a plane, a gradient is the information of how steeps the function is at any specified point. This steepness value tells the network weights how much they should change, while its sign specifies the direction of change. By correctly propagating these gradient values back through the network, which backpropagation does, we an successfully make our network learn from data \cite{Goodfellow-et-al-2016}.
 
 \subsection{Graph Neural Networks}
 
@@ -147,21 +152,22 @@ Node-wise: $x_v^{(t+1)} = \psi (x_v^{(t)}, \rho (\{m_e^{(t+1)}: (u, v, e) \in \m
 
 In the above equations, $\phi$ is a message function defined on each edge to generate a message by combining the edge feature with the features of its incident nodes; $\psi$ is an update function defined on each node to update the node feature by aggregating its incoming messages using the reduce function $\rho$.
 
-The GNN can be though of as an extension of CNNs. A CNN takes an image's local neighborhood and extracts information from it. It does this using convolution \textit{filters}, which take a certain amount of pixels in a neighborhood and multiply them with weights. Now, the size of this filter is predefined and cannot be changed. For instance, it can have a size of 3 x 3 or 5 x 5. If we were to create such a filter for use on graphs, we would simply designate the central weight of the filter to be the node we are currently looking at, and the surrounding weights would be its neighboring nodes. As we can see, this would limit us to graphs where nodes had a constant number of neighbors, or graphs where we could look only at a limited number of neighbors. GNNs do not have this limitation. The $\psi$ function takes all nodes in a central node's neighborhood into account equally.
+The GNN can be though of as an extension of CNNs. A CNN takes an image's local neighborhood and extracts information from it. It does this using convolution \textit{filters}, which take a certain amount of pixels in a neighborhood and multiply them with weights. Now, the size of this filter is predefined and cannot be changed. For instance, it can have a size of 3 x 3 or 5 x 5. If we were to create such a filter for use on graphs, we would simply designate the central weight of the filter to be the node we are currently looking at, and the surrounding weights would be its neighboring nodes. As we can see, this would limit us to graphs where nodes had a constant number of neighbors, or graphs where we could look only at a limited number of neighbors. GNNs do not have this limitation. The $\psi$ function takes all nodes in a central node's neighborhood into account equally \cite{GRL} \cite{bronstein2021geometric}.
 
-We used two different GNNs in this thesis, which we will describe in the following sections.
+We used three different GNNs in this thesis, which we will describe in the following sections.
 
 \subsubsection{Graph Covolutional Networks}
 
-The first network we used was the more simple of the two, and it bases its computations on Graph Convolutional Networks (GCN) \cite{GCN}. It aggregates information from neighboring nodes and the edges connecting them and uses them to update the central node's information. It can be defined as follows:
+The first network we used was the simplest and oldest one, and it bases its computations on Graph Convolutional Networks (GCN) \cite{GCN}. It aggregates information from neighboring nodes and the edges connecting them and uses them to update the central node's information. It can be defined as follows:
 
 \[ h_i^{(l+1)} = \sigma (b^{(l)} + \sum_{j \in \mathcal{N}(i)} \frac{e_{ji}}{c_{ji}} h_j^{(l)} W^{(l)} ) \]
 
-Here, $\mathcal{N}(i)$ represents all the neighboring nodes of node $i$, $e_{ji}$ is the scalar weight of the edge connecting nodes $i$ and $j$, $c_{ji} = \sqrt{|\mathcal{N}(j)|} \sqrt{|\mathcal{N}(i)|}$, and $\sigma$ is an activation function. $b^{(l)}$, $h_j^{(l)}$ and $W^{(l)}$ are the networks bias at step $l$, features of node $j$ at step $l$ and weight of the network at step $l$ respectively. The aggregated information is used to update the features of node $i$ at step $(l+1)$.
+Here, $\mathcal{N}(i)$ represents all the neighboring nodes of node $i$, $e_{ji}$ is the scalar weight of the edge connecting nodes $i$ and $j$, $c_{ji} = \sqrt{|\mathcal{N}(j)|} \sqrt{|\mathcal{N}(i)|}$, and $\sigma$ is an activation function. $b^{(l)}$, $h_j^{(l)}$ and $W^{(l)}$ are the networks bias at step $l$, features of node $j$ at step $l$ and weight of the network at step $l$ respectively. The aggregated information is used to update the features $h$ of node $i$ at step $(l+1)$. We can see that the calculations use are fairly straightforward, as they can be summed up by simply multiplying the network weight and node features and adding bias before passing it through an nonlinearity. A reader familiar with deep learning may notice that this is similar to an iteration of the backpropagation algorithm, but applied to the graph domain.
 
 \subsubsection{Graph Attention Networks}
+\label{Graph Attention Networks}
 
-The second networks we used, and the more complex of the two, was Graph Attention Networks (GAT) \cite{GATv2}. The version we used is an updated version of the original GAT paper \cite{GAT} and we did notice a slight increase in performance in the newer version. It can be defined as follows:
+The second networks we used is more complex than a simple GCN, as it uses the \textit{attention mechanism} \cite{attention} to improve its performance. The Graph Attention Networks (GAT) \cite{GATv2} we used is an updated version of the original GAT \cite{GAT} called GATv2 and we did notice a slight increase in performance while using it. It can be defined as follows:
 
 \[ h_i^{(l+1)} = \sum_{j \in \mathcal{N}(i)} \alpha_{ij}^{(l)} W_{right}^{(l)} h_j^{(l)} \]
 
@@ -171,9 +177,19 @@ where:
 
 \[ e_{ij}^{(l)} = \vec{a}^{T^{(l)}} \mathrm{LeakyReLU} (W_{left}^{(l)} h_i + W_{right}^{(l)} h_j) \]
 
-Here, $W_{right}$ is one of the two network weight matrices, $h$ is a node feature matrix, $\alpha$ is an attention weight and $\vec{a}$ is the attention weight vector. This attention weight is the main reason why this network performs better compared to the regular GCN.
+Here, $W_{right}$ is one of the two network weight matrices, $h$ is a node feature matrix, $\alpha$ is an attention weight and $\vec{a}$ is the attention weight vector. We can see that the basic equation is similar to the GCN, but with an added attention weight. This weight is the main reason why the network performs better compared to the regular GCN. The attention mechanism works by selecting data during training, such as nodes, that it considers more important than other data and thereby giving it more weight. This way, it increases model capacity and performance, while at the same time not directly increasing the network size.
 
-It differs from the original GAT only in the way $e_{ij}^{(l)}$ is calculated. Instead of using a single weight matrix $W$, we use two separate ones in the form of $W_{right}$ and $W_{left}$, giving the network more parameters and learning power.
+This network differs from the original GAT only in the way $e_{ij}^{(l)}$ is calculated. Instead of using a single weight matrix $W$ that is concatenated to the features $h$, we use two separate matrices in the form of $W_{right}$ and $W_{left}$, giving the network more parameters and learning power.
+
+\subsubsection{Edge Graph Attention Network}
+
+The last network we used, and by far the most effective one, is the graph attention layer that handles edge features (EGAT) \cite{EGAT}. The main equation is the same as in GAT (\ref{Graph Attention Networks}). The difference lies in how the attention scores $e_{ij}$ are calculated. Instead of the usual way, the are obtained like this:
+
+\[ e_{ij} = \vec{a} f_{ij}^{'} \]
+
+\[ f_{ij}^{'} = \mathrm{LeakyReLU} (A[h_i||f_{ij}||h_j]) \]
+
+Here, $f_{ij}$ represents edge features, $A$ is a weight matrix and $\vec{a}$ is a weight vector. This network greatly improves performance due to the fact that it better utilizes edge features. Instead of just using them as weights to scale edge importance, it handles them in the same manner of importance as the node features. This way, the network can find meaning in the edge weights much better compared to a regular GAT network.
 
 \chapter{Dataset}
 \label{dataset}
@@ -224,7 +240,22 @@ The first thing to do was generate a dataset from the data obtained after sequen
 
 \subsection{Models}
 
-The models we used for training are defined by inheriting the \texttt{torch.nn.Module} class. In each model, we define the layers of the network, as well as the \texttt{forward} function.
+The models we used for training are defined by inheriting the \texttt{torch.nn.Module} class. In each model, we define the layers of the network, as well as the \texttt{forward} function. An example of the EGAT model is in the following:
+
+\begin{lstlisting}
+class EGATModel(nn.Module):
+	def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes, num_heads):
+		super(EGATModel, self).__init__()
+		self.lin_n = nn.Linear(node_features, lin_dim)
+		self.egat1 = EGATConv(lin_dim, edge_features, hidden_dim, hidden_dim, num_heads=num_heads)
+		self.egat2 = EGATConv(hidden_dim * num_heads, hidden_dim * num_heads, out_dim, out_dim, num_heads=1)
+		self.egat3 = EGATConv(out_dim, out_dim, int(out_dim / 2), int(out_dim / 2), num_heads=1)
+		self.egat4 = EGATConv(int(out_dim / 2), int(out_dim / 2), int(out_dim / 4), int(out_dim / 4), num_heads=1)
+		self.classify = MLPPredictorEGAT(int(out_dim / 4), n_classes)
+		self.dp = nn.Dropout(p=0.5)
+\end{lstlisting}
+
+We define this network in the following way. First, we initalize a linear layer that transforms the node features (in and out node degrees) into a higher dimension of \texttt{node\_features}. Then, we define for EGAT layers. The first layer is of the hgihest size \texttt{hidden\_dim} (both for node and edge features), and subsequent layers divide this size by two in each step. Only the first layer used \texttt{num\_heads} attention heads, the rest use only one. This is done to improve trainign times, as this network proved much slower than the other ones we used. After all the EGAT layers are done with their computations, we pass everything through a classification layer. It works by taking the new calculayed node and edge features and concatenating them before passing them into a fully connected classification layer. The network then finally outputs a list of class probabilities for every edge in the graph.
 
 \subsection{Main}
 

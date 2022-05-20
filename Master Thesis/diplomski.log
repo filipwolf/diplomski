@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  20 MAY 2022 12:25
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  20 MAY 2022 18:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -490,36 +490,42 @@ Chapter 1.
 [1
 
 ] [2]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 53
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 56
 .
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 ) [3] [4]
-[5] [6] [7] [8]
+[5] [6] [7] [8] [9]
 Chapter 2.
-[9
+[10
 
-] [10]
+] [11]
 Chapter 3.
-[11
+[12
 
-] [12] [13]
+] [13]
+Overfull \hbox (15.91556pt too wide) in paragraph at lines 258--259
+\T1/ptm/m/n/12 forms the node fea-tures (in and out node de-grees) into a highe
+r di-men-sion of \T1/pcr/m/n/12 node_features\T1/ptm/m/n/12 .
+ []
+
+[14]
 Chapter 4.
-(./diplomski.bbl [14
+(./diplomski.bbl [15
 
-] [15
+] [16
 
-]) [16] [17
+] [17]) [18] [19
 
 ] (./diplomski.aux) ) 
 Here is how much of TeX's memory you used:
- 8952 strings out of 483107
- 125518 string characters out of 5964630
- 408707 words of memory out of 5000000
- 23816 multiletter control sequences out of 15000+600000
+ 8981 strings out of 483107
+ 126136 string characters out of 5964630
+ 419876 words of memory out of 5000000
+ 23845 multiletter control sequences out of 15000+600000
  590699 words of font info for 96 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 49i,18n,46p,1530b,1009s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 49i,18n,46p,1530b,1588s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
 }</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
@@ -530,16 +536,17 @@ fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/t
 ype1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
 lic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
 onts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb><
-/usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf
--dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/ut
-mri8a.pfb>
-Output written on diplomski.pdf (22 pages, 218663 bytes).
+m/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8
+.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/f
+onts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
+times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.p
+fb>
+Output written on diplomski.pdf (24 pages, 234339 bytes).
 PDF statistics:
- 160 PDF objects out of 1000 (max. 8388607)
- 110 compressed objects within 2 object streams
+ 170 PDF objects out of 1000 (max. 8388607)
+ 117 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  21 words of extra memory for PDF output out of 10000 (max. 10000000)
 

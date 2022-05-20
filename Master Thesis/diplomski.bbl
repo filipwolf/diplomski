@@ -1,9 +1,30 @@
 \begin{thebibliography}{10}
 
+\bibitem{attention}
+{\em Neural Machine Translation by Jointly Learning to Align and Translate}.
+  arXiv, 2014.
+
+\bibitem{GCN}
+{\em Semi-Supervised Classification with Graph Convolutional Networks}. arXiv,
+  2016.
+
+\bibitem{GAT}
+{\em Graph Attention Networks}. arXiv, 2017.
+
+\bibitem{DGL}
+{\em Deep Graph Library: A Graph-Centric, Highly-Performant Package for Graph
+  Neural Networks}. arXiv, 2019.
+
+\bibitem{bronstein2021geometric}
+{\em Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges},
+  2021.
+
 \bibitem{GATv2}
-S.~Brody, U.~Alon, and E.~Yahav.
-\newblock How attentive are graph attention networks?
-\newblock 2021.
+{\em How Attentive are Graph Attention Networks?} arXiv, 2021.
+
+\bibitem{dl_applications}
+M.~Chatterjee.
+\newblock Top 20 applications of deep learning in 2022 across industries, 2022.
 
 \bibitem{popular_ml}
 S.~. Data.
@@ -15,6 +36,16 @@ J.~Gilmer, S.~S. Schoenholz, P.~F. Riley, O.~Vinyals, and G.~E. Dahl.
 \newblock In D.~Precup and Y.~W. Teh, editors, {\em Proceedings of the 34th
   International Conference on Machine Learning}, volume~70 of {\em Proceedings
   of Machine Learning Research}, pages 1263--1272. PMLR, 06--11 Aug 2017.
+
+\bibitem{Goodfellow-et-al-2016}
+I.~Goodfellow, Y.~Bengio, and A.~Courville.
+\newblock {\em Deep Learning}.
+\newblock MIT Press, 2016.
+\newblock \url{http://www.deeplearningbook.org}.
+
+\bibitem{GRL}
+W.~L. Hamilton.
+\newblock 2020.
 
 \bibitem{uni_approx}
 K.~Hornik, M.~Stinchcombe, and H.~White.
@@ -30,10 +61,11 @@ E.~R. P. A. e.~a. Jumper, J.
 \newblock Highly accurate protein structure prediction with alphafold.
 \newblock {\em Nature}, 2021.
 
-\bibitem{GCN}
-T.~N. Kipf and M.~Welling.
-\newblock Semi-supervised classification with graph convolutional networks.
-\newblock 2016.
+\bibitem{EGAT}
+J.~M. B. A. M. R. S. K. D.-H.~S. Kamiński~K, Ludwiczak~J.
+\newblock Rossmann-toolbox: a deep learning-based protocol for the prediction
+  and design of cofactor specificity in rossmann fold proteins.
+\newblock {\em Brief Bioinform.}, 2022.
 
 \bibitem{HGP1}
 E.~S. Lander, L.~M. Linton, B.~Birren, C.~Nusbaum, M.~C. Zody, J.~Baldwin,
@@ -45,6 +77,11 @@ E.~S. Lander, L.~M. Linton, B.~Birren, C.~Nusbaum, M.~C. Zody, J.~Baldwin,
 Y.~Lecun, L.~Bottou, Y.~Bengio, and P.~Haffner.
 \newblock Gradient-based learning applied to document recognition.
 \newblock {\em Proceedings of the IEEE}, 86(11):2278--2324, 1998.
+
+\bibitem{dl_bioinformatics}
+S.~Min, B.~Lee, and S.~Yoon.
+\newblock {Deep learning in bioinformatics}.
+\newblock {\em Briefings in Bioinformatics}, 18(5):851--869, 07 2016.
 
 \bibitem{human}
 NCBI.
@@ -85,6 +122,12 @@ PacBio.
 \newblock Sequencing 101: ploidy, haplotypes, and phasing — how to get more
   from your sequencing data.
 
+\bibitem{dl_growth}
+Z.~M. Research.
+\newblock Outlook on the global deep learning market size, share \& growth 2022
+  - 2028 | estimated to achieve a revenue of \$80769.6 million with growing at
+  a cagr 38.3% report by zion market research, 2022.
+
 \bibitem{GNN}
 F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
 \newblock Graphical-based learning environments for pattern recognition.
@@ -97,21 +140,14 @@ F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
 Scitable.
 \newblock haplotype.
 
+\bibitem{trudeau_2017}
+R.~J. Trudeau.
+\newblock {\em Introduction to graph theory}.
+\newblock Stanford, 2017.
+
 \bibitem{Vaser}
 R.~Vaser and M.~{\v S}iki{\'c}.
 \newblock Raven: a de novo genome assembler for long reads.
 \newblock {\em bioRxiv}, 2021.
-
-\bibitem{GAT}
-P.~Veličković, G.~Cucurull, A.~Casanova, A.~Romero, P.~Liò, and Y.~Bengio.
-\newblock Graph attention networks.
-\newblock 2017.
-
-\bibitem{DGL}
-M.~Wang, D.~Zheng, Z.~Ye, Q.~Gan, M.~Li, X.~Song, J.~Zhou, C.~Ma, L.~Yu,
-  Y.~Gai, T.~Xiao, T.~He, G.~Karypis, J.~Li, and Z.~Zhang.
-\newblock Deep graph library: A graph-centric, highly-performant package for
-  graph neural networks.
-\newblock 2019.
 
 \end{thebibliography}

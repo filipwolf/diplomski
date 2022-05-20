@@ -9,55 +9,75 @@ Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for ent
 while executing---line 1049 of file abbrv.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
 while executing---line 1049 of file abbrv.bst
-Warning--empty journal in GATv2
+Warning--to sort, need editor, organization, or key in bronstein2021geometric
+Warning--to sort, need editor, organization, or key in GCN
+Warning--to sort, need editor, organization, or key in attention
+Warning--to sort, need editor, organization, or key in GATv2
+Warning--to sort, need editor, organization, or key in GAT
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1049 of file abbrv.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1049 of file abbrv.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1049 of file abbrv.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1049 of file abbrv.bst
+Warning--to sort, need editor, organization, or key in DGL
+Warning--empty title in GRL
+Warning--empty publisher in GRL
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
 while executing---line 1090 of file abbrv.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
 while executing---line 1090 of file abbrv.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
 while executing---line 1090 of file abbrv.bst
-Warning--empty journal in GCN
-Warning--empty journal in GAT
-Warning--empty journal in DGL
-You've used 19 entries,
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1090 of file abbrv.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1090 of file abbrv.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1090 of file abbrv.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1090 of file abbrv.bst
+You've used 28 entries,
             2118 wiz_defined-function locations,
-            600 strings with 8353 characters,
-and the built_in function-call counts, 9237 in all, are:
-= -- 744
-> -- 884
+            640 strings with 9624 characters,
+and the built_in function-call counts, 10363 in all, are:
+= -- 866
+> -- 819
 < -- 3
-+ -- 352
-- -- 331
-* -- 820
-:= -- 1656
-add.period$ -- 52
-call.type$ -- 19
-change.case$ -- 219
++ -- 331
+- -- 301
+* -- 838
+:= -- 1777
+add.period$ -- 70
+call.type$ -- 28
+change.case$ -- 222
 chr.to.int$ -- 0
-cite$ -- 23
-duplicate$ -- 200
-empty$ -- 448
-format.name$ -- 331
-if$ -- 1749
+cite$ -- 36
+duplicate$ -- 297
+empty$ -- 672
+format.name$ -- 301
+if$ -- 2061
 int.to.chr$ -- 0
-int.to.str$ -- 19
-missing$ -- 12
-newline$ -- 91
-num.names$ -- 42
-pop$ -- 251
+int.to.str$ -- 28
+missing$ -- 16
+newline$ -- 122
+num.names$ -- 48
+pop$ -- 291
 preamble$ -- 1
-purify$ -- 200
+purify$ -- 203
 quote$ -- 0
-skip$ -- 177
+skip$ -- 226
 stack$ -- 0
-substring$ -- 245
-swap$ -- 36
+substring$ -- 311
+swap$ -- 48
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 76
-warning$ -- 4
-while$ -- 50
-width$ -- 21
-write$ -- 178
-(There were 6 error messages)
+type$ -- 100
+warning$ -- 8
+while$ -- 57
+width$ -- 30
+write$ -- 249
+(There were 14 error messages)
