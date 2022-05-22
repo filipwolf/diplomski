@@ -1,5 +1,9 @@
 \begin{thebibliography}{10}
 
+\bibitem{dropout}
+{\em Improving neural networks by preventing co-adaptation of feature
+  detectors}. arXiv, 2012.
+
 \bibitem{attention}
 {\em Neural Machine Translation by Jointly Learning to Align and Translate}.
   arXiv, 2014.

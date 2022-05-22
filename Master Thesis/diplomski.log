@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  20 MAY 2022 18:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  22 MAY 2022 18:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -341,20 +341,20 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 (./diplomski.aux)
 \openout1 = `diplomski.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 13.
-LaTeX Font Info:    ... okay on input line 13.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
+LaTeX Font Info:    ... okay on input line 15.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -426,19 +426,19 @@ Package: lscape 2000/10/22 v3.01 Landscape Pages (DPC)
 Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
 )
 \c@lstlisting=\count284
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 21
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 23
 .
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 21.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 23.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 21.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 23.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -451,32 +451,32 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <hr_0036510053_56.pdf, id=11, 597.23125pt x 845.1575pt>
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf>
-Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 26.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf>
-Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 26.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 <hr_0036510053_56.pdf, id=14, page=1, 597.23125pt x 845.1575pt>
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 26.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 26.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 26.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 26.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 26.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
  [1 <./hr_0036510053_56.pdf>] [3]
 (./diplomski.toc)
@@ -489,64 +489,81 @@ Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 24.
 Chapter 1.
 [1
 
-] [2]
-LaTeX Font Info:    Trying to load font information for T1+pcr on input line 56
+]
+
+LaTeX Warning: Reference `dataset' on page 2 undefined on input line 58.
+
+[2]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 60
 .
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
-) [3] [4]
-[5] [6] [7] [8] [9]
+) [3] [4] [5]
+[6] [7] [8] [9]
 Chapter 2.
 [10
 
-] [11]
+]
+<images/graph_example.png, id=86, 1870.99pt x 612.2875pt>
+File: images/graph_example.png Graphic file (type png)
+<use images/graph_example.png>
+Package pdftex.def Info: images/graph_example.png  used on input line 223.
+(pdftex.def)             Requested size: 441.01773pt x 144.31735pt.
+ [11 <./images/graph_example.png>] [12]
 Chapter 3.
-[12
+[13
 
-] [13]
-Overfull \hbox (15.91556pt too wide) in paragraph at lines 258--259
-\T1/ptm/m/n/12 forms the node fea-tures (in and out node de-grees) into a highe
-r di-men-sion of \T1/pcr/m/n/12 node_features\T1/ptm/m/n/12 .
- []
-
-[14]
+] [14] [15] [16]
 Chapter 4.
-(./diplomski.bbl [15
+<images/accuracy_graph.png, id=108, 1518.67375pt x 407.5225pt>
+File: images/accuracy_graph.png Graphic file (type png)
+<use images/accuracy_graph.png>
+Package pdftex.def Info: images/accuracy_graph.png  used on input line 307.
+(pdftex.def)             Requested size: 441.01773pt x 118.34016pt.
+[17
 
-] [16
+ <./images/accuracy_graph.png>] [18]
+Chapter 5.
+(./diplomski.bbl [19
 
-] [17]) [18] [19
+] [20
 
-] (./diplomski.aux) ) 
+] [21]) [22] [23
+
+] (./diplomski.aux)
+
+LaTeX Warning: There were undefined references.
+
+ ) 
 Here is how much of TeX's memory you used:
- 8981 strings out of 483107
- 126136 string characters out of 5964630
- 419876 words of memory out of 5000000
- 23845 multiletter control sequences out of 15000+600000
- 590699 words of font info for 96 fonts, out of 8000000 for 9000
+ 9024 strings out of 483107
+ 126969 string characters out of 5964630
+ 434037 words of memory out of 5000000
+ 23882 multiletter control sequences out of 15000+600000
+ 598080 words of font info for 107 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  49i,18n,46p,1530b,1588s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
-}</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr
-/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texli
-ve/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texm
-f-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/t
-ype1/public/amsfonts/cm/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmr8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmsy6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8
-.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/sh
-are/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/
-texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/f
-onts/type1/urw/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/
-times/utmr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.p
-fb>
-Output written on diplomski.pdf (24 pages, 234339 bytes).
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
+e/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive/texm
+f-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist
+/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/share/texlive/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmmi6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/c
+mr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/
+share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/
+texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fo
+nts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
+w/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb
+8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on diplomski.pdf (28 pages, 549088 bytes).
 PDF statistics:
- 170 PDF objects out of 1000 (max. 8388607)
- 117 compressed objects within 2 object streams
+ 192 PDF objects out of 1000 (max. 8388607)
+ 130 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 31 words of extra memory for PDF output out of 10000 (max. 10000000)
 

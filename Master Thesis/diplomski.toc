@@ -18,13 +18,16 @@
 \contentsline {chapter}{\numberline {2}Dataset}{10}%
 \contentsline {section}{\numberline {2.1}Introduction}{10}%
 \contentsline {section}{\numberline {2.2}Dataset Creation}{10}%
-\contentsline {subsection}{\numberline {2.2.1}Simulating \& Mutating the Reads}{10}%
+\contentsline {subsection}{\numberline {2.2.1}Simulating \& Mutating the Reads}{11}%
 \contentsline {subsection}{\numberline {2.2.2}Assembling the Graph}{11}%
-\contentsline {chapter}{\numberline {3}Implementation}{12}%
-\contentsline {section}{\numberline {3.1}Technology Stack}{12}%
-\contentsline {section}{\numberline {3.2}Structure}{13}%
-\contentsline {subsection}{\numberline {3.2.1}DGLDataset}{13}%
-\contentsline {subsection}{\numberline {3.2.2}Models}{13}%
-\contentsline {subsection}{\numberline {3.2.3}Main}{14}%
-\contentsline {chapter}{\numberline {4}Conclusion}{15}%
-\contentsline {chapter}{Bibliography}{16}%
+\contentsline {chapter}{\numberline {3}Implementation}{13}%
+\contentsline {section}{\numberline {3.1}Technology Stack}{13}%
+\contentsline {section}{\numberline {3.2}Code Structure}{14}%
+\contentsline {subsection}{\numberline {3.2.1}DGLDataset}{14}%
+\contentsline {subsection}{\numberline {3.2.2}Models}{14}%
+\contentsline {subsection}{\numberline {3.2.3}Main}{16}%
+\contentsline {chapter}{\numberline {4}Results}{17}%
+\contentsline {section}{\numberline {4.1}Experiments on One Chromosome}{17}%
+\contentsline {subsection}{\numberline {4.1.1}Accuracy}{17}%
+\contentsline {chapter}{\numberline {5}Conclusion}{19}%
+\contentsline {chapter}{Bibliography}{20}%
