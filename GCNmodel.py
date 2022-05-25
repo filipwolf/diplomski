@@ -66,19 +66,23 @@ class EGATModel(nn.Module):
         self.egat4 = EGATConv(int(out_dim / 2), int(out_dim / 2), int(out_dim / 4), int(out_dim / 4), num_heads=1)
         self.classify = MLPPredictorEGAT(int(out_dim / 4), n_classes)
         self.dp = nn.Dropout(p=0.5)
+        self.bn1 = nn.BatchNorm1d(hidden_dim * num_heads)
+        self.bn2 = nn.BatchNorm1d(out_dim)
+        self.bn3 = nn.BatchNorm1d(int(out_dim / 2))
+        self.bn4 = nn.BatchNorm1d(int(out_dim / 4))
         # self.norm = EdgeWeightNorm(norm="right")
 
     def forward(self, graph, h, edge_features):
         edge_features = edge_features.reshape(len(edge_features), 1)
         node_f = self.lin_n(h)
         hn, he = self.egat1(graph, node_f, edge_features)
-        hn, he = torch.flatten(self.dp(F.elu(hn)), start_dim=1), torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        hn, he = self.bn1(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn1(torch.flatten(self.dp(F.elu(he)), start_dim=1))
         hn, he = self.egat2(graph, hn, he)
-        hn, he = self.dp(F.elu(hn)), self.dp(F.elu(he))
+        hn, he = self.bn2(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn2(torch.flatten(self.dp(F.elu(he)), start_dim=1))
         hn, he = self.egat3(graph, hn, he)
-        hn, he = self.dp(F.elu(hn)), self.dp(F.elu(he))
+        hn, he = self.bn3(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn3(torch.flatten(self.dp(F.elu(he)), start_dim=1))
         hn, he = self.egat4(graph, hn, he)
-        hn, he = torch.flatten(self.dp(F.elu(hn)), start_dim=1), torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        hn, he = self.bn4(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn4(torch.flatten(self.dp(F.elu(he)), start_dim=1))
         h = self.classify(graph, hn, he)
         return h
 

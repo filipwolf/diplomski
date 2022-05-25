@@ -52,8 +52,6 @@ if __name__ == "__main__":
 
     max_f1 = 0
 
-    print(graph_list)
-
     for epoch in range(500):
         print("Epoch: " + str(epoch))
         for i, graph in enumerate(graph_list[:100]):

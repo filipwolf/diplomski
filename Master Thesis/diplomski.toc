@@ -27,7 +27,10 @@
 \contentsline {subsection}{\numberline {3.2.2}Models}{14}%
 \contentsline {subsection}{\numberline {3.2.3}Main}{16}%
 \contentsline {chapter}{\numberline {4}Results}{17}%
-\contentsline {section}{\numberline {4.1}Experiments on One Chromosome}{17}%
+\contentsline {section}{\numberline {4.1}Performance Metrics}{17}%
 \contentsline {subsection}{\numberline {4.1.1}Accuracy}{17}%
-\contentsline {chapter}{\numberline {5}Conclusion}{19}%
-\contentsline {chapter}{Bibliography}{20}%
+\contentsline {subsection}{\numberline {4.1.2}F1 score}{17}%
+\contentsline {section}{\numberline {4.2}Experiments on One Chromosome}{18}%
+\contentsline {subsection}{\numberline {4.2.1}Accuracy \& F1 Score}{18}%
+\contentsline {chapter}{\numberline {5}Conclusion}{20}%
+\contentsline {chapter}{Bibliography}{21}%

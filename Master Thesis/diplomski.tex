@@ -295,23 +295,52 @@ All of the previously described functions are connected in the \texttt{main} fun
 
 In this chapter, we will present the results obtained in the experiments we performed for this thesis. First, we will go over the experiments on only one chromosome (\ref{sec:experiments on one chromosome}), and then over the experiments on the whole genome.
 
+\section{Performance Metrics}
+
+Here, we will briefly explain all the different metrics for evaluating model performance during training that we used. These include accuracy, F1 score and model loss.
+
+\subsection{Accuracy}
+
+Accuracy is a simple and reliable metric foe assessing model performance that is quite popular and widespread due to its interpretability and it being easy to understand. It can be described as the number of correctly classified examples divided by the total number of examples in the dataset. With that said, it does have limits to its use. For instance, in the case when the dataset is severely imbalanced, i.e. there are many more examples of one class, e.g. \textit{true} compared to the other, e.g. \textit{false}, it will always display a high performance figure by simply always guessing \textit{true}. Fortunately, this is not the case for our dataset, as we have a fairly similar number of correct and incorrect examples. We can also define it with the following equation:
+
+\[ \mathrm{Accuracy} = \frac{\mathrm{TP} + \mathrm{TN}}{\mathrm{TP} + \mathrm{TN} + \mathrm{FP} + \mathrm{FN}} \]
+
+Accuracy is the number of \textit{true positive} and \textit{true negative} examples divided by all examples. In other words, it is the sum of everything our model classified correctly divided by both everything our model did and didn't classify correctly.
+
+\subsection{F1 score}
+
+F1 score is slightly more complicated than the previously described accuracy score. It belongs to a family of scores known as \textit{F-scores}, which can be described with the following equation:
+
+\[ F = (1 + \beta^2) \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{(\beta^2 \cdot \mathrm{precision}) + \mathrm{recall}} \]
+
+where
+
+\[ \mathrm{precision} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}} \]
+
+\[ \mathrm{recall} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}} \]
+
+F1 score is a version where $\beta$ is set to 1, which simplifies the equation to:
+
+\[ F_1 = 2 \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}} \]
+
+It can be described as the harmonic mean between the precision and recall metrics and is often used as a more dataset agnostic version of accuracy.
+
 \section{Experiments on One Chromosome}
 \label{sec:experiments on one chromosome}
 
 The results of the experiments we performed on the dataset are presented through three graphs: accuracy, F1 score and loss. We will only display validation graphs, as training graphs are often an unreliable indicator of performance and they almost certainly overfit. In addition, we will only display a few different experiments we performed for clarity, even there were many more. Lastly, we only display the first 200 epochs of training, as all of the models reached their peak performance up to this point.
 
-\subsection{Accuracy}
+\subsection{Accuracy \& F1 Score}
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth]{images/accuracy_graph.png}
-	\caption[Accuracy graph]{Graph representing the model training performance on the validation part of the dataset. Epochs are displayed on the $x$ axis, while on the $y$ axis, we have model accuracy. The graph was obtained using TensorBoard.}
-	\label{fig:accuracy graph}
+	\includegraphics[width=\textwidth]{images/accuracy_val.png}
+	\includegraphics[width=\textwidth]{images/f1_val.png}
+	\caption[Accuracy and f1 graph]{Two graphs representing the model training performance on the validation part of the dataset. Above, we have the accuracy graph and below it, we can see an F1 score graph. Epochs are displayed on the $x$ axis, while on the $y$ axis, we have the respective performance metric of either accuracy or F1 score. The graphs were obtained using TensorBoard.}
+	\label{fig:accuracy and f1 graph}
 \end{figure}
 
-The first graph we are going to look at is an accuracy graph (\ref{fig:accuracy graph}). Accuracy is often used as a performance metric due to its simple and easy to understand explanation. It is the number of correctly classified examples divided by the number of all examples in the dataset. That being said, it can be a bad performance indicator if the dataset is severly inbalanced, i.e. there are many more examples of one class comapred to the other. Fortunately, this is here not the case, as we have a fairly similar number of correct and incorrect examples in the dataset.
-
-There are four model results displayed here. In red, we have a GATv2 model with dropout set to 0.5 and edge overlaps used as edge weights in the GCN layers. In blue, we have the same model, but without using edge overlaps. Their perfomance is nearly similar, proving that this way of using edge overlaps is rather inefficient. In orang, we also have GATv2 model with dropout, but with the addition of using dropout directly on the GAT layers, both on features and edges. Again, as we can see, this does not improve performance, as the regular dropout is probably enough to prevent quick overfitting. 
+The first two graphs we are going to look at are an accuracy graph and an F1 score graph (\ref{fig:accuracy and f1 graph} top, \ref{fig:accuracy and f1 graph} bottom). We are going to analyze both of them at the same time due to their similarity. There are four model results displayed here. In red, a GATv2 model with dropout set to 0.5 and edge overlaps used as edge weights in the GCN layers is displayed. In blue, we have the same model, but without using edge overlaps. Their performance is nearly similar, proving that this way of using edge overlaps is rather inefficient. In orange, we use GCN model with dropout set to 0.2 and edge overlaps used. We can see that it is of a very similar performance, meaning that the GAT layers extract little additional information from the model.
 
 The standout model here is the pink model. It has greatly outperformed the rest of the models, with an accuracy of 87.9\%. This is because here we used an EGAT model, which uses edge features much more effectively by incorporating them into the attention mechanism. However, we have to note that we had to use a much smaller model here due to slow training times. Nevertheless, it proved effective for the task at hand.
 
