@@ -199,6 +199,8 @@ The last network we used, and by far the most effective one, is the graph attent
 
 Here, $f_{ij}$ represents edge features, $A$ is a weight matrix and $\vec{a}$ is a weight vector. This network greatly improves performance due to the fact that it better utilizes edge features. Instead of just using them as weights to scale edge importance, it handles them in the same manner of importance as the node features. This way, the network can find meaning in the edge weights much better compared to a regular GAT network.
 
+\subsection{Other Functions}
+
 \chapter{Dataset}
 \label{ch:dataset}
 
@@ -309,21 +311,30 @@ Accuracy is the number of \textit{true positive} and \textit{true negative} exam
 
 \subsection{F1 score}
 
-F1 score is slightly more complicated than the previously described accuracy score. It belongs to a family of scores known as \textit{F-scores}, which can be described with the following equation:
+F1 score is slightly more complex than the previously described accuracy score. It belongs to a family of scores known as \textit{F-scores}, which can be described with the following equation:
 
-\[ F = (1 + \beta^2) \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{(\beta^2 \cdot \mathrm{precision}) + \mathrm{recall}} \]
+\[ \mathrm{F} = (1 + \beta^2) \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{(\beta^2 \cdot \mathrm{precision}) + \mathrm{recall}} \] where \[ \mathrm{precision} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}} \] \[ \mathrm{recall} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}} \]
+Precision measures how many of the examples we classified as postive are truly possitive, while recall measures how many of the positive examples we actually classified as positive.
 
-where
+F1 score is a version of the F-score where the $\beta$ parameter is set to 1, which in turn simplifies the equation to:
 
-\[ \mathrm{precision} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}} \]
+\[ \mathrm{F_1} = 2 \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}} \]
+It can be described as the harmonic mean between the precision and recall metrics and is often used as a more data agnostic version of those metrics.
 
-\[ \mathrm{recall} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}} \]
+\subsection{Loss Function}
 
-F1 score is a version where $\beta$ is set to 1, which simplifies the equation to:
+As our model falls into the classification category, for the loss function, we used \textit{cross entropy loss}, also know as \textit{logistic loss}. In works by taking the \textit{logits} our model outputs and comparing them against the true labels. Logits are vectors of size $n$, where $n$ is the number of classes we're predicting for every data entry. For instance, if we have 3 examples in our dataset that we need to classify and 7 classes, the size of our matrix would be $7 \times 3$. This matrix is compared to the \textit{one-hot} encoded classes of the data. One-hot encoded vectors are also of size $n$, but with only their true class for the example set to 1, and everything else to 0. They are compared with the following equation:
 
-\[ F_1 = 2 \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}} \]
+\[ L = - \sum_{i = 1}^n t_i \log (p_i) \]
+where $t_i$ is either a 1 or a 0 (truth label) for class $i$, and $p_i$ is the probability for class $i$. If we are only using two classes (which we indeed are), we can simplify this to \textit{binary cross entropy loss} represented with the following equation:
 
-It can be described as the harmonic mean between the precision and recall metrics and is often used as a more dataset agnostic version of accuracy.
+\[ L = - [t \log (p) + (1 - t) \log (1 - p)] \]
+A smaller value is better, so by minimizing this loss, we can train our model. Due to its logarithmic nature, it heavily penalizes values straying from 0, which is the ideal value of the function \cite{CEL}.
+
+It is also worth noting that the model doesn't take logits as input directly, but class probabilities instead. Therefore, before passing them to the function, we have to pass the logits through a \textit{softmax} function to normalize them into a range between 0 and 1 s that they can be interpreted as probabilities. The softmax function, or \textit{sigmoid} function if only two classes are present, can be described with the following equation:
+
+\[ \sigma(x) = \frac{\exp (x_i)}{\sum_j \exp (x_j)} \]
+In other words, we simply divide the exponent of our logit value by all logit exponents.
 
 \section{Experiments on One Chromosome}
 \label{sec:experiments on one chromosome}

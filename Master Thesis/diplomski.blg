@@ -40,45 +40,45 @@ Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, M
 while executing---line 1090 of file abbrv.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
 while executing---line 1090 of file abbrv.bst
-You've used 29 entries,
+You've used 30 entries,
             2118 wiz_defined-function locations,
-            644 strings with 9821 characters,
-and the built_in function-call counts, 10527 in all, are:
-= -- 883
-> -- 820
+            648 strings with 9874 characters,
+and the built_in function-call counts, 10724 in all, are:
+= -- 900
+> -- 827
 < -- 3
-+ -- 332
-- -- 301
-* -- 847
-:= -- 1797
-add.period$ -- 72
-call.type$ -- 29
-change.case$ -- 224
++ -- 335
+- -- 303
+* -- 853
+:= -- 1829
+add.period$ -- 74
+call.type$ -- 30
+change.case$ -- 228
 chr.to.int$ -- 0
-cite$ -- 38
-duplicate$ -- 308
-empty$ -- 695
-format.name$ -- 301
-if$ -- 2102
+cite$ -- 39
+duplicate$ -- 315
+empty$ -- 717
+format.name$ -- 303
+if$ -- 2145
 int.to.chr$ -- 0
-int.to.str$ -- 29
+int.to.str$ -- 30
 missing$ -- 16
-newline$ -- 125
-num.names$ -- 48
-pop$ -- 296
+newline$ -- 129
+num.names$ -- 50
+pop$ -- 305
 preamble$ -- 1
-purify$ -- 205
+purify$ -- 208
 quote$ -- 0
-skip$ -- 231
+skip$ -- 239
 stack$ -- 0
-substring$ -- 316
-swap$ -- 49
+substring$ -- 321
+swap$ -- 50
 text.length$ -- 3
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 103
+type$ -- 107
 warning$ -- 9
-while$ -- 57
-width$ -- 31
-write$ -- 256
+while$ -- 59
+width$ -- 32
+write$ -- 264
 (There were 14 error messages)
