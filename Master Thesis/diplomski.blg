@@ -3,6 +3,9 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: diplomski.aux
 The style file: abbrv.bst
 Database file #1: literatura.bib
+A bad cross reference---entry "relu"
+refers to entry "conf/icml/2010", which doesn't exist
+Warning--I didn't find a database entry for "conf/icml/2010"
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
 while executing---line 1049 of file abbrv.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
@@ -22,8 +25,8 @@ Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, M
 while executing---line 1049 of file abbrv.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
 while executing---line 1049 of file abbrv.bst
-Warning--to sort, need editor, organization, or key in DGL
 Warning--to sort, need editor, organization, or key in dropout
+Warning--to sort, need editor, organization, or key in DGL
 Warning--empty title in GRL
 Warning--empty publisher in GRL
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
@@ -40,45 +43,45 @@ Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, M
 while executing---line 1090 of file abbrv.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
 while executing---line 1090 of file abbrv.bst
-You've used 30 entries,
+You've used 34 entries,
             2118 wiz_defined-function locations,
-            648 strings with 9874 characters,
-and the built_in function-call counts, 10724 in all, are:
-= -- 900
-> -- 827
-< -- 3
-+ -- 335
-- -- 303
-* -- 853
-:= -- 1829
-add.period$ -- 74
-call.type$ -- 30
-change.case$ -- 228
+            671 strings with 10570 characters,
+and the built_in function-call counts, 12166 in all, are:
+= -- 1031
+> -- 904
+< -- 4
++ -- 365
+- -- 329
+* -- 949
+:= -- 2058
+add.period$ -- 85
+call.type$ -- 34
+change.case$ -- 253
 chr.to.int$ -- 0
-cite$ -- 39
-duplicate$ -- 315
-empty$ -- 717
-format.name$ -- 303
-if$ -- 2145
+cite$ -- 43
+duplicate$ -- 370
+empty$ -- 837
+format.name$ -- 329
+if$ -- 2457
 int.to.chr$ -- 0
-int.to.str$ -- 30
-missing$ -- 16
-newline$ -- 129
-num.names$ -- 50
-pop$ -- 305
+int.to.str$ -- 34
+missing$ -- 19
+newline$ -- 148
+num.names$ -- 58
+pop$ -- 340
 preamble$ -- 1
-purify$ -- 208
+purify$ -- 229
 quote$ -- 0
-skip$ -- 239
+skip$ -- 282
 stack$ -- 0
-substring$ -- 321
-swap$ -- 50
-text.length$ -- 3
+substring$ -- 396
+swap$ -- 65
+text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 107
+type$ -- 123
 warning$ -- 9
-while$ -- 59
-width$ -- 32
-write$ -- 264
-(There were 14 error messages)
+while$ -- 70
+width$ -- 36
+write$ -- 304
+(There were 15 error messages)

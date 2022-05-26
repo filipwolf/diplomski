@@ -30,6 +30,11 @@
 M.~Chatterjee.
 \newblock Top 20 applications of deep learning in 2022 across industries, 2022.
 
+\bibitem{elu}
+D.-A. Clevert, T.~Unterthiner, and S.~Hochreiter.
+\newblock Fast and accurate deep network learning by exponential linear units
+  (elus), 2015.
+
 \bibitem{popular_ml}
 S.~. Data.
 \newblock Most popular machine learning libraries – 2014/2021.
@@ -86,10 +91,21 @@ Y.~Lecun, L.~Bottou, Y.~Bengio, and P.~Haffner.
 \newblock Gradient-based learning applied to document recognition.
 \newblock {\em Proceedings of the IEEE}, 86(11):2278--2324, 1998.
 
+\bibitem{leakyrelu}
+A.~L. Maas, A.~Y. Hannun, and A.~Y. Ng.
+\newblock Rectifier nonlinearities improve neural network acoustic models.
+\newblock In {\em in ICML Workshop on Deep Learning for Audio, Speech and
+  Language Processing}, 2013.
+
 \bibitem{dl_bioinformatics}
 S.~Min, B.~Lee, and S.~Yoon.
 \newblock {Deep learning in bioinformatics}.
 \newblock {\em Briefings in Bioinformatics}, 18(5):851--869, 07 2016.
+
+\bibitem{relu}
+V.~Nair and G.~E. Hinton.
+\newblock Rectified linear units improve restricted boltzmann machines.
+\newblock In {\em ICML}, pages 807--814, 2010.
 
 \bibitem{human}
 NCBI.
@@ -147,6 +163,11 @@ F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
 \bibitem{haplotype}
 Scitable.
 \newblock haplotype.
+
+\bibitem{dropout2}
+N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov.
+\newblock Dropout: A simple way to prevent neural networks from overfitting.
+\newblock {\em Journal of Machine Learning Research}, 15(56):1929--1958, 2014.
 
 \bibitem{trudeau_2017}
 R.~J. Trudeau.

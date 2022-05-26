@@ -16,23 +16,26 @@
 \contentsline {subsubsection}{Graph Attention Networks}{8}%
 \contentsline {subsubsection}{Edge Graph Attention Network}{9}%
 \contentsline {subsection}{\numberline {1.3.3}Other Functions}{9}%
-\contentsline {chapter}{\numberline {2}Dataset}{10}%
-\contentsline {section}{\numberline {2.1}Introduction}{10}%
-\contentsline {section}{\numberline {2.2}Dataset Creation}{10}%
-\contentsline {subsection}{\numberline {2.2.1}Simulating \& Mutating the Reads}{11}%
-\contentsline {subsection}{\numberline {2.2.2}Assembling the Graph}{11}%
-\contentsline {chapter}{\numberline {3}Implementation}{13}%
-\contentsline {section}{\numberline {3.1}Technology Stack}{13}%
-\contentsline {section}{\numberline {3.2}Code Structure}{14}%
-\contentsline {subsection}{\numberline {3.2.1}DGLDataset}{14}%
-\contentsline {subsection}{\numberline {3.2.2}Models}{14}%
+\contentsline {subsubsection}{Nonlinearities}{9}%
+\contentsline {subsubsection}{Regularization Functions}{10}%
+\contentsline {chapter}{\numberline {2}Dataset}{11}%
+\contentsline {section}{\numberline {2.1}Introduction}{11}%
+\contentsline {section}{\numberline {2.2}Dataset Creation}{11}%
+\contentsline {subsection}{\numberline {2.2.1}Simulating \& Mutating the Reads}{12}%
+\contentsline {subsection}{\numberline {2.2.2}Assembling the Graph}{12}%
+\contentsline {chapter}{\numberline {3}Implementation}{14}%
+\contentsline {section}{\numberline {3.1}Technology Stack}{14}%
+\contentsline {section}{\numberline {3.2}Code Structure}{15}%
+\contentsline {subsection}{\numberline {3.2.1}DGLDataset}{15}%
+\contentsline {subsection}{\numberline {3.2.2}Models}{15}%
 \contentsline {subsection}{\numberline {3.2.3}Main}{16}%
-\contentsline {chapter}{\numberline {4}Results}{17}%
-\contentsline {section}{\numberline {4.1}Performance Metrics}{17}%
-\contentsline {subsection}{\numberline {4.1.1}Accuracy}{17}%
-\contentsline {subsection}{\numberline {4.1.2}F1 score}{17}%
-\contentsline {subsection}{\numberline {4.1.3}Loss Function}{18}%
-\contentsline {section}{\numberline {4.2}Experiments on One Chromosome}{19}%
-\contentsline {subsection}{\numberline {4.2.1}Accuracy \& F1 Score}{19}%
-\contentsline {chapter}{\numberline {5}Conclusion}{21}%
-\contentsline {chapter}{Bibliography}{22}%
+\contentsline {section}{\numberline {3.3}Model description}{17}%
+\contentsline {chapter}{\numberline {4}Results}{19}%
+\contentsline {section}{\numberline {4.1}Performance Metrics}{19}%
+\contentsline {subsection}{\numberline {4.1.1}Accuracy}{19}%
+\contentsline {subsection}{\numberline {4.1.2}F1 score}{19}%
+\contentsline {subsection}{\numberline {4.1.3}Loss Function}{20}%
+\contentsline {section}{\numberline {4.2}Experiments on One Chromosome}{21}%
+\contentsline {subsection}{\numberline {4.2.1}Accuracy \& F1 Score}{21}%
+\contentsline {chapter}{\numberline {5}Conclusion}{23}%
+\contentsline {chapter}{Bibliography}{24}%

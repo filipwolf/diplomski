@@ -123,11 +123,9 @@ The task we are presented with here is slightly different compared to standard g
 Graphs are data structures that can be defined with a set of nodes (vertices) $V$ and a set of edges connecting them $E$. Formally, this can be written as:
 
 \[ G = (V, E) \]
-
 where:
 
 \[ E \subseteq 	\{ (x, y)|(x, y) \in V^2 \mathrm{\ and\ } x \neq y \} \]
-
 The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps, which is an useful information for us \cite{trudeau_2017}.
 
 I this thesis, after sequencing and assembly (\ref{The Process of Sequencing and Assembly}), we obtain a list of reads connected to each other via overlaps. The reads can be thought of as nodes in a graph, while edges are the links between the nodes. By building such structures, we can more easily use existing graph theory insights to remove unnecessary edges and separate the two haplotypes.
@@ -169,7 +167,6 @@ We used three different GNNs in this thesis, which we will describe in the follo
 The first network we used was the simplest and oldest one, and it bases its computations on Graph Convolutional Networks (GCN) \cite{GCN}. It aggregates information from neighboring nodes and the edges connecting them and uses them to update the central node's information. It can be defined as follows:
 
 \[ h_i^{(l+1)} = \sigma (b^{(l)} + \sum_{j \in \mathcal{N}(i)} \frac{e_{ji}}{c_{ji}} h_j^{(l)} W^{(l)} ) \]
-
 Here, $\mathcal{N}(i)$ represents all the neighboring nodes of node $i$, $e_{ji}$ is the scalar weight of the edge connecting nodes $i$ and $j$, $c_{ji} = \sqrt{|\mathcal{N}(j)|} \sqrt{|\mathcal{N}(i)|}$, and $\sigma$ is an activation function. $b^{(l)}$, $h_j^{(l)}$ and $W^{(l)}$ are the networks bias at step $l$, features of node $j$ at step $l$ and weight of the network at step $l$ respectively. The aggregated information is used to update the features $h$ of node $i$ at step $(l+1)$. We can see that the calculations use are fairly straightforward, as they can be summed up by simply multiplying the network weight and node features and adding bias before passing it through an nonlinearity. A reader familiar with deep learning may notice that this is similar to an iteration of the backpropagation algorithm, but applied to the graph domain.
 
 \subsubsection{Graph Attention Networks}
@@ -178,13 +175,9 @@ Here, $\mathcal{N}(i)$ represents all the neighboring nodes of node $i$, $e_{ji}
 The second networks we used is more complex than a simple GCN, as it uses the \textit{attention mechanism} \cite{attention} to improve its performance. The Graph Attention Networks (GAT) \cite{GATv2} we used is an updated version of the original GAT \cite{GAT} called GATv2 and we did notice a slight increase in performance while using it. It can be defined as follows:
 
 \[ h_i^{(l+1)} = \sum_{j \in \mathcal{N}(i)} \alpha_{ij}^{(l)} W_{right}^{(l)} h_j^{(l)} \]
-
 where:
-
 \[ \alpha_{ij}^{(l)} = \mathrm{softmax}_i (e_{ij}^{(l)}) \]
-
 \[ e_{ij}^{(l)} = \vec{a}^{T^{(l)}} \mathrm{LeakyReLU} (W_{left}^{(l)} h_i + W_{right}^{(l)} h_j) \]
-
 Here, $W_{right}$ is one of the two network weight matrices, $h$ is a node feature matrix, $\alpha$ is an attention weight and $\vec{a}$ is the attention weight vector. We can see that the basic equation is similar to the GCN, but with an added attention weight. This weight is the main reason why the network performs better compared to the regular GCN. The attention mechanism works by selecting data instances during training, such as nodes, that it considers more important than other data and thereby giving it more weight. This way, it increases model capacity and performance, while at the same time not directly increasing the network size. It is also worth mentioning that we can specify a number of so-called attention heads. Attention heads are simply multiple attention mechanisms at work at the same time. The final attention score is calculated by concatenating or averaging these different attention values. This is done to improve training stability and ultimately performance.
 
 This network differs from the original GAT only in the way $e_{ij}^{(l)}$ is calculated. Instead of using a single weight matrix $W$ that is concatenated to the features $h$, we use two separate matrices in the form of $W_{right}$ and $W_{left}$, giving the network more parameters and learning power.
@@ -194,12 +187,43 @@ This network differs from the original GAT only in the way $e_{ij}^{(l)}$ is cal
 The last network we used, and by far the most effective one, is the graph attention layer that handles edge features (EGAT) \cite{EGAT}. The main equation is the same as in GAT (\ref{Graph Attention Networks}). The difference lies in how the attention scores $e_{ij}$ are calculated. Instead of the usual way, the are obtained like this:
 
 \[ e_{ij} = \vec{a} f_{ij}^{'} \]
-
 \[ f_{ij}^{'} = \mathrm{LeakyReLU} (A[h_i||f_{ij}||h_j]) \]
-
 Here, $f_{ij}$ represents edge features, $A$ is a weight matrix and $\vec{a}$ is a weight vector. This network greatly improves performance due to the fact that it better utilizes edge features. Instead of just using them as weights to scale edge importance, it handles them in the same manner of importance as the node features. This way, the network can find meaning in the edge weights much better compared to a regular GAT network.
 
 \subsection{Other Functions}
+
+In this section, we will explain all the functions we use in our networks that aren't directly responsible for training, such as regularization functions and nonlinearities.
+
+\subsubsection{Nonlinearities}
+\label{subsubsec: nonlinearities}
+
+%todo: add sigmoid description
+
+We use three nonlinearities in our work, all of them quite similar to each other. The most basic one is the \textbf{ReLU} (rectified linear unit) \cite{relu}.	It can be simply described with the following equation:
+
+\[ \mathrm{ReLU}(z) = \max (0, z) \]
+In other words, it lets through everything that is positive in a linear fashion, and sets everything else to zero. This is one of the most widely used nonlinearities. It has the same benefits as a sigmoid function or a tanh function, but is less computationally expensive.
+
+A variant of the ReLU is the \textbf{LeakyReLU} \cite{leakyrelu}. It only differs from ReLU in that it allows for a small non zero constant gradient $\alpha$ below zero. It tries to fix the limitation of ReLU where some neurons never express their values due to them being negative.
+
+Finally, we have the \textbf{ELU} (exponential linear unit) \cite{elu}. It can be described with the following equation:
+
+\[ \mathrm{ELU}(z) = \begin{cases} 
+z & z > 0 \\
+\alpha \cdot (e^z - 1) & z \leq 0
+\end{cases} \]
+For values greater than 0, it emits a constant output. But for any other value, it slowly smooths out bellow zero where it tends to the value $- \alpha$. Just like LeakyReLU, it also tries to negate some weaknesses of ReLU and can be used as a strong alternative to it.
+
+\subsubsection{Regularization Functions}
+\label{subsubsec:regularization functions}
+
+We primarily used three different regularization functions throughout our networks. In general, these functions help stabilize and speed up network training, as well as often improve performance slightly.
+
+Before imputing our data into the model, we \textbf{normalize} it. If this isn't done automatically in the network, we do it with built-in functions, which involves simply dividing an edge weight with all other edge weights connected to the same nodes.
+
+More interesting that normalization is \textbf{dropout} \cite{dropout} \cite{dropout2}. Dropout is one of the most popular regularization techniques and often greatly improves network performance. It works by randomly omitting entire neurons from the network along with their connection. By doing this, neurons get more specialized in detecting different features in the data and don't co-adapt as much. In practice, these neurons aren't actually dropped, but their weights are simply reduced by multiplying them with small constants, thereby lessening their importance during training and subsequent prediction.
+
+Lastly, we employed \textbf{batch normalization} \cite{bn}. During training, it normalizes the outputs of neurons so that the next layers can always expect the same kinds of values as input, thereby stabilizing and greatly improving training times. It also allows for a much wider range o learning rate values to be used without making the model diverge. As a side effect, by making the layer activations less dependent on the current batch, it adds some noise to training, and thereby acts as a regularizer to the network.
 
 \chapter{Dataset}
 \label{ch:dataset}
@@ -285,11 +309,28 @@ self.dp = nn.Dropout(p=0.5)
 
 We define the network in the following way. First, we initalize a linear layer that transforms the node features (number of in and out node degrees) into a higher dimension of size \texttt{node\_features}. Then, we define four EGAT layers. The first layer is of the largest width \texttt{hidden\_dim} (both for node and edge features), and subsequent layers divide this size by two in each step. Only the first layer used a \texttt{num\_heads} number of attention heads, the rest used only one. This is done to improve training times, as this network proved much slower than the other ones we used. After all the EGAT layers are done with their computations, we pass everything through a classification layer. This layer works by taking the new calculated node and edge features and concatenating them before passing them into a fully connected classification layer. The network then finally outputs a list of class probabilities for every edge in the graph.
 
-You may have noticed that in some layers, we multiply the input dimension for the EGAT layer with \texttt{num\_heads}. This is done so that the number of attention heads is accounted for correctly while passing the results to the next network. The different layer outputs are \textit{flattened}, i.e. concatenated into a smaller dimensional vector before being passed to the next layer. Aside from this, we also employ the \textit{dropout} \cite{dropout} mechanism to reduce overfitting. It works by randomly removing some connections between neurons in a neural network and thereby adjusts the weights more sporadically, omitting information from some while giving it to others.
+You may have noticed that in some layers, we multiply the input dimension for the EGAT layer with \texttt{num\_heads}. This is done so that the number of attention heads is accounted for correctly while passing the results to the next network. The different layer outputs are \textit{flattened}, i.e. concatenated into a smaller dimensional vector before being passed to the next layer. Aside from this, we also employ the \textit{dropout} \cite{dropout} mechanism to reduce overfitting.
 
 \subsection{Main}
 
 All of the previously described functions are connected in the \texttt{main} function. First, we define the function for logging parameters such as loss and accuracy for visualization using TensorBoard. Then, we define the dataset by calling the \texttt{DGLDataset} module and, if it previously hasn't been generated, create the dataset. We then define the model we will use for training with all its parameters and layer sizes. We define the optimizer, and finally, start the training process.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/model.png}
+	\caption[Model]{Graphical representation of the model architecture with EGAT layers. Different layers are represented with different colors and the main model is described within the gray box.}
+	\label{fig:model}
+\end{figure}
+
+\section{Model description}
+
+In Figure \ref{fig:model}, we can see the general structure of one of our models, specifically, the model using the EGAT layers. We will explain this model in detail as it is the most complicated one we used and it generalizes well to all other models we used.
+
+In the first step, we take node features, node in and out degrees, as input to a linear layer. The dimension of each of these feature vectors is $n$, where $n$ is the number of nodes in the current graph. The purpose of this linear layer is to increase the size of the features from two to a larger number $m_1$ (usually 64 or 128), thereby extracting useful information from them and successfully representing it with a suitable dimension.
+
+We then have $n \times m_1$ matrix, which we use as input to the first EGAT layer along with the node features we use (edge overlap lengths) and the graph structure. The EGAT layer uses these to perform its operations and outputs two vectors of size $n \times m_2 \times a$ and $e \times m_2 \times a$, where $m_2$ is the output size of the first EGAT layer (usually larger than $m_1$), $a$ is the number of attention heads (usually three) and $e$ is the number of edges. The two vectors represent the learned features of the nodes and edges respectively. They are then passed through ELU activation function (Section \ref{subsubsec: nonlinearities}) which acts as a nonlinearity, followed with the dropout mechanism (Section \ref{subsubsec:regularization functions}). This is then finally passed through batch normalization (Section \ref{subsubsec:regularization functions}).
+
+This set of operations represents one step of the network, which we perform four times. In each step, we reduce the $m_2$ dimension two times in each step and use only one attention head. After the final layer is done, we pass everything through a classification layer. This layer works by taking the last set of calculated node and edge features and concatenates them in a node feature, edge feature, node feature order. These are then used as input to a fully connected layer which finally outputs logits. To use them in a loss function, we pass them through a sigmoid function to get class probabilities.
 
 %TODO: create diagram of how everything connects
 
