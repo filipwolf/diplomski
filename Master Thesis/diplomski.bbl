@@ -65,6 +65,11 @@ K.~Hornik, M.~Stinchcombe, and H.~White.
 Illumina.
 \newblock Assembling novel genomes.
 
+\bibitem{bn}
+S.~Ioffe and C.~Szegedy.
+\newblock Batch normalization: Accelerating deep network training by reducing
+  internal covariate shift, 2015.
+
 \bibitem{alphafold}
 E.~R. P. A. e.~a. Jumper, J.
 \newblock Highly accurate protein structure prediction with alphafold.
