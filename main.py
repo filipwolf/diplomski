@@ -44,8 +44,8 @@ if __name__ == "__main__":
     graph_list = yeast_dataset.graph_list
 
     # model = GCNModel(2, 1, 128, 64, 64, 2)
-    # model = GATModel(2, 1, 128, 512, 256, 2, 3)
-    model = EGATModel(2, 1, 64, 256, 128, 2, 3)
+    model = GATModel(2, 1, 128, 512, 256, 2, 3)
+    # model = EGATModel(2, 1, 64, 256, 128, 2, 3)
     # if device == 'cuda':
     #     model = model.to(device)
     opt = torch.optim.Adam(model.parameters())
@@ -63,13 +63,9 @@ if __name__ == "__main__":
             # edge_features = edge_features.resize(19841, 1)
             edge_labels = yeast_dataset.edge_labels[i]
             logits = model(graph, node_features, edge_features)
-            writer.add_graph(model, [graph_list[100], node_features, edge_features])
-            writer.close()
 
             # pred = torch.softmax(logits, dim=1).max(1).indices
             loss = F.cross_entropy(logits, edge_labels)
-            # compute validation accuracy
-            # backward propagation
             opt.zero_grad()
             loss.backward()
             opt.step()

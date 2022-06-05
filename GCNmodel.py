@@ -16,7 +16,7 @@ class GCNModel(nn.Module):
         self.conv4 = GraphConv(128, out_dim)
         self.classify = MLPPredictor(out_dim, n_classes)
         self.dp = nn.Dropout(p=0.2)
-        self.norm = EdgeWeightNorm(norm="right")
+        self.norm = EdgeWeightNorm(norm="both")
 
     def forward(self, graph, node_features, edge_features):
         norm_edge_weight = self.norm(graph, edge_features)
@@ -42,7 +42,7 @@ class GATModel(nn.Module):
         self.conv2 = GraphConv(int(out_dim / 2), int(out_dim / 4))
         self.classify = MLPPredictor(int(out_dim / 4), n_classes)
         self.dp = nn.Dropout(p=0.5)
-        self.norm = EdgeWeightNorm(norm="right")
+        self.norm = EdgeWeightNorm(norm="both")
 
     def forward(self, graph, h, edge_features):
         norm_edge_weight = self.norm(graph, edge_features)

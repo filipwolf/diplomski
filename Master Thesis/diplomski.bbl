@@ -81,6 +81,10 @@ J.~M. B. A. M. R. S. K. D.-H.~S. Kamiński~K, Ludwiczak~J.
   and design of cofactor specificity in rossmann fold proteins.
 \newblock {\em Brief Bioinform.}, 2022.
 
+\bibitem{adam}
+D.~P. Kingma and J.~Ba.
+\newblock Adam: A method for stochastic optimization, 2014.
+
 \bibitem{CEL}
 K.~E. Koech.
 \newblock Cross-entropy loss function, 2020.
@@ -120,6 +124,10 @@ NCBI.
 NCBI.
 \newblock Saccharomyces cerevisiae.
 
+\bibitem{latex_nn}
+I.~Neutelings.
+\newblock Neural networks.
+
 \bibitem{genome_cost}
 NIH.
 \newblock The cost of sequencing a human genome, 2021.
@@ -150,6 +158,10 @@ S.~Nurk, S.~Koren, A.~Rhie, M.~Rautiainen, A.~V. Bzikadze, A.~Mikheenko, M.~R.
 PacBio.
 \newblock Sequencing 101: ploidy, haplotypes, and phasing — how to get more
   from your sequencing data.
+
+\bibitem{optimizers}
+S.~Park.
+\newblock A 2021 guide to improving cnns-optimizers: Adam vs sgd, 2021.
 
 \bibitem{dl_growth}
 Z.~M. Research.

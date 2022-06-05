@@ -4,6 +4,11 @@
 \usepackage{color}
 \usepackage{natbib}
 \usepackage{graphicx}
+\usepackage{tikz} 
+\usepackage{pgfplots}
+\usepackage{bm}
+\usepackage{relsize}
+\usepackage{subfigure}
 \setcitestyle{numbers}
 \setcitestyle{square}
 \lstset{
@@ -11,6 +16,37 @@ basicstyle=\ttfamily,
 breaklines=true,
 backgroundcolor=\color{lightgray}
 }
+\usepackage{listofitems} % for \readlist to create arrays
+\usetikzlibrary{arrows.meta} % for arrow size
+\usetikzlibrary{positioning}
+
+\usepackage[outline]{contour} % glow around text
+\contourlength{1.4pt}
+
+\tikzset{>=latex} % for LaTeX arrow head
+\usepackage{xcolor}
+\colorlet{myred}{red!80!black}
+\colorlet{myblue}{blue!80!black}
+\colorlet{mygreen}{green!60!black}
+\colorlet{myorange}{orange!70!red!60!black}
+\colorlet{mydarkred}{red!30!black}
+\colorlet{mydarkblue}{blue!40!black}
+\colorlet{mydarkgreen}{green!30!black}
+\tikzstyle{node}=[thick,circle,draw=myblue,minimum size=22,inner sep=0.5,outer sep=0.6]
+\tikzstyle{node in}=[node,green!20!black,draw=mygreen!30!black,fill=mygreen!25]
+\tikzstyle{node hidden}=[node,blue!20!black,draw=myblue!30!black,fill=myblue!20]
+\tikzstyle{node convol}=[node,orange!20!black,draw=myorange!30!black,fill=myorange!20]
+\tikzstyle{node out}=[node,red!20!black,draw=myred!30!black,fill=myred!20]
+\tikzstyle{connect}=[thick,mydarkblue] %,line cap=round
+\tikzstyle{connect arrow}=[-{Latex[length=4,width=3.5]},thick,mydarkblue,shorten <=0.5,shorten >=1]
+\tikzset{ % node styles, numbered for easy mapping with \nstyle
+	node 1/.style={node in},
+	node 2/.style={node hidden},
+	node 3/.style={node out},
+}
+\def\nstyle{int(\lay<\Nnodlen?min(2,\lay):3)} % map layer number onto 1, 2, or 3
+\def\layersep{1.5}
+\def\nodesep{1}
 
 \begin{document}
 
@@ -130,11 +166,75 @@ Graphs are data structures that can be defined with a set of nodes (vertices) $V
 where:
 
 \[ E \subseteq 	\{ (x, y)|(x, y) \in V^2 \mathrm{\ and\ } x \neq y \} \]
-The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps, which is an useful information for us \cite{trudeau_2017}.
+The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. A representation of such a graph can be seen in Figure \ref{fig:example_graph}. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps, which is an useful information for us \cite{trudeau_2017}. Aside from this, both the nodes and edges have weights assigned to them that can represent various information about the graph.
 
-I this thesis, after sequencing and assembly (\ref{subsec:the process of sequencing and assembly}), we obtain a list of reads connected to each other via overlaps. The reads can be thought of as nodes in a graph, while edges are the links between the nodes. By building such structures, we can more easily use existing graph theory insights to remove unnecessary edges and separate the two haplotypes.
+In this thesis, after sequencing and assembly (\ref{subsec:the process of sequencing and assembly}), we obtain a list of reads connected to each other via overlaps. The reads can be thought of as nodes in a graph, while edges are the links between the nodes. By building such structures, we can more easily use existing graph theory insights to remove unnecessary edges and separate the two haplotypes.
+
+\begin{figure}
+\centering
+\begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+\node[main] (1) {$v_1$}; 
+\node[main] (2) [above right of=1] {$v_2$}; 
+\node[main] (3) [below right of=1] {5}; 
+\node[main] (4) [above right of=3] {8}; 
+\node[main] (5) [above right of=4] {3}; 
+\node[main] (6) [below right of=4] {4}; 
+\draw[->] (1) -- node[auto] {$e$} (2);
+\draw[->] (1) -- node[auto] {7} (3);
+\draw[->] (1) to [out=135,in=90,looseness=1.5] node[auto] {1} (5); 
+\draw[->] (1) to [out=180,in=270,looseness=5] node[auto, swap] {3} (1); 
+\draw[->] (2) -- node[auto] {4} (4); 
+\draw[->] (3) -- node[auto] {2} (4); 
+\draw[->] (5) -- node[auto] {8} (4); 
+\draw[->] (5) to [out=315, in=315, looseness=2.5] node[auto] {2} (3); 
+\draw[->] (6) -- node[auto] {1} (4); 
+\end{tikzpicture}
+\caption[Example graph]{An example of a directed graph with node and edge weights. Aside from every edge being directed, loops are also present.}
+\label{fig:example_graph}
+\end{figure}
 
 \section{Deep Learning}
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[x=2.2cm,y=1.4cm]
+	\readlist\Nnod{2,3,3,3,2} % array of number of nodes per layer
+	\readlist\Nstr{n,m,m,m,k} % array of string number of nodes per layer
+	\readlist\Cstr{\strut x,a^{(\prev)},a^{(\prev)},a^{(\prev)},y} % array of coefficient symbol per layer
+	\def\yshift{0.5} % shift last node for dots
+	
+	\foreachitem \N \in \Nnod{ % loop over layers
+		\def\lay{\Ncnt} % alias of index of current layer
+		\pgfmathsetmacro\prev{int(\Ncnt-1)} % number of previous layer
+		\message{\lay,}
+		\foreach \i [evaluate={\c=int(\i==\N); \y=\N/2-\i-\c*\yshift;
+			\index=(\i<\N?int(\i):"\Nstr[\lay]");
+			\x=\lay; \n=\nstyle;}] in {1,...,\N}{ % loop over nodes
+			% NODES
+			\node[node \n] (N\lay-\i) at (\x,\y) {$\Cstr[\lay]_{\index}$};
+			
+			% CONNECTIONS
+			\ifnum\lay>1 % connect to previous layer
+			\foreach \j in {1,...,\Nnod[\prev]}{ % loop over nodes in previous layer
+				\draw[connect,white,line width=1.2] (N\prev-\j) -- (N\lay-\i);
+				\draw[connect] (N\prev-\j) -- (N\lay-\i);
+				%\draw[connect] (N\prev-\j.0) -- (N\lay-\i.180); % connect to left
+			}
+			\fi % else: nothing to connect first layer
+			
+		}
+		\path (N\lay-\N) --++ (0,1+\yshift) node[midway,scale=1.5] {$\vdots$};
+	}
+	
+	% LABELS
+	\node[above=0.2,align=center,mygreen!60!black] at (N1-1.90) {input\\[-0.2em]layer};
+	\node[above=0.2,align=center,myblue!60!black] at (N3-1.90) {hidden layers};
+	\node[above=0.2,align=center,myred!60!black] at (N\Nnodlen-1.90) {output\\[-0.2em]layer};
+	
+	\end{tikzpicture}
+\caption[Neural network]{Example of a fully connected neural network. The green nodes represent the input to the network of size $n$. The blue nodes represent the hidden layers, with each connection between them having trainable weights. They are of size $m$ with the numbers in brackets representing the layer index. Finally, the red nodes represent the output of the network of size $k$. Taken from \cite{latex_nn}.}
+\label{fig:neural network}
+\end{figure}
 
 In this section, we will go over the basics of deep learning (section \ref{subsec:basics}), the main tool used for the experiments in this thesis, followed with an overview of graph neural networks (section \ref{subsec:graph neural networks}) and all its different variants we used.
 
@@ -143,23 +243,22 @@ In this section, we will go over the basics of deep learning (section \ref{subse
 
 In the last decade, deep learning has grown from a niche research area to one of the largest fields withing computer science. It is now actively employed in virtually every human endeavor, from healthcare to entertainment \cite{dl_applications}. And it is still growing day by day on its mission to become the standard way of handling almost all data \cite{dl_growth}.
 
-In deep learning, we use data processing structures called \textit{artificial neural networks} (ANNs) to extract useful information from our data and learn to predict an outcome, such as some feature of the data or a target class. ANNs do this by adjusting learnable \textit{weights} defined for every neuron in our network. Due to these weights, neural networks are much denser structures when compared to previous machine learning methods and can be referred to as \textit{universal function approximators} \cite{uni_approx} due to their ability to, with large enough networks, approximate any function. This gives them unprecedented performance on previously unsolvable tasks, but due to their abstract structure, makes them somewhat difficult to interpret. Some networks, like \textit{convolutional neural networks} \cite{CNN}, don't suffer from this problem as much and can produce some quite intuitive visualizations. On the other hand, some networks, like the ones we will use here, cannot be visually meaningfully interpreted.
+In deep learning, we use data processing structures called \textit{artificial neural networks} (ANNs) to extract useful information from our data and learn to predict an outcome, such as some feature of the data or a target class. An example of a fully connected neural network can be seein in Figure \ref{fig:neural network}. ANNs do this by adjusting learnable \textit{weights} defined for every neuron in our network. Due to these weights, neural networks are much denser structures when compared to previous machine learning methods and can be referred to as \textit{universal function approximators} \cite{uni_approx} due to their ability to, with large enough networks, approximate any function. This gives them unprecedented performance on previously unsolvable tasks, but due to their abstract structure, makes them somewhat difficult to interpret. Some networks, like \textit{convolutional neural networks} \cite{CNN}, don't suffer from this problem as much and can produce some quite intuitive visualizations. On the other hand, some networks, like the ones we will use here, cannot be visually meaningfully interpreted.
 
-To successfully explain how ANNs work, we need to introduce two concepts: a loss function and backpropagation. When use our deep learning model to learn from data, we pass it through our network and compare the output to a previously defined true value by using a \textit{loss function}. A loss function abstracts the error of our network prediction to a single number which is then used to calculate gradients in respect to our data. These gradients are then propagated back through the network using \textit{backpropagation}. In essence, the backpropagation algorithm tells every weight in our network how to change in order to better predict our data. If we imagine our data as a 2-dimensional function on a plane, a gradient is the information of how steeps the function is at any specified point. This steepness value tells the network weights how much they should change, while its sign specifies the direction of change. By correctly propagating these gradient values back through the network, which backpropagation does, we an successfully make our network learn from data \cite{Goodfellow-et-al-2016}.
+To successfully explain how ANNs work, we need to introduce two concepts: a loss function and backpropagation. When we use our deep learning model to learn from data, we pass the data through our network and compare the output to a previously defined true value by using a \textit{loss function}. A loss function abstracts the error of our network prediction to a single number which is then used to calculate gradients in respect to our data. The loss function we used is described in section \ref{subsec:loss function}. These gradients are then propagated back through the network using \textit{backpropagation}. In essence, the backpropagation algorithm tells every weight in our network how to change in order to better predict our data. If we imagine our data as a 2-dimensional function on a plane, a gradient is the information of how steeps the function is at any specified point. This steepness value tells the network weights how much they should change, while its sign specifies the direction of change. By correctly propagating these gradient values back through the network, which backpropagation does, we an successfully make our network learn from data \cite{Goodfellow-et-al-2016}.
 
 \subsection{Graph Neural Networks}
 \label{subsec:graph neural networks}
 
-While standard ANNs are great at predicting simple data with no underlying structure (or at least one that isn't known), to successfully make our network learn from assembly graphs, we will need something more refined. Yes, it is true that we can simply represent our graph in the form of a 1-dimensional vector, but we then lose precious structural information about the contig overlaps. By using networks more tailor-made for data representation on graphs, we can take advantage of the graph's underlying structure. The networks in question are called \textit{Graph Neural Networks} (GNNs) \cite{GNN}. Most modern graph neural networks work on the principle of \textit{message passing} \cite{message_passing}. A node accumulates information from adjacent nodes and the edges connecting them and uses it to update its own weights. By repeating this process enough times, we can converge to a stable solution. This can be represented wit the following equation.
+While standard ANNs are great at predicting simple data with no underlying structure (or at least one that isn't known), to successfully make our network learn from assembly graphs, we will need something more refined. Yes, it is true that we can simply represent our graph in the form of a 1-dimensional vector, but we then lose precious structural information about the contig overlaps. By using networks more tailor-made for data representation on graphs, we can take advantage of the graph's underlying structure. The networks in question are called \textit{Graph Neural Networks} (GNNs) \cite{GNN}. Most modern graph neural networks work on the principle of \textit{message passing} \cite{message_passing}. A node accumulates information from adjacent nodes and the edges connecting them and uses it to update its own weights. The information is represented in the form of node and edge features, multidimensional vectors of data that represent some information about the nodes and edges. By repeating this process enough times, we can converge to a stable solution. This can be represented wit the following equation.
 
-%napisati svojim rijecima
+%TODO: napisati svojim rijecima
 
 Let $x_v \in \mathbf{R}^{d_1}$ be the feature for node $v$, and $w \in \mathbf{R}^{d_2}$ be the feature for edge ($u$, $v$). The message passing paradigm defines the following node-wise and edge-wise computation at step $t+1$:
 
-Edge-wise: $m_e^{(t+1)} = \phi (x_v^{(t)}, x_u^{(t)}, w_e^{(t)}), (u, v, e) \in \mathcal{E}$.
+Edge-wise: \[ m_e^{(t+1)} = \phi (x_v^{(t)}, x_u^{(t)}, w_e^{(t)}), (u, v, e) \in \mathcal{E} \]
 
-Node-wise: $x_v^{(t+1)} = \psi (x_v^{(t)}, \rho (\{m_e^{(t+1)}: (u, v, e) \in \mathcal{E}\}))$.
-
+Node-wise: \[ x_v^{(t+1)} = \psi (x_v^{(t)}, \rho (\{m_e^{(t+1)}: (u, v, e) \in \mathcal{E}\})) \]
 In the above equations, $\phi$ is a message function defined on each edge to generate a message by combining the edge feature with the features of its incident nodes; $\psi$ is an update function defined on each node to update the node feature by aggregating its incoming messages using the reduce function $\rho$.
 
 The GNN can be though of as an extension of CNNs. A CNN takes an image's local neighborhood and extracts information from it. It does this using convolution \textit{filters}, which take a certain amount of pixels in a neighborhood and multiply them with weights. Now, the size of this filter is predefined and cannot be changed. For instance, it can have a size of 3 x 3 or 5 x 5. If we were to create such a filter for use on graphs, we would simply designate the central weight of the filter to be the node we are currently looking at, and the surrounding weights would be its neighboring nodes. As we can see, this would limit us to graphs where nodes had a constant number of neighbors, or graphs where we could look only at a limited number of neighbors. GNNs do not have this limitation. The $\psi$ function takes all nodes in a central node's neighborhood into account equally \cite{GRL} \cite{bronstein2021geometric}.
@@ -200,39 +299,133 @@ Here, $f_{ij}$ represents edge features, $A$ is a weight matrix and $\vec{a}$ is
 
 In this section, we will explain all the functions we use in our networks that aren't directly responsible for training, such as regularization functions and nonlinearities.
 
+\begin{figure}
+	\centering
+	\begin{tikzpicture}
+		\begin{axis}
+		[
+		grid=major,
+		axis x line=middle,
+		axis y line=middle,
+		domain=-5:2,
+		legend style={at={(0.37,0.95)}}  
+		]
+			\addplot+[mark=none,red,domain=-5:0] {0};
+			\addplot+[mark=none,red,domain=0:2] {x};
+			\addplot+[mark=none,blue,domain=-5:0] {0.1*x};
+			\addplot+[mark=none,green,domain=-5:0] {exp(x)-1};
+			\addplot+[mark=none,yellow,domain=-5:5] {1/(1+exp(-x))};
+			\legend{$\mathrm{ReLU}(x)$,,$\mathrm{LeakyReLU}(x)$,$\mathrm{ELU}(x)$, $\mathrm{sigmoid}(x)$}
+		\end{axis}
+	\end{tikzpicture}
+\caption{An example of all the different nonlinearities used in this thesis for model training. In red, we can see a regular ReLU function, which is valued at zero for $x<0$. The blue line represents the LeakyReLU function, which lets a small value pass through it for $x<0$, here value at $0.1*x$. The green line represents the ELU function, which takes a exponential form for $x<0$. We can observe that these functions are different only for $x<0$. Lastly, the yellow line represents the sigmoid function. Unlike the other functions, it restricts both positive and negative values to  range of $[0,1]$.}
+\label{fig:nonlinearities}
+\end{figure}
+
 \subsubsection{Nonlinearities}
 \label{subsubsec: nonlinearities}
 
-%todo: add sigmoid description
-
-We use four different nonlinearities in our work. Three of them are used as nonlinearities between netwrok layers, and one of them, the sigmoid function, is used for final classification of the edges. First, we are going to desribe the network nonlinearities. The most basic one is the \textbf{ReLU} (rectified linear unit) \cite{relu}.	It can be simply described with the following equation:
+We use four different nonlinearities in our work. Three of them are used as nonlinearities between network layers, and one of them, the sigmoid function, is used for final classification of the edges. First, we are going to describe the network nonlinearities. The most basic one is the \textbf{ReLU} (rectified linear unit) \cite{relu}, represented with the red line in Figure \ref{fig:nonlinearities}. It can be simply described with the following equation:
 
 \[ \mathrm{ReLU}(z) = \max (0, z) \]
-In other words, it lets through everything that is positive in a linear fashion, and sets everything else to zero. This is one of the most widely used nonlinearities. It has the same benefits as a sigmoid function or a tanh function, but is less computationally expensive.
+In other words, it lets through everything that is positive in a linear fashion, and sets everything else to zero. This is one of the most widely used nonlinearities. It has the same benefits as a sigmoid function or a tanh function (being differentiable), but is less computationally expensive and doesn't suffer from saturated weights for high input values. That being said, it does suffer from the exploding gradients problem because, unlike the sigmoid or tanh, it does not restrict the size of the outputs.
 
-A variant of the ReLU is the \textbf{LeakyReLU} \cite{leakyrelu}. It only differs from ReLU in that it allows for a small non zero constant gradient $\alpha$ below zero. It tries to fix the limitation of ReLU where some neurons never express their values due to them being negative.
+A variant of the ReLU is the \textbf{LeakyReLU} \cite{leakyrelu}, represented with the blue line in Figure \ref{fig:nonlinearities}. It only differs from ReLU in that it allows for a small non zero constant gradient $\alpha$ below zero. It tries to fix the limitation of ReLU where some neurons never express their values due to them always being negative.
 
-Finally, we have the \textbf{ELU} (exponential linear unit) \cite{elu}. It can be described with the following equation:
+Finally, we have the \textbf{ELU} (exponential linear unit) \cite{elu}, represented with the green line in Figure \ref{fig:nonlinearities}. It can be described with the following equation:
 
 \[ \mathrm{ELU}(z) = \begin{cases} 
 z & z > 0 \\
 \alpha \cdot (e^z - 1) & z \leq 0
 \end{cases} \]
-For values greater than 0, it emits a constant output. But for any other value, it slowly smooths out bellow zero where it tends to the value $- \alpha$. Just like LeakyReLU, it also tries to negate some weaknesses of ReLU and can be used as a strong alternative to it.
+For values greater than 0, it emits a constant output. But for any other value, it slowly smooths out bellow zero where it tends to the value $- \alpha$. Just like LeakyReLU, it also tries to negate the previously mentioned weakness of ReLU and can be used as a strong alternative to it.
 
-Finally, for the classification of the network outputs, we need to normalize them into a $[0, 1]$ range so they can be interpreted as probabilities. For this, we use the \textbf{sigmoid} function, described with the following equation:
+Lastly, for the classification of the network outputs, we need to normalize them into a $[0, 1]$ range so they can be interpreted as probabilities. For this, we use the \textbf{sigmoid} function, represented with the yellow line in Figure \ref{fig:nonlinearities} and described with the following equation:
 
 \[ S(x) = \frac{1}{1 + e^{-x}} \]
 where $x$ is the input to the function. It is worth noting that for cases where there are more than two classes present, we actually use the \textit{softmax} function. It can be described with the following equation:
 
 \[ \sigma(x) = \frac{\exp (x_i)}{\sum_j \exp (x_j)} \]
 
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[
+	node/.style={circle, draw, thick},
+	]
+	
+	\foreach \y in {1,...,5}{
+		\node[node] (i\y) at (0,\nodesep*\y) {};
+		\node[node, right=\layersep of i\y] (h1\y) {};
+		\node[node, right=\layersep of h1\y] (h2\y) {};
+	}
+	
+	\node[node, right=\layersep of h22] (o1) {};
+	\node[node, right=\layersep of h24] (o2) {};
+	
+	\foreach \source in {1,...,5}
+	\foreach \dest in {1,...,5}{
+		\path[-stealth, thick] (i\source) edge (h1\dest);
+		\path[-stealth, thick] (h1\source) edge (h2\dest);
+	}
+	\foreach \source in {1,...,5}
+	\foreach \dest in {1,2}
+	\draw[-stealth, thick] (h2\source) -- (o\dest);
+	
+	\draw[-stealth, thick] (6, 3*\nodesep) -- node[above,font=\Large\bfseries] {dropout} (8.5, 3*\nodesep);
+	
+	% Boundary
+	
+	\foreach \y in {1,...,5}
+	\node[node, right=12em of h2\y] (di\y) {};
+	
+	\node[red,font=\huge] at (di1) {$\times$};
+	\node[red,font=\huge] at (di3) {$\times$};
+	
+	\foreach \y in {1,...,5}
+	\node[node, right=\layersep of di\y] (dh1\y) {};
+	
+	\node[red,font=\huge] at (dh11) {$\times$};
+	\node[red,font=\huge] at (dh13) {$\times$};
+	\node[red,font=\huge] at (dh14) {$\times$};
+	
+	\foreach \y in {1,...,5}
+	\node[node, right=\layersep of dh1\y] (dh2\y) {};
+	
+	\node[red,font=\huge] at (dh22) {$\times$};
+	\node[red,font=\huge] at (dh24) {$\times$};
+	
+	\node[node, right=\layersep of dh22] (do1) {};
+	\node[node, right=\layersep of dh24] (do2) {};
+	
+	\foreach \source in {2,4,5}
+	\foreach \dest in {2,5}
+	\draw[-stealth, thick] (di\source) -- (dh1\dest);
+	
+	\foreach \source in {2,5}
+	\foreach \dest in {1,3,5}
+	\draw[-stealth, thick] (dh1\source) -- (dh2\dest);
+	
+	\foreach \source in {1,3,5}
+	\foreach \dest in {1,2}
+	\draw[-stealth, thick] (dh2\source) -- (do\dest);
+	
+	\end{tikzpicture}
+\caption{An example of dropout. On the network on the right, we can see that some nodes, as well as their connections, have been dropped. This leads to  sparser network and more node specialization. Taken from \cite{latex_nn}.}
+\label{fig:dropout}
+\end{figure}
+
 \subsubsection{Regularization Functions}
 \label{subsubsec:regularization functions}
 
-We primarily used three different regularization functions throughout our networks. In general, these functions help stabilize and speed up network training, as well as often improve performance slightly.
+We primarily used three different regularization functions throughout our networks. In general, these functions help stabilize and speed up network training, as well as often improve performance.
 
-Before imputing our data into the model, we \textbf{normalize} it. If this isn't done automatically in the network, we do it with built-in functions, which involves simply dividing an edge weight with all other edge weights connected to the same nodes.
+Before imputing our data into the model, we \textbf{normalize} it, i.e. bring its values into a $[0,1]$ range. This is done so that input data from different sources is all in the same range. If this isn't done automatically in the network, we do it with built-in functions. There are many different ways to normalize edge and node data. Input and output node degrees are normalized by subtracting the minimal respective node degree value from them and dividing them with the maximum value which was also reduced with the minimal value, a process known as min-max scaling. Formally, this can be written as:
+
+\[ x' = \frac{x - \min(x)}{\max(x) - \min(x)} \]
+Normalizing edge weights is a bit more complicated. The method we use for this is represented with the following equation:
+
+\[ c_{ji} = \left( \sqrt{\sum_{k \in N(j)} e_{jk} } \sqrt{\sum_{k \in N(i)} e_{ki} } \right) \]
+$e_{jk}$ and $e_{ki}$ are the weights of the edges from node $j$ to node $k$ and from node $k$ to node $i$ respectively. We divide all of the weights with the calculated weight $c_{ji}$. Intuitively, we multiply the square roots of the sums of weights of the edges connected to the two nodes that are being connected by edge $e_{ji}$. It is worth noting that we usually did not use node degree normalization, as we would transform the node data into a higher abstract dimension anyway, where the individual node degrees would get lost.
 
 More interesting that normalization is \textbf{dropout} \cite{dropout} \cite{dropout2}. Dropout is one of the most popular regularization techniques and often greatly improves network performance. It works by randomly omitting entire neurons from the network along with their connection. By doing this, neurons get more specialized in detecting different features in the data and don't co-adapt as much. In practice, these neurons aren't actually dropped, but their weights are simply reduced by multiplying them with small constants, thereby lessening their importance during training and subsequent prediction.
 
@@ -255,12 +448,12 @@ There ar a lot of readily available datasets for experimenting on graphs and gen
 
 \subsection{Simulating \& Mutating the Reads}
 
-To generate the dataset, we used a multi-step process. The yeast genome was stored in a simple FASTA file (section \ref{subsubsec:fasta and fastq}) with the chromosomes written down in order. In the first step, we would simply extract the first chromosome from the FASTA file. In the next step, in order to simulate a fragmented chromosome like if it was obtained in the process of sequencing, we needed to generate artificial reads from the chromosome. This was done using the \texttt{seqrequester}\footnote{https://github.com/marbl/seqrequester} package and its \texttt{generate} option for generating reads. By setting the \texttt{-nreads} flag to the desired number, we could specify the number of reads the program would generate, and using the \texttt{-distribution} flag, we could choose the desired distribution for the reads (in our case \texttt{pacbio-hifi}). After this was done, we ended up with a file filled with simulated reads. We used a small C++ program\footnote{Courtesy of R. Vaser} to mutate these reads into new ones of the same length with a mutation frequency of 0.01, meaning that every 100 base pairs, a base pair would get mutated into its complement base pair. Now, if the original simulated reads represented the mother's reads, these mutated ones could be thought of as the father's reads. Lastly, we combined them into a single file by simply concatenating them, and we were now ready for the final sequencing process where we would obtain contigs and their overlaps which we could use for training our model.
+To generate the dataset, we used a multi-step process. The yeast genome was stored in a simple FASTA file (section \ref{subsubsec:fasta and fastq}) with the chromosomes written down in order. In the first step, we would simply extract the first chromosome from the FASTA file. In the next step, in order to simulate a fragmented chromosome like if it was obtained in the process of sequencing, we needed to generate artificial reads from the chromosome. This was done using the \texttt{seqrequester}\footnote{https://github.com/marbl/seqrequester} package and its \texttt{generate} option for generating reads. By setting the \texttt{-nreads} flag to the desired number, we could specify the number of reads the program would generate, and using the \texttt{-distribution} flag, we could choose the desired distribution for the reads (in our case \texttt{pacbio-hifi}). We did this $n$ times, where $n$ is the number of graphs we wanted to generate for training, usually 100. After this was done, we ended up with $n$ files filled with simulated reads. We used a small C++ program\footnote{Courtesy of R. Vaser} to mutate these reads into new ones of the same length with a mutation frequency of 0.01, meaning that every 100 base pairs, a base pair would get mutated into its complement base pair. Now, if the original simulated reads represented the mother's reads, these mutated ones could be thought of as the father's reads. Lastly, we combined the father's and mother's reads from each of the $2n$ ($n$ for the father's and $n$ for the mother's reads) files into a single file by concatenating them, which left us with $n$ files that were ready for the final sequencing process where we would obtain contigs and their overlaps which we could use for training our model.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/graph_example.png}
-	\caption[Graph]{Example of a graph obtained after sequencing and assembly. Orange nodes represent mutated reads, while green nodes represent the original reads. This graph was obtained using the Graphia\footnotemark{} graphing tool.}
+	\caption[Graph]{Example of a graph obtained after sequencing and assembly. Orange nodes represent mutated reads, while green nodes represent the original reads. We would generate in surplus of 100 of these graphs in order to train our model. This graph was obtained using the Graphia\footnotemark{} graphing tool.}
 	\label{fig:graph}
 \end{figure}
 \footnotetext{https://graphia.app/}
@@ -268,7 +461,7 @@ To generate the dataset, we used a multi-step process. The yeast genome was stor
 \subsection{Assembling the Graph}
 \label{subsec:assembling the graph}
 
-We found that generating 5000 - 10 000 reads gave satisfactory results in combination with the Raven assembler \cite{Vaser}. This is due to the fact that Raven's \texttt{filter} option reduces the number of edges in the graph if a smaller value for the option is specified. While setting the option to 0.99, and using the previously mentioned number of reads, Raven will generate an appropriate number of nodes and edges for training. Setting it to anything lower would create datasets too small for training. Unfortunately, this very low filter value also meant that the overlaps between our contigs were also a minimum of 99\%, making them less of a candidate for usage as edge features.
+We found that generating 5000 - 10 000 reads gave satisfactory results in combination with the Raven assembler \cite{Vaser}. This is due to the fact that Raven's \texttt{filter} option reduces the number of edges in the graph if a smaller value for the option is specified. While setting the option to 0.99, and using the previously mentioned number of reads, Raven will generate an appropriate number of nodes and edges for training. Setting it to anything lower would create datasets too small for training. Unfortunately, this very low filter value also meant that the overlaps between our contigs were also a minimum of 99\%, making them less of a candidate for usage as edge features. We won't go into detail about why this is so, as it is unclear to us as well.
 
 After Raven is done with the assembly process, it outputs two files: a GFA file (section \ref{subsubsec:gfa}) and CSV file (section \ref{subsubsec:csv}). They both contain information about the contigs and their overlaps suitable in a format for generating a graph. They also contained different information in each, so to fully utilize all the graph information we have available, we needed to use both files. From the GFA file, we extract information about which contig belongs to the mutated reads and which one to the original simulated ones, as well as contig overlap length information. We extract them to a separate file for easier analyzing. An example of a graph obtained after assembly can be seen in Figure \ref{fig:graph}. Now, as we previously mentioned, our task is to separate the contigs into the father's and the mother's genome. In other words, if we are presented with a graph where nodes represent contigs and edges their overlaps, we need to remove edges between contigs that don't belong to the same parent. So for each edge, we specify if it's "correct" (i.e. it connects two contigs belonging to the same parent) or "incorrect" (it connect two contigs belonging to different parents). We now have a dataset where each edge has a label, as well as a feature in the form of overlap length. We can now use this as input to our model to generate a dataset fit for training.
 
@@ -323,18 +516,19 @@ self.dp = nn.Dropout(p=0.5)
 
 We define the network in the following way. First, we initalize a linear layer that transforms the node features (number of in and out node degrees) into a higher dimension of size \texttt{node\_features}. Then, we define four EGAT layers. The first layer is of the largest width \texttt{hidden\_dim} (both for node and edge features), and subsequent layers divide this size by two in each step. Only the first layer used a \texttt{num\_heads} number of attention heads, the rest used only one. This is done to improve training times, as this network proved much slower than the other ones we used. After all the EGAT layers are done with their computations, we pass everything through a classification layer. This layer works by taking the new calculated node and edge features and concatenating them before passing them into a fully connected classification layer. The network then finally outputs a list of class probabilities for every edge in the graph.
 
-You may have noticed that in some layers, we multiply the input dimension for the EGAT layer with \texttt{num\_heads}. This is done so that the number of attention heads is accounted for correctly while passing the results to the next network. The different layer outputs are \textit{flattened}, i.e. concatenated into a smaller dimensional vector before being passed to the next layer. Aside from this, we also employ the \textit{dropout} (section \ref{subsubsec:regularization functions}) mechanism to reduce overfitting.
+You may have noticed that in some layers, we multiply the input dimension for the EGAT layer with \texttt{num\_heads}. This is done so that the number of attention heads is accounted for correctly while passing the results to the next network. The different layer outputs are \textit{flattened}, i.e. concatenated into a smaller dimensional vector before being passed to the next layer. Aside from this, we also employ the \textit{dropout} (section \ref{subsubsec:regularization functions}) mechanism to reduce overfitting (section \ref{subsec:the training process}).
 
 \subsection{Main}
 
-All of the previously described functions are connected in the \texttt{main} function. First, we define the function for logging parameters such as loss and accuracy for visualization using TensorBoard (section \ref{sec:technology stack}). Then, we define the dataset by calling the \texttt{DGLDataset} module and, if it previously hasn't been generated, create the dataset. We then define the model we will use for training with all its parameters and layer sizes. We define the optimizer, and finally, start the training process.
+All of the previously described functions are connected in the \texttt{main} function. First, we define the function for logging parameters such as loss and accuracy for visualization using TensorBoard (section \ref{sec:technology stack}). Then, we define the dataset by calling the \texttt{DGLDataset} module and, if it previously hasn't been generated, create the dataset. We then define the model we will use for training with all its parameters and layer sizes. After that, we define the optimizer for our model, and finally, we start the training process. This process is depicted in Figure \ref{fig:architecture}.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/model.png}
-	\caption[Model]{Graphical representation of the model architecture with EGAT layers. Different layers are represented with different colors and the main model is described within the gray box.}
+	\caption[Model]{Graphical representation of the model architecture with EGAT layers. Different layers are represented with different colors and the main model is described within the gray box. This image was constructed using diagrams.net\footnotemark{}}
 	\label{fig:model}
 \end{figure}
+\footnotetext{https://www.diagrams.net/}
 
 \section{Model description}
 
@@ -346,7 +540,49 @@ We then have $n \times m_1$ matrix, which we use as input to the first EGAT laye
 
 This set of operations represents one step of the network, which we perform four times. In each step, we reduce the $m_2$ dimension two times in each step and use only one attention head. After the final layer is done, we pass everything through a classification layer. This layer works by taking the last set of calculated node and edge features and concatenates them in a node feature, edge feature, node feature order. These are then used as input to a fully connected layer which finally outputs logits. To use them in a loss function, we pass them through a sigmoid function to get class probabilities.
 
-%TODO: create diagram of how everything connects
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/system_architecture.png}
+	\caption[Architecture]{Illustration depicting the architecture of our system. All the different components are joined together in the Main program. This image was constructed using diagrams.net\footnotemark{}}
+	\label{fig:architecture}
+\end{figure}
+\footnotetext{https://www.diagrams.net/}
+
+\subsection{Optimizer}
+
+An important element of every machine learning system is the optimizer. An optimizer is a function that controls how the weights of our network are adjusted after we obtain the gradients. The optimizer we used is the popular Adam (Adaptive Moment Estimation) optimizer \cite{adam}. It falls into the adaptive optimizers category and represents a nice balance between speed and performance due to using two different adaptive techniques: momentum and root mean square propagation (SMSProp). Recently, there has been more and more research about the advantages and disadvantages of adaptive optimization techniques compared to standard \textit{Stochastic Gradient Descent} (SGD). However, it is still a good idea to first use Adam as it doesn't require hyperparameter tuning to offer good results \cite{optimizers}. Momentum accelerates gradient descent using the \textit{exponentially weighted average} of the gradients and can be described with the following equations:
+
+\[ w_{t+1} = w_t - \alpha m_t \]
+where
+
+\[ m_t = \beta m_{t-1} + (1 - \beta)  \frac{\partial L}{\partial w_t} \]
+Here, $w_t$ and $w_{t+1}$ are the current and new weights respectively and $\alpha$ is the learning rate. $m_t$ and $m_{t-1}$ are the current and previous moving averages respectively, while $\frac{\partial L}{\partial w_t}$ is the derivative of the loss function by the weights of the network. Lastly, $\beta$ is the moving average parameter or decay value, usually 0.9. Essentially, momentum accumulates previous gradients to speed up its convergence towards an optimum. On the other hand, RMSProp can be described as:
+
+\[ w_{t+1} = w_t - \frac{\alpha}{\sqrt{v_t + \epsilon}} \frac{\partial L}{\partial w_t} \]
+where
+
+\[ v_t = \beta v_{t-1} + (1 - \beta) \left(\frac{\partial L}{\partial w_t}\right)^2 \]
+Here, $v_t$ and $v_{t-1}$ are the current and previous sum of squared gradients (moving averages) and $\epsilon$ is a small value added to avoid division by zero. RMSProp works the same way as momentum, but instead uses the squares of gradients and instead of multiplying $\alpha$ with $v_t$, it divides by it.
+
+Finally, Adam is defined with the following set of equations:
+
+\[ m_i = \beta_1 m_i + (1 - \beta_1) \frac{\partial L}{\partial \theta_i} \]
+
+
+\[ v_i = \beta_2 v_i + (1 - \beta_2) \left(\frac{\partial L}{\partial \theta_i}\right)^2 \]
+then:
+
+\[ \widehat{m_l} = \frac{m_i}{1 - \beta_1}, \widehat{v_l} = \frac{v_i}{1 - \beta_2} \]
+
+\[ \theta_i = \theta_i - \frac{\alpha}{\sqrt{\widehat{v_l}} + \epsilon} \widehat{m_l} \]
+It uses both the first and the second momentum which are divided by one minus the decay factor $\beta$ to account for bias in the estimator. $\epsilon$ is a small value added in order to avoid division by zero and $\alpha$ is the learning rate. $\beta_1$ is almost always 0.9, while $\beta_2$ is usually 0.999. In the first iteration, the moving averagesa are set to zero. By using techniques from both SGD with momentum and RMSProp, Adam inherits both of their strengths. The main advantages are that Adam takes big enough steps to avoid local otpima, while simultaneously oscillating minimaly when it reaches the global optimum.
+
+\subsection{The Training Process}
+\label{subsec:the training process}
+
+After we generated our dataset of $n$ graphs (100 for the dataset with only one chromosome), we used 99 graphs for training and one for validation. This is done to prevent \textit{overfitting}. This can be explained in the following way. As our model trains on the training part of the dataset, it starts to memorize the data in our dataset by heart. This may sound good, but it actually leads to poor \textit{generalization}, i.e., it cannot perform well on other similar data, only on the data it was trained on. To alleviate this, we separate a smaller validation dataset from the main one that the model doesn't train on. By validating our performance on it, we can get a more accurate state of the performance of our model. As the model starts overfitting, performance on the train part of the dataset will continue to improve, while on the validation part, it will start to worsen. We can then take the step where the model performed on the validation dataset the best as the best version of our model.
+
+Aside from this, validation can also be used for tuning \textit{hyperparameters} of our model, i.e. parameters that aren't adjuseted during training, but are set before training. In that case, as some of the information from the validation dataset leaks into the training,  we also need to create a test dataset that will now fulfill the role that validation has fulfilled previously: generalization testing. In this thesis, we don't do this as most of the hyperparameters we used are set to default and we aren't concerned with top performance as much as testing out if the concept of haplotype separation works with GNNs and with what models.
 
 \chapter{Results}
 \label{ch:results}
