@@ -1,6 +1,6 @@
 import torch
 import torch.nn.functional as F
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, precision_score, recall_score
 from torch.utils.tensorboard import SummaryWriter
 
 from GCNmodel import GCNModel, GATModel, EGATModel
@@ -22,7 +22,7 @@ def evaluate(model, graph_list, dataset, yeast_data):
         loss = F.cross_entropy(logits, edge_labels)
         # print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
         # print("Eval F1: " + str(f1_score(edge_labels, pred, average="macro")))
-        return loss, torch.sum(pred == edge_labels), f1_score(edge_labels, pred, average="macro")
+        return loss, torch.sum(pred == edge_labels), f1_score(edge_labels, pred, average="macro"), precision_score(edge_labels, pred), recall_score(edge_labels, pred)
 
 
 if __name__ == "__main__":
@@ -44,8 +44,8 @@ if __name__ == "__main__":
     graph_list = yeast_dataset.graph_list
 
     # model = GCNModel(2, 1, 128, 64, 64, 2)
-    model = GATModel(2, 1, 128, 512, 256, 2, 3)
-    # model = EGATModel(2, 1, 64, 256, 128, 2, 3)
+    # model = GATModel(2, 1, 128, 512, 256, 2, 3)
+    model = EGATModel(2, 1, 64, 256, 128, 2, 3)
     # if device == 'cuda':
     #     model = model.to(device)
     opt = torch.optim.Adam(model.parameters())
@@ -72,15 +72,19 @@ if __name__ == "__main__":
             # print('Train loss: ' + str(loss.item()))
             # print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
             # print('Train F1: ' + str(f1_score(edge_labels, pred)))
-        loss, acc, f1 = evaluate(model, graph_list, yeast_dataset, yeast_dataset)
+        loss, acc, f1, precision, recall = evaluate(model, graph_list, yeast_dataset, yeast_dataset)
 
         if f1 > max_f1:
             print("Eval acc: " + str(acc / len(edge_labels)))
             print("Eval F1: " + str(f1))
             print("Eval loss: " + str(loss))
+            print("Eval precision: " + str(precision))
+            print("Eval recall: " + str(recall))
 
         max_f1 = max(f1, max_f1)
 
         writer.add_scalar('Loss/val', loss, epoch)
         writer.add_scalar('Accuracy/val', acc / len(edge_labels), epoch)
         writer.add_scalar('F1/val', f1, epoch)
+        writer.add_scalar('precision/val', precision, epoch)
+        writer.add_scalar('recall/val', recall, epoch)
