@@ -248,6 +248,7 @@ In the last decade, deep learning has grown from a niche research area to one of
 In deep learning, we use data processing structures called \textit{artificial neural networks} (ANNs) to extract useful information from our data and learn to predict an outcome, such as some feature of the data or a target class. An example of a fully connected neural network can be seein in Figure \ref{fig:neural network}. ANNs do this by adjusting learnable \textit{weights} defined for every neuron in our network. Due to these weights, neural networks are much denser structures when compared to previous machine learning methods and can be referred to as \textit{universal function approximators} \cite{uni_approx} due to their ability to, with large enough networks, approximate any function. This gives them unprecedented performance on previously unsolvable tasks, but due to their abstract structure, makes them somewhat difficult to interpret. Some networks, like \textit{convolutional neural networks} \cite{CNN}, don't suffer from this problem as much and can produce some quite intuitive visualizations. On the other hand, some networks, like the ones we will use here, cannot be visually meaningfully interpreted.
 
 \subsubsection{Loss Function \& Stochastic Gradient Descent}
+\label{subsubsec: loss function and stochastic gradient descent}
 
 To successfully explain how ANNs work, we need to introduce two concepts: a loss function and backpropagation. When we use our deep learning model to learn from data, we pass the data through our network and compare the output to a previously defined true value by using a \textit{loss function}. A loss function abstracts the error of our network prediction to a single number which is then used to calculate gradients in respect to our data. The loss function we used is described in section \ref{subsec:loss function}. These gradients are then propagated back through the network using \textit{backpropagation}. But, before explaining the backpropagation algorithm, we first need to explain a related, but simpler concept in the form of \textit{Stochastic Gradient Descent} (SGD). In SGD, to find a function's minimum value, we simply nudge all the weights of the function in the direction opposite the function's gradients. This will bring the weights closer to an optimal position as the gradient points in the opposite direction of the function minimum. This is represented in the following equation:
 
@@ -543,7 +544,7 @@ All of the previously described functions are connected in the \texttt{main} fun
 \end{figure}
 \footnotetext{https://www.diagrams.net/}
 
-\section{Model description}
+\section{Model Description}
 \label{sec:model description}
 
 In Figure \ref{fig:model}, we can see the general structure of one of our models, specifically, the model using the EGAT layers (section \ref{subsubsec:edge graph attention network}). We will explain this model in detail as it is the most complicated one we used and it generalizes well to all other models we used.
@@ -604,7 +605,7 @@ Aside from this, validation can also be used for tuning \textit{hyperparameters}
 \subsection{Hyperparameters}
 \label{subsec:hyperparameters}
 
-There are numerous important hyperparameters that can be adjusted to optimize training performance. However, due to time constraints and simplicity reasons, we mostly used default parameters in this thesis. We already mentioned the hyperparameters we used for the Adam optimizer (section \ref{subsec:optimizer}), the network sizes we used (section \ref{sec:model description}), as well as the values used for dropout (section \ref{subsubsec:regularization functions}), but there are others that require an explanation. An important one is \textbf{batch size}. Batch size determines how much of our data enters our network during one step of training. In perfect SGD (section \ref{subsec:optimizer}).
+There are numerous important hyperparameters that can be adjusted to optimize training performance. However, due to time constraints and simplicity reasons, we mostly used default parameters in this thesis. We already mentioned the hyperparameters we used for the Adam optimizer (section \ref{subsec:optimizer}), the network sizes we used (section \ref{sec:model description}), as well as the values used for dropout (section \ref{subsubsec:regularization functions}), but there are others that require an explanation. An important one is batch size (section \ref{subsubsec: loss function and stochastic gradient descent}). Batch size determines how much of our data enters our network during one step of training. In GNNs, it translates to the number of separate graphs in an instance of the dataset. The message passing algorithm (section \ref{subsec:graph neural networks}) doesn't pass data over from separate graphs, so batches can be implemented very easily. That being said, the graphs we used for training were of sufficient size and using more than one graph during an instance of training simply wasn't necesary. In addition, some graphs appeared fragmented after assembly anyways, so they acted like mini-batches regardless.
 
 \chapter{Results}
 \label{ch:results}
@@ -653,7 +654,7 @@ It is also worth noting that the loss function doesn't take logits as input dire
 \section{Experiments on One Chromosome}
 \label{sec:experiments on one chromosome}
 
-The results of the experiments we performed on the dataset are presented through three graphs: accuracy, F1 score and loss. We will only display validation graphs, as training graphs are often an unreliable indicator of performance and they almost certainly overfit. In addition, we will only display a few different experiments we performed for clarity, even there were many more. Lastly, we only display the first 200 epochs of training, as all of the models reached their peak performance up to this point.
+The results of the experiments we performed on one chromosome are presented through three graphs: accuracy, F1 score and loss. We will only display validation graphs, as training graphs are often an unreliable indicator of performance due to them almost certainly overfitting. In addition, we will only display a few different experiments we performed for clarity, even though there were many more. Lastly, we only display the first 200 epochs of training, as all of the models reached their peak performance up to that point.
 
 \subsection{Accuracy \& F1 Score}
 
@@ -669,6 +670,36 @@ The first two graphs we are going to look at are an accuracy graph and an F1 sco
 
 The standout model here is the pink model. It has greatly outperformed the rest of the models, with an accuracy of 87.9\%. This is because here we used an EGAT model (section \ref{subsubsec:edge graph attention network}), which uses edge features much more effectively by incorporating them into the attention mechanism. However, we have to note that we had to use a much smaller model here due to slow training times. Nevertheless, it proved effective for the task at hand.
 
+\section{Experiments on the Whole Genome}
+\label{sec:experiments on the whole genome}
+
+In addition to accuracy, F1 score and loss, we also present recall and precision. These additional metrics might provide clarity in how the model trains on the provided data. The model we used for training was the EGAT model (section \ref{subsubsec:edge graph attention network}) with default parameters.
+
+\subsection{Accuracy, F1 Score \& Loss}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/accuracy_eg.png}
+	\includegraphics[width=\textwidth]{images/f1_eg.png}
+	\includegraphics[width=\textwidth]{images/loss_eg.png}
+	\caption[Accuracy,f1 score and loss graph]{Graphs representing the accuracy (top), F1 score (middle) and model loss (bottom) for the validation part of the entire genome dataset. The model was trained for 500 epochs. The graphs were obtained using TensorBoard (section \ref{sec:technology stack}).}
+	\label{fig:accuracy, f1 score and loss}
+\end{figure}
+
+In Figure \ref{fig:accuracy, f1 score and loss} we can see the graphs for accuracy (top), F1 score (middle) and model loss (bottom). We group these three graphs together due to them showing similar properties. Accuracy and F1 score exhibit almost the same graphs, while model loss is essentially an inverted version of the same graph. They are also grouped together due to them showing a nice example of overfitting. The model reaches its best performance fairly early during traing, around epoch 100, and then continues to progressively exhibit worse and wrose performance on the vaidation dataset. The best model had an F1 score of 0.8024, accuracy of 0.7911 and loss of 0.3868. This is not far off from the best performing model on only one chromosome, showing that different chromosomes exhibit similar features which our model could take leverage of.
+
+\subsection{Precision \& Recall}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/precision_eg.png}
+	\includegraphics[width=\textwidth]{images/recall_eg.png}
+	\caption[Precision and recall graph]{Graphs representing the precision (top) and recall (bottom) for the validation part of the entire genome dataset. The graphs were obtained using TensorBoard (section \ref{sec:technology stack}).}
+	\label{fig:precision and recall}
+\end{figure}
+
+In Figure \ref{fig:precision and recall} we can see the graphs for precision (top) and recall (bottom) for the validation part of the entire genome dataset. An interesting observatin we can immediately see is that at the beggining of training, the model has a near perfect recall with a fairly lower precision score. This means that the model classifies most positive examples in the dataset as indeed positive, while classifying some negative examples incorrectly. As training continues the model starts trading recall for a higher precision value, and this carries on for the entirery of the 500 epochs. The model essentialy tries to balance these two metrics as best as it can, with the optimal balance found somewhere araound epoch 100. For that balance, recall stands at 0.9368, while precision is 0.7389. The dataset is of course not perfectly balanced, and this is somewhat reflected in these numbers, but it is also a testament to the fact that the model is simply better at finding incorrect edges, while simultaneously classifying some correct edges as incorrect. Balancing these parameters depends on the use case for such an application, but we can generalize that the model is quite succesful at separating haplotypes, but the haplotypes it separates will be somewhat incomplete.
+
 \chapter{Conclusion}
 
 
@@ -680,13 +711,13 @@ The standout model here is the pink model. It has greatly outperformed the rest 
 \title{Using Graph Neural Networks to Separate Haplotypes in Assembly Graphs}
 \begin{abstract}
 
-\keywords{}
+\keywords{Bioinformatics, Graph Neural Networks, GNN, Haplotype Separation, Deep Learning, Machine Learning}
 \end{abstract}
 
-\hrtitle{}
+\hrtitle{Korištenje graf neuronskih mreža za odvajanje haplotipa u grafovima astavljanja}
 \begin{sazetak}
 
-\kljucnerijeci{}
+\kljucnerijeci{Bioinformatika, Graf Neuronske Mreže, GNN, Odvajanje haplotipa, Duboko Učenje, Strojno Učenje}
 \end{sazetak}
 
 \end{document}

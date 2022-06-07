@@ -6,6 +6,7 @@ from torch.utils.tensorboard import SummaryWriter
 from GCNmodel import GCNModel, GATModel, EGATModel
 from dataset import YeastDataset
 from path_utils import PATH
+from utils import SaveBestModel
 
 
 def evaluate(model, graph_list, dataset, yeast_data):
@@ -51,6 +52,9 @@ if __name__ == "__main__":
     opt = torch.optim.Adam(model.parameters())
 
     max_f1 = 0
+    best_model = 0
+
+    save_best_model = SaveBestModel()
 
     for epoch in range(500):
         print("Epoch: " + str(epoch))
@@ -80,6 +84,7 @@ if __name__ == "__main__":
             print("Eval loss: " + str(loss))
             print("Eval precision: " + str(precision))
             print("Eval recall: " + str(recall))
+            save_best_model(f1, epoch, model, opt, loss)
 
         max_f1 = max(f1, max_f1)
 
