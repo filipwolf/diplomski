@@ -82,7 +82,7 @@ if __name__ == "__main__":
             print("Eval loss: " + str(loss))
             print("Eval precision: " + str(precision))
             print("Eval recall: " + str(recall))
-            best_predictions = predictions.clone()
+            gen(predictions)
             torch.save({
                 'epoch': epoch,
                 'model_state_dict': model.state_dict(),
@@ -97,5 +97,3 @@ if __name__ == "__main__":
         writer.add_scalar('F1/val', f1, epoch)
         writer.add_scalar('precision/val', precision, epoch)
         writer.add_scalar('recall/val', recall, epoch)
-
-    gen(best_predictions)
