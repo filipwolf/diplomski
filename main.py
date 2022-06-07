@@ -6,7 +6,7 @@ from torch.utils.tensorboard import SummaryWriter
 from GCNmodel import GCNModel, GATModel, EGATModel
 from dataset import YeastDataset
 from path_utils import PATH
-from utils import SaveBestModel
+from scripts.graphiaGen2 import gen
 
 
 def evaluate(model, graph_list, dataset, yeast_data):
@@ -23,7 +23,7 @@ def evaluate(model, graph_list, dataset, yeast_data):
         loss = F.cross_entropy(logits, edge_labels)
         # print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
         # print("Eval F1: " + str(f1_score(edge_labels, pred, average="macro")))
-        return loss, torch.sum(pred == edge_labels), f1_score(edge_labels, pred, average="macro"), precision_score(edge_labels, pred), recall_score(edge_labels, pred)
+        return loss, torch.sum(pred == edge_labels), f1_score(edge_labels, pred, average="macro"), precision_score(edge_labels, pred), recall_score(edge_labels, pred), pred
 
 
 if __name__ == "__main__":
@@ -44,19 +44,17 @@ if __name__ == "__main__":
 
     graph_list = yeast_dataset.graph_list
 
-    # model = GCNModel(2, 1, 128, 64, 64, 2)
+    model = GCNModel(2, 1, 128, 64, 64, 2)
     # model = GATModel(2, 1, 128, 512, 256, 2, 3)
-    model = EGATModel(2, 1, 64, 256, 128, 2, 3)
+    # model = EGATModel(2, 1, 64, 256, 128, 2, 3)
     # if device == 'cuda':
     #     model = model.to(device)
     opt = torch.optim.Adam(model.parameters())
 
     max_f1 = 0
-    best_model = 0
+    best_predictions = 0
 
-    save_best_model = SaveBestModel()
-
-    for epoch in range(500):
+    for epoch in range(1):
         print("Epoch: " + str(epoch))
         for i, graph in enumerate(graph_list[:100]):
             node_in_degrees = yeast_dataset.node_in_degrees[i]
@@ -76,7 +74,7 @@ if __name__ == "__main__":
             # print('Train loss: ' + str(loss.item()))
             # print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
             # print('Train F1: ' + str(f1_score(edge_labels, pred)))
-        loss, acc, f1, precision, recall = evaluate(model, graph_list, yeast_dataset, yeast_dataset)
+        loss, acc, f1, precision, recall, predictions = evaluate(model, graph_list, yeast_dataset, yeast_dataset)
 
         if f1 > max_f1:
             print("Eval acc: " + str(acc / len(edge_labels)))
@@ -84,7 +82,13 @@ if __name__ == "__main__":
             print("Eval loss: " + str(loss))
             print("Eval precision: " + str(precision))
             print("Eval recall: " + str(recall))
-            save_best_model(f1, epoch, model, opt, loss)
+            best_predictions = predictions.clone()
+            torch.save({
+                'epoch': epoch,
+                'model_state_dict': model.state_dict(),
+                'optimizer_state_dict': opt.state_dict(),
+                'f1': f1,
+            }, 'outputs/best_model.pth')
 
         max_f1 = max(f1, max_f1)
 
@@ -93,3 +97,5 @@ if __name__ == "__main__":
         writer.add_scalar('F1/val', f1, epoch)
         writer.add_scalar('precision/val', precision, epoch)
         writer.add_scalar('recall/val', recall, epoch)
+
+    gen(best_predictions)
