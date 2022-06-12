@@ -68,32 +68,37 @@ backgroundcolor=\color{lightgray}
 
 \chapter{Introduction}
 
-Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genome from its numerous broken-up fragments obtained after sequencing \cite{de_novo2}. We will here, however, focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individual's genome is composed of both a mother's and a father's genome. Because we inherit both parent's chromosomes, the genetic material gets mixed between them, but some regions stay together in the form of genes. The term haplotype refers both to these inherited regions, as well as all of the genes of a parent on a chromosome \cite{haplotype}. In this thesis, we will use the term haplotype in the latter sense. By separating the two haplotypes from a genome, we can determine which parent contributed to what genes. This has a wide range of applications, from ancestry tests to finding hereditary diseases \cite{haplotype_usage}.         
+Traditionally, the focus of \textit{de novo} genome assembly has always been on the reconstruction of an individual's genome from its numerous broken-up fragments obtained after sequencing \cite{de_novo2}. We will here, however, focus on a different application of \textit{de novo} genome assembly: haplotype separation. Every individual's genome is composed of both a mother's and a father's genome. Because we inherit both parent's chromosomes, the genetic material between them gets mixed up, but some regions stay together regardless in the form of genes. The term \textit{haplotype} refers both to these inherited regions, as well as to all of the genes of a single parent on a chromosome \cite{haplotype}. In this thesis, we will use the term haplotype in the latter sense. By separating the two haplotypes in a genome, we can determine which parent is responsible for what genes. This has a wide range of applications, from ancestry tests to finding hereditary diseases \cite{haplotype_usage}.         
 
-We will try to do this using novel algorithms from the field of \textit{deep learning} (DL). Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems researchers face. This is however slowly changing. More and more research is being done using deep learning to solve problems in bioinformatics, foregoing the laborious process of feature engineering and extensive human intervention. First, DL was employed only for finding dense and abstract representations of genome features, but it later started to completely replace the previously mentioned algorithms. It has contributed tremendously to the field in recent years and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solvable for 50 years \cite{alphafold}. Still, there remains a long way to go before DL becomes completely standard within the field. Thus, this Thesis is concerned with applying recent DL techniques in order to solve the problem of separating the two haplotypes in an existing genome. This could not only potentially improve performance and reduce the necessity for human experts, but also bring bioinformatics to a wider range of people \cite{dl_bioinformatics}.
+We will try to do this using novel algorithms from the field of \textit{deep learning} (DL), which is itself a subfield of \textit{machine learning} (ML). Bioinformatics has long been dominated by algorithms that employ complex heuristics and expert knowledge to find solutions to the problems researchers face \cite{compeau_pevzner_2015}. This is however slowly changing. More and more research is being done using ML to solve problems in bioinformatics, foregoing the laborious process of feature engineering and extensive human intervention. First, ML was employed only for finding dense and abstract representations of genome features, but it later started to completely replace the previously mentioned algorithms. It has since contributed tremendously to the field and shows no signs of stopping, the most notable achievement being the solution to the protein folding problem which previously wasn't solvable for 50 years \cite{alphafold}. Still, there remains a long way to go before ML, and to an extent, DL, becomes completely standard within the field. Thus, this thesis is concerned with applying recent DL techniques in order to solve the problem of separating haplotypes in genomes. This could not only potentially improve existing solutions to the problem at hand and reduce the necessity for human expert intervention, but also bring bioinformatics to a wider range of people who may not necessarily have a deep understanding of genetics \cite{dl_bioinformatics}.
 
 \section{Bioinformatics}
 
-Bioinformatics is an interdisciplinary field of research that has had a tremendous impact on humanity in the last few decades. Since the completion of the Human Genome Project \cite{HGP1} \cite{HGP2}, the cost of sequencing a human genome has fallen exponentially. We can now reliably sequence a human genome for less than a \$1000 \cite{genome_cost}, all thanks to recent advances in sequencing technology, as well as the accompanying algorithms. We will here briefly explain the general pipeline of genome sequencing and assembly (section \ref{subsec:the process of sequencing and assembly}), as well as the file formats used in the process (section \ref{subsec:file formats}).
+Bioinformatics is an interdisciplinary field of research that has had a tremendous impact on humanity in the last few decades. Since the completion of the Human Genome Project \cite{HGP1} \cite{HGP2}, the cost of sequencing a human genome has fallen exponentially. We can now reliably sequence a human genome for less than a \$1000 \cite{genome_cost}, all thanks to recent advances in sequencing technology, as well as accompanying algorithms. In section \ref{subsec:the process of sequencing and assembly}, we will briefly explain the general pipeline of genome sequencing and assembly, while in section \ref{subsec:file formats}, we will go through all the file formats used in this thesis for storing data	.
 
 \subsection{The Process of Sequencing and Assembly}
 \label{subsec:the process of sequencing and assembly}
 
-In an ideal world, we would extract a human genome in the form of DNA from a cell, input it into a sequencer, and get a complete and accurate sequence of DNA as output which we could immediately use for further study. However, unfortunately this is not (yet) the case and it is hard to predict when this might become possible. Due to this, we have to make due with sequencers that can only output genomes in the form of thousands of fragmented reads, at maximum about 10 kilobases (kb) long, with shorter read sequencers sequencing reads at lengths of around 150 base pairs (bp). This process is called \textit{shotgun sequencing}. An average genome is much longer than that, e.g. the yeast genome is around 12 Mb long \cite{yeast} and the human genome is around 6.4 Gb long \cite{human}, so after sequencing, we need to assemble these short reads into longer ones before going deeper into analysis.
+In an ideal world, we would extract a human genome in the form of DNA from a cell, input it into a \textit{sequencer}, and get a complete and accurate sequence of a DNA molecule as output with no \textit{base pairs} (adenine, cytosine, guanine and thymine) missing, which we could immediately use for further studying. Unfortunately, this perfect process is not (yet) a reality and it is hard to predict when this might become so. Due to this, we have to make due with sequencers that can only output genomes in the form of thousands of fragmented \textit{reads}, at maximum about 10 kilobases (kb) long, with shorter read sequencers sequencing reads at lengths of around 150 base pairs (bp). This process is called \textit{shotgun sequencing}. An average genome is much longer than that, e.g. the yeast genome is around 12 Mb long \cite{yeast} and the human genome is around 6.4 Gb long \cite{human}, so after sequencing, we need to assemble these short reads into longer ones before going further into analysis.
 
-This process of finding longer reads is the first step in the process of \textit{assembly}. These longer reads are called \textit{contigs}. After this is done, we move on to looking for overlaps between the contigs which we use to create a graph in which each node represents a read, and each edge represents an overlap between reads. An overlap can be described as a match between two contigs' \textit{ends}, that is, the contig's prefix (start) and suffix (end). The length of this overlap can indicate a stronger similarity, and therefore stronger link between two contigs. Finally, we are tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome.
+This process of finding longer reads is the first step in the process of \textit{assembly}, depicted as steps one through three in Figure \ref{fig:genome assembly}. These longer reads are called \textit{contigs}. We can use the overlaps between sequences (step two in Figure \ref{fig:genome assembly}) to build graphs in which each read is represented with a node, and each overlap between reads is represented with an edge in the graph. An overlap can be described as a match between two contigs' \textit{ends}, i.e. the contigs' prefix (start) and suffix (end), which can come in the form of a prefix - suffix or an suffix - prefix overlap. The length of this overlap can indicate a stronger similarity between two reads, and therefore a stronger link in the graph between them. Finally, we are tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome. We also need to orient them properly, depicted as step four in Figure \ref{fig:genome assembly}.
 
-%TODO: create image of de novo genome assembly
+\begin{figure}
+	\centering
+	\includegraphics[width=0.95\textwidth]{images/genome_assembly.png}
+	\caption[Genome assembly]{An illustration depicting the process of \textit{de novo} genome assembly in four steps. First, fragmented sequences are obtained after sequencing. Next, we find overlaps between the sequences. We then combine these overlaps into contigs, and finally, determine the contigs' orientation to create scaffolds. This illustration was inspired by \cite{baker_2012}.}
+	\label{fig:genome assembly}
+\end{figure}
 
 \subsection{File Formats}
 \label{subsec:file formats}
 
-As a specific subfield that combines computer science and genetics, bioinformatics uses multiple file formats that are unique to it. Mostly used for storing representations of genomic data, they offer us a simpler way to work with such data, as well as modify it. In the following sections, we will briefly describe these file formats, as well as state their usage in this project.
+As a distinct subfield that combines computer science and genetics, bioinformatics uses multiple file formats that are unique to it. Mostly used for storing representations of genomic data, they offer us a simpler way to work genome sequences, as well as modify them. In the following sections, we will briefly describe these file formats, as well as state their usage in this thesis.
 
 \subsubsection{FASTA \& FASTQ}
 \label{subsubsec:fasta and fastq}
 
-The most common file format encountered while working with genomic data is the FASTA format, designated by its .fasta or .fa file extension. It is a text-based format for storing nucleotide sequences and their information. Base pairs of amino acids are stored using letters (A - adenine, C - cytosine, G - guanine, T - thymine) in the form of a sequence. Every sequence starts with a description line, which is designated with a ">" symbol at the start of it. The description line can contain various information about the sequence, such as sequence name, sequence length, sequence statistics, etc. In our case, for the yeast genomic data, it specified the species and chromosome to which the sequences belonged to. After generating the reads (Chapter \ref{ch:dataset}) for our data, the description contained data such as the read number, strand information, position on the chromosome, length and the chromosome to which it belonged to, as well as if its a mutated read or not. Sometimes, we may also encounter a FASTQ file. It is identical to a FASTA file, but with added sequence quality score information added after every sequence. In the following, we can see an example of a FASTA file filled with reads:
+The most common file format encountered while working with genomic data is the FASTA format, designated by its .fasta or .fa file extension. It is a text-based format for storing nucleotide sequences and their information. Base pairs of amino acids are stored using letters (A - adenine, C - cytosine, G - guanine, T - thymine) in the form of a long sequence. Every sequence starts with a description line, which is designated with a ">" symbol at the start of the line. The description line can contain various information about the sequence, such as sequence name, sequence length, sequence statistics, etc. In our case, it specified the species and chromosome to which the sequences belonged to (section \ref{sec:introduction}). After generating the reads for our data (Chapter \ref{ch:dataset}), the description contained data such as the read number, strand information (forward or reverse), position on the chromosome, length and the chromosome to which it belonged to, as well as if it was a mutated read or not. Sometimes, we may also encounter a FASTQ file, which is identical to a FASTA file, but with added sequence quality score information added after every sequence. In the following example, we can see a typical line of a FASTA file filled with short reads:
 
 \begin{lstlisting}
 >read=1,reverse,position=1004750-1015277,length=10527,NC_001139.9
@@ -103,9 +108,9 @@ AAGCTTGCAGATTTATTAACAGTTCAAACGAGTTTGGCTGATAATGCTCGTGCAGGTATTG
 \subsubsection{CSV}
 \label{subsubsec:csv}
 
-After generating various information about our dataset, we would store it in a CSV (comma separated values) file. That way, it could be easily read by some of the tools we used (section \ref{sec:technology stack}). A CSV file can be thought of as a table, where values in a row are separated with a comma sign. The file starts with a header with column names that are also separated with commas.
+After generating various information about our dataset, we would store it in a CSV (comma separated values) file. That way, it could be  more easily read by some of the tools we used for extracting data from reads (section \ref{sec:technology stack}). A CSV file can be thought of as a table, where values in a row are separated with a comma sign. The file starts with a header with column names that are also separated with commas.
 
-Another reason why we use the CSV file format is because of the Raven assembler outputting a CSV file with information about sequence overlaps (section \ref{subsec:assembling the graph}). It is stored in the file in the following way. We start in a descending order of read name. A line with an even index number represents an original read, while a line with an odd index number line represents a \textit{virtual} read, i.e. a \textit{reverse complement} of the original read. A reverse complement represents the same sequence as the original, but in reverse order and with the base pairs replaced with their complements (A - T, C - G). The original and the reverse complement essentially represent the same genomic data, but on different strands of the DNA. An example of such a file is in the following:
+Another reason why we use the CSV file format is because of the Raven assembler (section \ref{subsec:assembling the graph}) outputting a CSV file with information about sequence overlap lengths. This information is stored in the file in the following way. We start in a descending order of read name. A line with an even index number represents an original read, while a line with an odd index number represents a \textit{virtual} read, i.e. a \textit{reverse complement} or \textit{strand} of the original read. A reverse complement represents the same sequence as the original, but in reverse order and with the base pairs replaced with their complements (A - T, C - G). The original and the reverse complement essentially represent the same genomic data, but on different strands of the DNA, which are either a forward or backward strand. An example of such a file ican be seein in the following example:
 
 \begin{lstlisting}
 6549 [3274] LN:i:9216 RC:i:1,6412 [3206] LN:i:11360 RC:i:1,1,39678 8937 0 0.992832
@@ -114,12 +119,12 @@ Another reason why we use the CSV file format is because of the Raven assembler 
 6639 [3319] LN:i:10224 RC:i:1,6646 [3323] LN:i:10656 RC:i:1,1,39681 9915 0 0.990291
 \end{lstlisting}
 
-First, we have the index of the read. Then, in square brackets, we have the index of the original read (each virtual read forms a pair with an original read). Then, we have some read information, followed by the second read and its own information. Lastly, we have three fields that represent the overlap length, the weight of the overlap (here not used) and its score, measured in percentage of the overlap match respectively. Each line essentially represents an edge in our graph between two nodes. The first $n$ lines in the file, where $n$ is the number of reads, represent the overlap between the original and virtual file.
+First, we have the index of the first read. Then, in square brackets, we have the index of the original first read (each virtual read forms a pair with an original read). We then have some read information, followed by the second read with which the first one forms an overlap, along with its own information. Lastly, we have three fields that represent the overlap length, the weight of the overlap (not used in this thesis) and its score, measured in the percentage of the overlap match (note: overlaps do not need to be perfect). Each line essentially represents an edge in our graph between two nodes. The first $n$ lines in the file, where $n$ is the number of reads, represent the overlap between the original and virtual file. They are then followed by all other overlaps.
 
 \subsubsection{GFA}
 \label{subsubsec:gfa}
 
-Another important file Raven outputs is a Graphical Fragment Assembly (GFA)\footnote{https://gfa-spec.github.io/GFA-spec/GFA1.html} file. It contains similar information to the CSV file, but with some notable additions, namely, instead of just specifying read overlaps, it also contains the whole sequences it uses in the assembly process. It also includes the original read names specified before assembly that contain mutation information. Each line in the file starts with an identifier, listed in the following table:
+Another important file Raven outputs is a Graphical Fragment Assembly (GFA)\footnote{https://gfa-spec.github.io/GFA-spec/GFA1.html} file. It contains similar information to the CSV file, but with some notable additions, namely, instead of just specifying read overlaps, it also contains the whole sequences it uses in the assembly process. It also includes the original read names specified before assembly that contain mutation information. Each line in the file starts with an identifier, all the different ones being listed in the following table:
 
 \begin{center}
 	\begin{tabular}{ |c|c| }
@@ -143,109 +148,108 @@ Another important file Raven outputs is a Graphical Fragment Assembly (GFA)\foot
 	\end{tabular}
 \end{center}
 
-For our purposes, the file only contained lines starting with the letters S and L. S denotes a segment (sequence) used in the assembly, along with most of its information that was present before assembly (this is notable because it is missing in the CSV file). The lines starting with an L contain lines about sequence overlaps in a similar manner to the CSV file, with the addition of overlap length information and mutation info the later being crucial for specifying which edges connect what parent's haplotype. An example of lines starting with an L is in the following:
+For our purposes, the file only contained lines starting with the letters S and L. S denotes a segment (sequence) used in the assembly, along with most of its information that was present before assembly (this is notable because it is missing in the CSV file). The lines starting with an L contain lines about sequence overlaps in a similar manner to the CSV file, with the addition of overlap length and mutation information, the latter being crucial for specifying which parent's haplotypes we are connecting with the overlaps. An example of lines starting with an L is in the following example:
 
 \begin{lstlisting}
 L	read=4158,reverse,position=395590-406211,length=10621,NC_001139.9|mutated	+ read=4884,reverse,position=383506-395832,length=12326,NC_001139.9|mutated	+	101M
 L	read=4832,forward,position=802633-815655,length=13022,NC_001139.9|mutated	-	read=4165,reverse,position=793088-803478,length=10390,NC_001139.9|mutated	+	733M
 \end{lstlisting}
 
+The S lines are important because we can use them to associate the GFA file with the CSV file. This is due to the fact that the read index of a true read in the CSV file is equal to the line index of a sequence in the GFA file divided by two. So for example, the read with the true index 346 in the CSV file is equal to the sequence in line 173 in the GFA file.
+
 \subsubsection{Miscellaneous}
 
-Aside from the mentioned file formats, we created numerous files of our own that either didn't have a suffix, or simply ended with a \textit{.txt} extension, for easier reading and writing. Those files were of an unspecified format and contained temporary information abut the graph, such as overlap lengths, parent affiliation, and similar.
+Aside from the mentioned file formats, we created numerous other files of our own that either didn't have a suffix, or simply ended with a \textit{.txt} extension, for easier reading and writing. Those files were of an unspecified format and contained temporary information abut graphs, such as overlap lengths, parent affiliation, and similar.
 
 \section{Thesis Task}
 
-The task we are presented with here is slightly different compared to standard genome sequencing. Instead of just finding a path through the graph in order to assemble a complete genome, we are instead tasked with removing edges in the graph that connect contigs belonging to separate parents. By doing this, we are essentially separating the two haplotypes that constitute a genome. To give more insight into this, we will explain what graphs are and how we use them.
+The task we are presented with here is slightly different compared to standard genome sequencing. Instead of just finding a path through the assembly graph in order to assemble a complete genome, we are instead tasked with removing edges in the graph that connect contigs belonging to different parents. By doing this, we are essentially separating the two haplotypes that constitute a genome. To give more insight into this, we will explain what graphs are and how we use them in the following section.
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
+	\node[main] (1) {$v_1$}; 
+	\node[main] (2) [above right of=1] {$v_2$}; 
+	\node[main] (3) [below right of=1] {5}; 
+	\node[main] (4) [above right of=3] {8}; 
+	\node[main] (5) [above right of=4] {3}; 
+	\node[main] (6) [below right of=4] {4}; 
+	\draw[->] (1) -- node[auto] {$e$} (2);
+	\draw[->] (1) -- node[auto] {7} (3);
+	\draw[->] (1) to [out=135,in=90,looseness=1.5] node[auto] {1} (5); 
+	\draw[->] (1) to [out=180,in=270,looseness=5] node[auto, swap] {3} (1); 
+	\draw[->] (2) -- node[auto] {4} (4); 
+	\draw[->] (3) -- node[auto] {2} (4); 
+	\draw[->] (5) -- node[auto] {8} (4); 
+	\draw[->] (5) to [out=315, in=315, looseness=2.5] node[auto] {2} (3); 
+	\draw[->] (6) -- node[auto] {1} (4); 
+	\end{tikzpicture}
+	\caption[Example graph]{An example of a directed graph with node and edge weights. Aside from every edge being directed, loops are also present, which connect nodes to themselves.}
+	\label{fig:example_graph}
+\end{figure}
 
 \subsection{Graphs}
 
 Graphs are data structures that can be defined with a set of nodes (vertices) $V$ and a set of edges connecting them $E$. Formally, this can be written as:
-
 \[ G = (V, E) \]
 where:
-
 \[ E \subseteq 	\{ (x, y)|(x, y) \in V^2 \mathrm{\ and\ } x \neq y \} \]
-The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we will work with. A representation of such a graph can be seen in Figure \ref{fig:example_graph}. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done because edge direction can encode both suffix - prefix and prefix - suffix overlaps, which is an useful information for us \cite{trudeau_2017}. Aside from this, both the nodes and edges have weights assigned to them that can represent various information about the graph.
+The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we work with in this thesis. A representation of such a graph can be seen in Figure \ref{fig:example_graph}. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done so because edge direction can encode both suffix - prefix and prefix - suffix overlaps (section \ref{subsec:the process of sequencing and assembly}), which is an useful information for us. Aside from this, both the nodes and edges have weights assigned to them that can represent various information about the graph \cite{trudeau_2017}.
 
-In this thesis, after sequencing and assembly (\ref{subsec:the process of sequencing and assembly}), we obtain a list of reads connected to each other via overlaps. The reads can be thought of as nodes in a graph, while edges are the links between the nodes. By building such structures, we can more easily use existing graph theory insights to remove unnecessary edges and separate the two haplotypes.
-
-\begin{figure}
-\centering
-\begin{tikzpicture}[node distance={15mm}, thick, main/.style = {draw, circle}] 
-\node[main] (1) {$v_1$}; 
-\node[main] (2) [above right of=1] {$v_2$}; 
-\node[main] (3) [below right of=1] {5}; 
-\node[main] (4) [above right of=3] {8}; 
-\node[main] (5) [above right of=4] {3}; 
-\node[main] (6) [below right of=4] {4}; 
-\draw[->] (1) -- node[auto] {$e$} (2);
-\draw[->] (1) -- node[auto] {7} (3);
-\draw[->] (1) to [out=135,in=90,looseness=1.5] node[auto] {1} (5); 
-\draw[->] (1) to [out=180,in=270,looseness=5] node[auto, swap] {3} (1); 
-\draw[->] (2) -- node[auto] {4} (4); 
-\draw[->] (3) -- node[auto] {2} (4); 
-\draw[->] (5) -- node[auto] {8} (4); 
-\draw[->] (5) to [out=315, in=315, looseness=2.5] node[auto] {2} (3); 
-\draw[->] (6) -- node[auto] {1} (4); 
-\end{tikzpicture}
-\caption[Example graph]{An example of a directed graph with node and edge weights. Aside from every edge being directed, loops are also present.}
-\label{fig:example_graph}
-\end{figure}
+In this thesis, after sequencing and assembly (section \ref{subsec:the process of sequencing and assembly}), we obtain a list of reads connected to each other via overlaps. The reads can be thought of as nodes in a graph, while edges are the links between the nodes. By building such structures, we can more easily use existing graph theory insights to remove unwanted edges and separate the two haplotypes.
 
 \section{Deep Learning}
 
-\begin{figure}
-	\centering
-	\begin{tikzpicture}[x=2.2cm,y=1.4cm]
-	\readlist\Nnod{2,3,3,3,2} % array of number of nodes per layer
-	\readlist\Nstr{n,m,m,m,k} % array of string number of nodes per layer
-	\readlist\Cstr{\strut x,a^{(\prev)},a^{(\prev)},a^{(\prev)},y} % array of coefficient symbol per layer
-	\def\yshift{0.5} % shift last node for dots
-	
-	\foreachitem \N \in \Nnod{ % loop over layers
-		\def\lay{\Ncnt} % alias of index of current layer
-		\pgfmathsetmacro\prev{int(\Ncnt-1)} % number of previous layer
-		\message{\lay,}
-		\foreach \i [evaluate={\c=int(\i==\N); \y=\N/2-\i-\c*\yshift;
-			\index=(\i<\N?int(\i):"\Nstr[\lay]");
-			\x=\lay; \n=\nstyle;}] in {1,...,\N}{ % loop over nodes
-			% NODES
-			\node[node \n] (N\lay-\i) at (\x,\y) {$\Cstr[\lay]_{\index}$};
-			
-			% CONNECTIONS
-			\ifnum\lay>1 % connect to previous layer
-			\foreach \j in {1,...,\Nnod[\prev]}{ % loop over nodes in previous layer
-				\draw[connect,white,line width=1.2] (N\prev-\j) -- (N\lay-\i);
-				\draw[connect] (N\prev-\j) -- (N\lay-\i);
-				%\draw[connect] (N\prev-\j.0) -- (N\lay-\i.180); % connect to left
-			}
-			\fi % else: nothing to connect first layer
-			
-		}
-		\path (N\lay-\N) --++ (0,1+\yshift) node[midway,scale=1.5] {$\vdots$};
-	}
-	
-	% LABELS
-	\node[above=0.2,align=center,mygreen!60!black] at (N1-1.90) {input\\[-0.2em]layer};
-	\node[above=0.2,align=center,myblue!60!black] at (N3-1.90) {hidden layers};
-	\node[above=0.2,align=center,myred!60!black] at (N\Nnodlen-1.90) {output\\[-0.2em]layer};
-	
-	\end{tikzpicture}
-\caption[Neural network]{Example of a fully connected neural network. The green nodes represent the input to the network of size $n$. The blue nodes represent the hidden layers, with each connection between them having trainable weights. They are of size $m$ with the numbers in brackets representing the layer index. Finally, the red nodes represent the output of the network of size $k$. Taken from \cite{latex_nn}.}
-\label{fig:neural network}
-\end{figure}
-
-In this section, we will go over the basics of deep learning (section \ref{subsec:basics}), the main tool used for the experiments in this thesis, followed with an overview of graph neural networks (section \ref{subsec:graph neural networks}) and all its different variants we used.
+In this section, we will go over the basics of deep learning (section \ref{subsec:basics}), the main method behind the experiments in this thesis, followed with an overview of graph neural networks (section \ref{subsec:graph neural networks}) and all the different variants of them we used. Lastly, in section \ref{subsec:other functions}, we will explain all the different nonlinearities and regularization functions we used in our models.
 
 \subsection{Basics}
 \label{subsec:basics}
 
-In the last decade, deep learning has grown from a niche research area to one of the largest fields withing computer science. It is now actively employed in virtually every human endeavor, from healthcare to entertainment \cite{dl_applications}. And it is still growing day by day on its mission to become the standard way of handling almost all data \cite{dl_growth}.
+In the last decade, deep learning has grown from a niche research area to one of the most prominent fields withing computer science. It is now actively employed in virtually every human endeavor, from healthcare to entertainment \cite{dl_applications}. And it is still growing day by day on its mission to revolutionize the way we handle almost all data \cite{dl_growth}. To give insight into the field, will will explain the most basic building block of DL, Artificial Neural Networks, along with the algorithms that make them work: Stochastic Gradient Descent and Backpropagation.
 
 \subsubsection{Artificial Neural Networks}
 
-In deep learning, we use data processing structures called \textit{artificial neural networks} (ANNs) to extract useful information from our data and learn to predict an outcome, such as some feature of the data or a target class. An example of a fully connected neural network can be seein in Figure \ref{fig:neural network}. ANNs do this by adjusting learnable \textit{weights} defined for every neuron in our network. Due to these weights, neural networks are much denser structures when compared to previous machine learning methods and can be referred to as \textit{universal function approximators} \cite{uni_approx} due to their ability to, with large enough networks, approximate any function. This gives them unprecedented performance on previously unsolvable tasks, but due to their abstract structure, makes them somewhat difficult to interpret. Some networks, like \textit{convolutional neural networks} \cite{CNN}, don't suffer from this problem as much and can produce some quite intuitive visualizations. On the other hand, some networks, like the ones we will use here, cannot be visually meaningfully interpreted.
+In deep learning, we use data processing structures called \textit{artificial neural networks} (ANNs) to extract information from data and learn to predict an outcome, such as some feature of the data or a target class to which the data belongs. An example of a fully connected neural network can be seen in Figure \ref{fig:neural network}. ANNs learn from data by adjusting trainable \textit{weights} that are defined for every connection between neurons in our network. Due to these weights, neural networks are much denser structures when compared to previous machine learning methods and can be referred to as \textit{universal function approximators} \cite{uni_approx} due to their ability to, with large enough networks, approximate any continuous function. This gives them unprecedented performance on previously unsolvable tasks, but due to their abstract structure, makes them somewhat difficult to interpret. Some networks, like \textit{convolutional neural networks} \cite{CNN}, don't suffer from this problem of interpretability as much and can produce some quite intuitive visualizations. On the other hand, some networks, like the ones we will use in this thesis, cannot be visually meaningfully interpreted.
+
+\begin{figure}
+	\centering
+	\begin{tikzpicture}[x=2.2cm,y=1.4cm]
+		\readlist\Nnod{2,3,3,3,2} % array of number of nodes per layer
+		\readlist\Nstr{n,m,m,m,k} % array of string number of nodes per layer
+		\readlist\Cstr{\strut x,a^{(\prev)},a^{(\prev)},a^{(\prev)},y} % array of coefficient symbol per layer
+		\def\yshift{0.5} % shift last node for dots
+		
+		\foreachitem \N \in \Nnod{ % loop over layers
+			\def\lay{\Ncnt} % alias of index of current layer
+			\pgfmathsetmacro\prev{int(\Ncnt-1)} % number of previous layer
+			\message{\lay,}
+			\foreach \i [evaluate={\c=int(\i==\N); \y=\N/2-\i-\c*\yshift;
+				\index=(\i<\N?int(\i):"\Nstr[\lay]");
+				\x=\lay; \n=\nstyle;}] in {1,...,\N}{ % loop over nodes
+				% NODES
+				\node[node \n] (N\lay-\i) at (\x,\y) {$\Cstr[\lay]_{\index}$};
+				
+				% CONNECTIONS
+				\ifnum\lay>1 % connect to previous layer
+				\foreach \j in {1,...,\Nnod[\prev]}{ % loop over nodes in previous layer
+					\draw[connect,white,line width=1.2] (N\prev-\j) -- (N\lay-\i);
+					\draw[connect] (N\prev-\j) -- (N\lay-\i);
+					%\draw[connect] (N\prev-\j.0) -- (N\lay-\i.180); % connect to left
+				}
+				\fi % else: nothing to connect first layer
+				
+			}
+			\path (N\lay-\N) --++ (0,1+\yshift) node[midway,scale=1.5] {$\vdots$};
+		}
+		
+		% LABELS
+		\node[above=0.2,align=center,mygreen!60!black] at (N1-1.90) {input\\[-0.2em]layer};
+		\node[above=0.2,align=center,myblue!60!black] at (N3-1.90) {hidden layers};
+		\node[above=0.2,align=center,myred!60!black] at (N\Nnodlen-1.90) {output\\[-0.2em]layer};
+	\end{tikzpicture}
+	\caption[Neural network]{Example of a fully connected neural network. Nodes represent individual artificial neurons. The green neurons represent the input to the network, which is of size $n$. The blue neurons represent the hidden layers, which are \textit{fully connected}, i.e. each neuron is connected to every other neuron in the previous and following layer. Each of these connections has a trainable weight associated with it used for learning how the neurons should pass data between them to learn from it. The hidden layers are of size $m$ with the numbers in brackets representing the layer index. Finally, the red neurons represent the output of the network, which is of size $k$. This image was taken from \cite{latex_nn}.}
+	\label{fig:neural network}
+\end{figure}
 
 \subsubsection{Loss Function \& Stochastic Gradient Descent}
 \label{subsubsec: loss function and stochastic gradient descent}
@@ -258,8 +262,26 @@ where $w$ are the function weights, $n$ is the number of data samples, $\eta$ is
 Now, SGD can also come in multiple forms. True SGD, as in the above equation, calculates these weight changes by first calculating function loss on all data we have available, averages it and only then updates weights. This is very accurate, but also rather slow. On the other end of the spectrum, we can update weights after we process every piece of data. This is very fast and has a lower chance of ending up in local optima, but is also too imprecise for fine-tuning network performance. Due to this, we use a compromise of the two in the form of \textit{mini-batches}. Instead of using only one or all data, we use a batch of data. Using larger batches is slower and more precise, while using smaller batches is faster and less precise. That being said, most often, we are limited by memory constraints while determining batch size.
 
 \subsubsection{Backpropagation}
+\label{subsubsec:backpropagation}
 
-We can now move on to the backpropagation algorithm. In essence, it is the idea of SGD applied to neural networks. It tells every weight in our network how to change in order to better predict our data. By correctly propagating these gradient values back through the network, which backpropagation does, we can successfully make our network learn from data \cite{Goodfellow-et-al-2016}.
+We can now move on to the backpropagation algorithm. In essence, it is the idea of SGD applied to neural networks. It tells every weight in our network how to change in order to better predict our data. By correctly propagating these gradient values back through the network, which backpropagation does, we can successfully make our network learn from data \cite{Goodfellow-et-al-2016}. We will now explain this in more detail.
+
+After we obtain a loss value and gradients, we need to somehow pass them back through the network and adjust network weights properly according to those gradients. The amount of change is different depending on the layer of the network, but can be calculated using the partial derivative of the network error in respect to the weight with the chain rule:
+
+\[ \frac{\partial E}{\partial w_{ij}} = \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial w_{ij}} = \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial net_j} \frac{\partial net_j}{\partial w_{ij}}\]
+Here, $E$ is the error of our network, $o_j$ is the output of layer $j$, $net_j$ is the output of layer $j$ before the activation function, and $w_{ij}$ is the weight of the neuron $i$ in layer $j$. Only one part of $net_j$ depends on $w_{ij}$, so we can substitute the last term in the above equation with $o_i$. If the neuron is in the output layer (denoted in a red color in Figure \ref{fig:neural network}), then $o_j = y$, so $\frac{\partial E}{\partial o_{j}} = \frac{\partial E}{\partial y}$. If it isn't (denoted with a blue color in Figure \ref{fig:neural network}), the derivative is less obvious and we won't go into detail on how to obtain it, but will simply state it.
+
+Finally, we get:
+
+\[ \frac{\partial E}{\partial w_{ij}} = \delta_j o_i \]
+where:
+
+\[ \delta_j = \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial net_j} = \begin{cases}
+	\frac{\partial E}{\partial y} \frac{\partial \phi(net_j)}{\partial net_j} & \text{if $j$ is an output neuron,} \\
+	(\sum_{l \in L} w_{jl} \delta_l) \frac{\partial \phi(net_j)}{\partial net_j} & \text{if $j$ is an inner neuron.}
+\end{cases}
+\]
+Here, $\phi$ is the activation function and $L$ is the set of all neurons receiving input from node $j$, or in other words, all successor nodes to node $j$. After we have obtained these values, we use the weight update function from the previous chapter to finally update network weights.
 
 \subsection{Graph Neural Networks}
 \label{subsec:graph neural networks}
@@ -275,7 +297,20 @@ Edge-wise: \[ m_e^{(t+1)} = \phi (x_v^{(t)}, x_u^{(t)}, w_e^{(t)}), (u, v, e) \i
 Node-wise: \[ x_v^{(t+1)} = \psi (x_v^{(t)}, \rho (\{m_e^{(t+1)}: (u, v, e) \in \mathcal{E}\})) \]
 In the above equations, $\phi$ is a message function defined on each edge to generate a message by combining the edge feature with the features of its incident nodes; $\psi$ is an update function defined on each node to update the node feature by aggregating its incoming messages using the reduce function $\rho$.
 
+\subsubsection{GNNs and CNNs}
+
 The GNN can be though of as an extension of CNNs. A CNN takes an image's local neighborhood and extracts information from it. It does this using convolution \textit{filters}, which take a certain amount of pixels in a neighborhood and multiply them with weights. Now, the size of this filter is predefined and cannot be changed. For instance, it can have a size of 3 x 3 or 5 x 5. If we were to create such a filter for use on graphs, we would simply designate the central weight of the filter to be the node we are currently looking at, and the surrounding weights would be its neighboring nodes. As we can see, this would limit us to graphs where nodes had a constant number of neighbors, or graphs where we could look only at a limited number of neighbors. GNNs do not have this limitation. The $\psi$ function takes all nodes in a central node's neighborhood into account equally \cite{GRL} \cite{bronstein2021geometric}.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/gnn_backprop.png}
+	\caption[GNN backpropagation]{A diagram depicting the process of unfolding a graph in order to calculate its gradients. In the first step (top), we have graph. We then build a network in terms of the graph's update functions $g$ and $f$, thereby obtaining an encoding network corresponding to our graph. In the last step (bottom), we unfold the encoding network to get a recurrent neural network where each layer contains all of the graph's functions $f$ and $g$. Image taken from \cite{GNN}.}
+	\label{fig:gnn backprop}
+\end{figure}
+
+\subsubsection{Backpropagation for GNNs}
+
+Calculating backpropagation for GNNs is different from regular backpropagation (section \ref{subsubsec:backpropagation}). We will here try to explain it intuitively without going into too much mathematical detail, as it's beyond the scope of this thesis and rather unnecessary for understanding how GNNs work. First, it is necessary to look at a GNN as consisting of units of functions $\phi$ and $\psi$. We can then build a network of these functions that corresponds to our graph and call it an \textit{encoding network}. When functions $\phi$ and $\psi$ are implemented by regular neural networks, the encoding networks turn out to be \textit{recurrent neural networks}, i.e. networks that that take as input values from a previous neuron and themselves. After we unfold this network, we get a time series that corresponds to steps in our GNN learning process. Each of these steps contains all of units in an encoding network and defines how they pass messages to each other in each time step. We then apply backpropagation on recurrent neural networks, as defined in \cite{rnn_backprop}. This process can be seen in Figure \ref{fig:gnn backprop} \cite{GNN}.
 
 We used three different GNNs in this thesis, which we will describe in the following sections. We will start with the most basic GNN, the Graph Convolutional Network (section \ref{subsubsec:graph convolutional netwroks}), follow them up with Graph Attention Networks (section \ref{subsubsec:graph attention networks}), and finally finish with the most complex network type, the Edge Graph Attention Network (section \ref{subsubsec:edge graph attention network}).
 
@@ -310,6 +345,7 @@ The last network we used, and by far the most effective one, is the graph attent
 Here, $f_{ij}$ represents edge features, $A$ is a weight matrix and $\vec{a}$ is a weight vector. This network greatly improves performance due to the fact that it better utilizes edge features. Instead of just using them as weights to scale edge importance, it handles them in the same manner of importance as the node features. This way, the network can find meaning in the edge weights much better compared to a regular GAT network.
 
 \subsection{Other Functions}
+\label{subsec:other functions}
 
 In this section, we will explain all the functions we use in our networks that aren't directly responsible for training, such as regularization functions and nonlinearities.
 
@@ -480,7 +516,7 @@ We found that generating 5000 - 10 000 reads gave satisfactory results in combin
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/separated_haplotypes_before_training.png}
-	\caption[Separated graph]{Example of a graph obtained after sequencing and assembly. in this case, the haplotypes are separated. Orange nodes represent mutated reads, while green nodes represent the original reads. This graph was obtained using the Graphia\footnotemark{} graphing tool.}
+	\caption[Separated graph]{Example of a graph obtained after sequencing and assembly. In this case, the haplotypes are separated. Orange nodes represent mutated reads, while green nodes represent the original reads. We can see the high completeness of the green graph and high fragmentation of the orange graph. This graph was obtained using the Graphia\footnotemark{} graphing tool.}
 	\label{fig:separated graph}
 \end{figure}
 \footnotetext{https://graphia.app/}
@@ -536,7 +572,7 @@ self.classify = MLPPredictorEGAT(int(out_dim / 4), n_classes)
 self.dp = nn.Dropout(p=0.5)
 \end{lstlisting}
 
-We define the network in the following way. First, we initalize a linear layer that transforms the node features (number of in and out node degrees) into a higher dimension of size \texttt{node\_features}. Then, we define four EGAT layers. The first layer is of the largest width \texttt{hidden\_dim} (both for node and edge features), and subsequent layers divide this size by two in each step. Only the first layer used a \texttt{num\_heads} number of attention heads, the rest used only one. This is done to improve training times, as this network proved much slower than the other ones we used. After all the EGAT layers are done with their computations, we pass everything through a classification layer. This layer works by taking the new calculated node and edge features and concatenating them before passing them into a fully connected classification layer. The network then finally outputs a list of class probabilities for every edge in the graph.
+We define the network in the following way. First, we initialize a linear layer that transforms the node features (number of in and out node degrees) into a higher dimension of size \texttt{node\_features}. Then, we define four EGAT layers. The first layer is of the largest width \texttt{hidden\_dim} (both for node and edge features), and subsequent layers divide this size by two in each step. Only the first layer used a \texttt{num\_heads} number of attention heads, the rest used only one. This is done to improve training times, as this network proved much slower than the other ones we used. After all the EGAT layers are done with their computations, we pass everything through a classification layer. This layer works by taking the new calculated node and edge features and concatenating them before passing them into a fully connected classification layer. The network then finally outputs a list of class probabilities for every edge in the graph.
 
 You may have noticed that in some layers, we multiply the input dimension for the EGAT layer with \texttt{num\_heads}. This is done so that the number of attention heads is accounted for correctly while passing the results to the next network. The different layer outputs are \textit{flattened}, i.e. concatenated into a smaller dimensional vector before being passed to the next layer. Aside from this, we also employ the \textit{dropout} (section \ref{subsubsec:regularization functions}) mechanism to reduce overfitting (section \ref{subsec:the training process}).
 
@@ -544,7 +580,7 @@ You may have noticed that in some layers, we multiply the input dimension for th
 
 All of the previously described functions are connected in the \texttt{main} function. First, we define the function for logging parameters such as loss and accuracy for visualization using TensorBoard (section \ref{sec:technology stack}). Then, we define the dataset by calling the \texttt{DGLDataset} module and, if it previously hasn't been generated, create the dataset. We then define the model we will use for training with all its parameters and layer sizes. After that, we define the optimizer for our model, and finally, we start the training process. This process is depicted in Figure \ref{fig:architecture}.
 
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{images/model.png}
 	\caption[Model]{Graphical representation of the model architecture with EGAT layers. Different layers are represented with different colors and the main model is described within the gray box. This image was constructed using diagrams.net\footnotemark{}}
@@ -574,7 +610,7 @@ This set of operations represents one step of the network, which we perform four
 \subsection{Optimizer}
 \label{subsec:optimizer}
 
-An important element of every machine learning system is the optimizer. An optimizer is a function that controls how the weights of our network are adjusted after we obtain the gradients. The optimizer we used is the popular Adam (Adaptive Moment Estimation) optimizer \cite{adam}. It falls into the adaptive optimizers category and represents a nice balance between speed and performance due to using two different adaptive techniques: momentum and root mean square propagation (SMSProp). Recently, there has been more and more research about the advantages and disadvantages of adaptive optimization techniques compared to standard \textit{Stochastic Gradient Descent} (SGD). However, it is still a good idea to first use Adam as it doesn't require hyperparameter tuning to offer good results \cite{optimizers}. Momentum accelerates gradient descent using the \textit{exponentially weighted average} of the gradients and can be described with the following equations:
+An important element of every machine learning system is the optimizer. An optimizer is a function that controls how the weights of our network are adjusted after we obtain the gradients. The optimizer we used is the popular Adam (Adaptive Moment Estimation) optimizer \cite{adam}. It falls into the adaptive optimizers category and represents a nice balance between speed and performance due to using two different adaptive techniques: momentum and root mean square propagation (RMSProp). Recently, there has been more and more research about the advantages and disadvantages of adaptive optimization techniques compared to standard \textit{Stochastic Gradient Descent} (SGD). However, it is still a good idea to first use Adam as it doesn't require hyperparameter tuning to offer good results \cite{optimizers}. Momentum accelerates gradient descent using the \textit{exponentially weighted average} of the gradients and can be described with the following equations:
 
 \[ w_{t+1} = w_t - \alpha m_t \]
 where
@@ -599,7 +635,7 @@ then:
 \[ \widehat{m_l} = \frac{m_i}{1 - \beta_1}, \widehat{v_l} = \frac{v_i}{1 - \beta_2} \]
 
 \[ \theta_i = \theta_i - \frac{\alpha}{\sqrt{\widehat{v_l}} + \epsilon} \widehat{m_l} \]
-It uses both the first and the second momentum which are divided by one minus the decay factor $\beta$ to account for bias in the estimator. $\epsilon$ is a small value added in order to avoid division by zero and $\alpha$ is the learning rate. $\beta_1$ is almost always 0.9, while $\beta_2$ is usually 0.999. In the first iteration, the moving averagesa are set to zero. By using techniques from both SGD with momentum and RMSProp, Adam inherits both of their strengths. The main advantages are that Adam takes big enough steps to avoid local otpima, while simultaneously oscillating minimaly when it reaches the global optimum.
+It uses both the first and the second momentum which are divided by one minus the decay factor $\beta$ to account for bias in the estimator. $\epsilon$ is a small value added in order to avoid division by zero and $\alpha$ is the learning rate. $\beta_1$ is almost always 0.9, while $\beta_2$ is usually 0.999. In the first iteration, the moving averages are set to zero. By using techniques from both SGD with momentum and RMSProp, Adam inherits both of their strengths. The main advantages are that Adam takes big enough steps to avoid local optima, while simultaneously oscillating minimally when it reaches the global optimum.
 
 During training, we used a version od Adam implemented in PyTorch (section \ref{sec:technology stack}) with default parameters. The learning rate was set to 0.001, the $\beta$ parameters were set to 0.9 an 0.999 respectively, $\epsilon$ was set to 1e-8 and weight decay wasn't used.
 
@@ -608,48 +644,49 @@ During training, we used a version od Adam implemented in PyTorch (section \ref{
 
 After we generated our dataset of $n$ graphs (100 for the dataset with only one chromosome), we used 99 graphs for training and one for validation. This is done to prevent \textit{overfitting}. This can be explained in the following way. As our model trains on the training part of the dataset, it starts to memorize the data in our dataset by heart. This may sound good, but it actually leads to poor \textit{generalization}, i.e., it cannot perform well on other similar data, only on the data it was trained on. To alleviate this, we separate a smaller validation dataset from the main one that the model doesn't train on. By validating our performance on it, we can get a more accurate state of the performance of our model. As the model starts overfitting, performance on the train part of the dataset will continue to improve, while on the validation part, it will start to worsen. We can then take the step where the model performed on the validation dataset the best as the best version of our model.
 
-Aside from this, validation can also be used for tuning \textit{hyperparameters} of our model, i.e. parameters that aren't adjuseted during training, but are set before training. In that case, as some of the information from the validation dataset leaks into the training,  we also need to create a test dataset that will now fulfill the role that validation has fulfilled previously: generalization testing. In this thesis, we don't do this as most of the hyperparameters we used are set to default and we aren't concerned with top performance as much as testing out if the concept of haplotype separation works with GNNs and with what models.
+Aside from this, validation can also be used for tuning \textit{hyperparameters} of our model, i.e. parameters that aren't adjusted during training, but are set before training. In that case, as some of the information from the validation dataset leaks into the training,  we also need to create a test dataset that will now fulfill the role that validation has fulfilled previously: generalization testing. In this thesis, we don't do this as most of the hyperparameters we used are set to default and we aren't concerned with top performance as much as testing out if the concept of haplotype separation works with GNNs and with what models.
+
+The models were trained on a setup with two AMD EPYC 7662 64-Core processors with 32 threads. Training time was shortest for GCNs, with around 30 minutes for 100 epochs. It took up to two times as much time for 100 epochs of GATs and four times as much for EGATs.
 
 \subsection{Hyperparameters}
 \label{subsec:hyperparameters}
 
-There are numerous important hyperparameters that can be adjusted to optimize training performance. However, due to time constraints and simplicity reasons, we mostly used default parameters in this thesis. We already mentioned the hyperparameters we used for the Adam optimizer (section \ref{subsec:optimizer}), the network sizes we used (section \ref{sec:model description}), as well as the values used for dropout (section \ref{subsubsec:regularization functions}), but there are others that require an explanation. An important one is batch size (section \ref{subsubsec: loss function and stochastic gradient descent}). Batch size determines how much of our data enters our network during one step of training. In GNNs, it translates to the number of separate graphs in an instance of the dataset. The message passing algorithm (section \ref{subsec:graph neural networks}) doesn't pass data over from separate graphs, so batches can be implemented very easily. That being said, the graphs we used for training were of sufficient size and using more than one graph during an instance of training simply wasn't necesary. In addition, some graphs appeared fragmented after assembly anyways, so they acted like mini-batches regardless.
+There are numerous important hyperparameters that can be adjusted to optimize training performance. However, due to time constraints and simplicity reasons, we mostly used default parameters in this thesis. We already mentioned the hyperparameters we used for the Adam optimizer (section \ref{subsec:optimizer}), the network sizes we used (section \ref{sec:model description}), as well as the values used for dropout (section \ref{subsubsec:regularization functions}), but there are others that require an explanation. An important parameter is batch size (section \ref{subsubsec: loss function and stochastic gradient descent}). Batch size determines how much of our data enters our network during one step of training. In GNNs, it translates to the number of separate graphs in an instance of the dataset. The message passing algorithm (section \ref{subsec:graph neural networks}) doesn't pass data over from separate graphs, so batches can be implemented very easily. That being said, the graphs we used for training were of sufficient size and using more than one graph during an instance of training simply wasn't necesary. In addition, some graphs appeared fragmented after assembly anyways, so they acted like mini-batches regardless.
 
 \chapter{Results}
 \label{ch:results}
 
-In this chapter, we will present the results obtained in the experiments we performed for this thesis. First, we will go over the experiments on only one chromosome (section \ref{sec:experiments on one chromosome}), and then over the experiments on the whole genome.
+In this chapter, we will present the results obtained in the experiments we performed for this thesis. First, we will go over the experiments er performed on only one chromosome (section \ref{sec:experiments on one chromosome}), and then over the experiments we performed on the whole genome (section \ref{sec:experiments on the whole genome}).
 
 \section{Performance Metrics}
 
-Here, we will briefly explain all the different metrics for evaluating model performance during training that we used. These include accuracy (section \ref{subsec:accuracy}), F1 score (section \ref{subsec:f1 score}) and model loss (section \ref{subsec:loss function}).
+Here, we will briefly explain all the different metrics for evaluating model performance during training that we used. These include accuracy (section \ref{subsec:accuracy}), F1 score along with recall and precision (section \ref{subsec:f1 score}) and model loss (section \ref{subsec:loss function}).
 
 \subsection{Accuracy}
 \label{subsec:accuracy}
 
-Accuracy is a simple and reliable metric foe assessing model performance that is quite popular and widespread due to its interpretability and it being easy to understand. It can be described as the number of correctly classified examples divided by the total number of examples in the dataset. With that said, it does have limits to its use. For instance, in the case when the dataset is severely imbalanced, i.e. there are many more examples of one class, e.g. \textit{true} compared to the other, e.g. \textit{false}, it will always display a high performance figure by simply always guessing \textit{true}. Fortunately, this is not the case for our dataset, as we have a fairly similar number of correct and incorrect examples. We can also define it with the following equation:
+Accuracy is a simple and reliable metric used for assessing model performance that is quite popular and widespread due to its interpretability and easy to understand nature. It can be described as the number of correctly classified examples divided by the total number of examples in the dataset. With that being said, it does have its limits. In the case when the dataset is severely imbalanced, i.e. there are siginificantly more examples of one class compared to the other, e.g. \textit{true} vs. \textit{false}, it will always display a high value by simply always guessing \textit{true}. Fortunately, this is not the case for our dataset, as we have a fairly similar number of correct and incorrect examples (section \ref{ch:dataset}). Accuracy can also be defined with the following equation:
 
 \[ \mathrm{Accuracy} = \frac{\mathrm{TP} + \mathrm{TN}}{\mathrm{TP} + \mathrm{TN} + \mathrm{FP} + \mathrm{FN}} \]
+Put into words, it is the number of \textit{true positive} examples (everything our model classified correctly) and \textit{true negative} examples (everything our model did not classify correctly) divided by all examples in the dataset.
 
-Accuracy is the number of \textit{true positive} and \textit{true negative} examples divided by all examples. In other words, it is the sum of everything our model classified correctly divided by both everything our model did and didn't classify correctly.
-
-\subsection{F1 score}
+\subsection{F1-Score}
 \label{subsec:f1 score}
 
-F1 score is slightly more complex than the previously described accuracy score. It belongs to a family of scores known as \textit{F-scores}, which can be described with the following equation:
+F1-score is a more complex metric than the previously described accuracy score, but is also more informative about model results. It belongs to a family of scores known as \textit{F-scores}, which can be described with the following equation:
 
-\[ \mathrm{F} = (1 + \beta^2) \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{(\beta^2 \cdot \mathrm{precision}) + \mathrm{recall}} \] where \[ \mathrm{precision} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}} \] \[ \mathrm{recall} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}} \]
-Precision measures how many of the examples we classified as positive are truly positive, while recall measures how many of the positive examples we actually classified as positive.
+\[ F_1 = (1 + \beta^2) \cdot \frac{\mathrm{precision} \cdot \mathrm{recall}}{\beta^2 \cdot \mathrm{precision} + \mathrm{recall}} \] where \[ \mathrm{precision} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FP}} \] \[ \mathrm{recall} = \frac{\mathrm{TP}}{\mathrm{TP} + \mathrm{FN}} \]
+Precision measures how many of the examples we classified as positive are truly positive, while recall measures how many of the positive examples present in the dataset our model actually classified as positive.
 
-F1 score is a version of the F-score where the $\beta$ parameter is set to 1, which in turn simplifies the equation to:
+F1-score is a version of F-score where the $\beta$ parameter is set to 1, which in turn simplifies the equation to:
 
 \[ \mathrm{F_1} = 2 \frac{\mathrm{precision} \cdot \mathrm{recall}}{\mathrm{precision} + \mathrm{recall}} \]
-It can be described as the harmonic mean between the precision and recall metrics and is often used as a more data agnostic version of those metrics.
+Intuitively, it can be described as the harmonic mean between the precision and recall metrics and is often used as a more data agnostic version of those metrics.
 
 \subsection{Loss Function}
 \label{subsec:loss function}
 
-As our model falls into the classification category, for the loss function, we used \textit{cross entropy loss}, also know as \textit{logistic loss}. In works by taking the \textit{logits} our model outputs and comparing them against the true labels. Logits are vectors of size $n$, where $n$ is the number of classes we're predicting for every data entry. For instance, if we have 3 examples in our dataset that we need to classify and 7 classes, the size of our matrix would be $7 \times 3$. This matrix is compared to the \textit{one-hot} encoded classes of the data. One-hot encoded vectors are also of size $n$, but with only their true class for the example set to 1, and everything else to 0. They are compared with the following equation:
+As our model falls into the classification category, for the loss function, we used \textit{cross entropy loss}, also know as \textit{logistic loss}. It works by taking the \textit{logits} our model generates as output and compares them against true labels. Logits are vectors of size $n$, where $n$ is the number of classes we have predicted for every data entry. For instance, if we have three examples in our dataset that we need to classify into seven classes, the size of our matrix would be $7 \times 3$. This matrix is compared to the \textit{one-hot} encoded classes of the data. One-hot encoded vectors are also of size $n$, but with only their true class for the example set to 1, and everything else to 0. They are compared with the following equation:
 
 \[ L = - \sum_{i = 1}^n t_i \log (p_i) \]
 where $t_i$ is either a 1 or a 0 (truth label) for class $i$, and $p_i$ is the probability for class $i$. If we are only using two classes (which we indeed are), we can simplify this to \textit{binary cross entropy loss} represented with the following equation:
@@ -678,14 +715,7 @@ The first two graphs we are going to look at are an accuracy graph and an F1 sco
 
 The standout model here is the pink model. It has greatly outperformed the rest of the models, with an accuracy of 87.9\%. This is because here we used an EGAT model (section \ref{subsubsec:edge graph attention network}), which uses edge features much more effectively by incorporating them into the attention mechanism. However, we have to note that we had to use a much smaller model here due to slow training times. Nevertheless, it proved effective for the task at hand.
 
-\section{Experiments on the Whole Genome}
-\label{sec:experiments on the whole genome}
-
-In addition to accuracy, F1 score and loss, we also present recall and precision. These additional metrics might provide clarity in how the model trains on the provided data. The model we used for training was the EGAT model (section \ref{subsubsec:edge graph attention network}) with default parameters.
-
-\subsection{Accuracy, F1 Score \& Loss}
-
-\begin{figure}[h]
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{images/accuracy_eg.png}
 	\includegraphics[width=\textwidth]{images/f1_eg.png}
@@ -694,11 +724,20 @@ In addition to accuracy, F1 score and loss, we also present recall and precision
 	\label{fig:accuracy, f1 score and loss}
 \end{figure}
 
-In Figure \ref{fig:accuracy, f1 score and loss} we can see the graphs for accuracy (top), F1 score (middle) and model loss (bottom). We group these three graphs together due to them showing similar properties. Accuracy and F1 score exhibit almost the same graphs, while model loss is essentially an inverted version of the same graph. They are also grouped together due to them showing a nice example of overfitting. The model reaches its best performance fairly early during traing, around epoch 100, and then continues to progressively exhibit worse and wrose performance on the vaidation dataset. The best model had an F1 score of 0.8024, accuracy of 0.7911 and loss of 0.3868. This is not far off from the best performing model on only one chromosome, showing that different chromosomes exhibit similar features which our model could take leverage of.
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/separated_haplotypes_after_training.png}
+	\caption[Separated graph after training]{Example of a graph obtained after training with separated haplotypes. Orange nodes represent mutated reads, while green nodes represent the original reads. We can see that the green graph in the middle is complete, but contaminated with orange nodes, while the orange nodes forming a circle around it aren't contaminated with green nodes at all, but are instead highly fragmented. This graph was obtained using the Graphia\footnotemark{} graphing tool.}
+	\label{fig:separated graph after training}
+\end{figure}
+\footnotetext{https://graphia.app/}
 
-\subsection{Precision \& Recall}
+\section{Experiments on the Whole Genome}
+\label{sec:experiments on the whole genome}
 
-\begin{figure}[h]
+In addition to accuracy, F1 score and loss, we also present recall and precision. These additional metrics might provide clarity in how the model trains on the provided data. The model we used for training was the EGAT model (section \ref{subsubsec:edge graph attention network}) with default parameters. We use it here because it proved to be the most effective model from all the tested models.
+
+\begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{images/precision_eg.png}
 	\includegraphics[width=\textwidth]{images/recall_eg.png}
@@ -706,7 +745,13 @@ In Figure \ref{fig:accuracy, f1 score and loss} we can see the graphs for accura
 	\label{fig:precision and recall}
 \end{figure}
 
-In Figure \ref{fig:precision and recall} we can see the graphs for precision (top) and recall (bottom) for the validation part of the entire genome dataset. An interesting observatin we can immediately see is that at the beggining of training, the model has a near perfect recall with a fairly lower precision score. This means that the model classifies most positive examples in the dataset as indeed positive, while classifying some negative examples incorrectly. As training continues the model starts trading recall for a higher precision value, and this carries on for the entirery of the 500 epochs. The model essentialy tries to balance these two metrics as best as it can, with the optimal balance found somewhere araound epoch 100. For that balance, recall stands at 0.9368, while precision is 0.7389. The dataset is of course not perfectly balanced, and this is somewhat reflected in these numbers, but it is also a testament to the fact that the model is simply better at finding incorrect edges, while simultaneously classifying some correct edges as incorrect. Balancing these parameters depends on the use case for such an application, but we can generalize that the model is quite succesful at separating haplotypes, but the haplotypes it separates will be somewhat incomplete.
+\subsection{Accuracy, F1 Score \& Loss}
+
+In Figure \ref{fig:accuracy, f1 score and loss} we can see the graphs for accuracy (top), F1 score (middle) and model loss (bottom). We group these three graphs together due to them showing similar properties. Accuracy and F1 score exhibit almost the same graphs, while model loss is essentially an inverted version of the same graph. They are also grouped together due to them showing a nice example of overfitting. The model reaches its best performance fairly early during training, around epoch 100, and then continues to progressively exhibit worse and worse performance on the validation dataset. The best model had an F1 score of 0.8024, accuracy of 0.7911 and loss of 0.3868. This is not far off from the best performing model on only one chromosome, showing that different chromosomes exhibit similar features which our model could take leverage of.
+
+\subsection{Precision \& Recall}
+
+In Figure \ref{fig:precision and recall} we can see the graphs for precision (top) and recall (bottom) for the validation part of the entire genome dataset. An interesting observation we can immediately see is that at the beginning of training, the model has a near perfect recall with a fairly lower precision score. This means that the model classifies most positive examples in the dataset as indeed positive, while classifying some negative examples incorrectly. As training continues, the model starts trading recall for a higher precision value, and this carries on for the entirety of the 500 epochs. The model essentially tries to balance these two metrics as best as it can, with the optimal balance found somewhere around epoch 100. For that balance, recall stands at 0.9368, while precision is 0.7389. The dataset is of course not perfectly balanced, and this is somewhat reflected in these numbers, but it is also a testament to the fact that the model is simply better at finding incorrect edges, while simultaneously classifying some correct edges as incorrect. Balancing these parameters depends on the use case for such an application, but we can generalize that the model is quite successful at separating haplotypes, but the haplotypes it separates will be somewhat incomplete. This can be seen in Figure \ref{fig:separated graph after training}. It is quire similar to Figure \ref{fig:separated graph}, but with some major differences. The large haplotype in the middle in green is somewhat contaminated with orange nodes, while all the fragmented orange nodes around it don't contain any green nodes. This again confirms our previous recall vs precision findings.
 
 \chapter{Conclusion}
 

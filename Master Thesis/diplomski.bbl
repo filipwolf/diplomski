@@ -163,6 +163,11 @@ PacBio.
 S.~Park.
 \newblock A 2021 guide to improving cnns-optimizers: Adam vs sgd, 2021.
 
+\bibitem{rnn_backprop}
+F.~J. Pineda.
+\newblock Generalization of back-propagation to recurrent neural networks.
+\newblock {\em Phys. Rev. Lett.}, 59:2229--2232, Nov 1987.
+
 \bibitem{dl_growth}
 Z.~M. Research.
 \newblock Outlook on the global deep learning market size, share \& growth 2022
