@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  12 JUN 2022 21:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  13 JUN 2022 18:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -764,18 +764,6 @@ File: pgflibraryarrows.meta.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 zlibrarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2020/01/08 v3.1.5b (3.1.5b)
 )
-(/usr/share/texlive/texmf-dist/tex/latex/contour/contour.sty
-Package: contour 2004/11/18 v2.14 Print contoured text (HH, MH)
-\con@length=\skip64
-
-Loading configuration file `contour.cfg'.
-(/usr/share/texlive/texmf-dist/tex/latex/contour/contour.cfg
-File: contour.cfg 2004/11/18 v2.14 Print contoured text (HH, MH)
-)
-contour: Using driver file `pdftex.cnt'.
-(/usr/share/texlive/texmf-dist/tex/latex/contour/pdftex.cnt
-File: pdftex.cnt 2004/11/18 v2.14 Print contoured text (HH, MH)
-))
 (/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-pdfmode.def
 File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 \l__kernel_color_stack_int=\count311
@@ -784,20 +772,20 @@ File: l3backend-pdfmode.def 2020-02-03 L3 backend support: PDF mode
 (./diplomski.aux)
 \openout1 = `diplomski.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 51.
-LaTeX Font Info:    ... okay on input line 51.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 48.
+LaTeX Font Info:    ... okay on input line 48.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -848,32 +836,8 @@ LaTeX Font Info:    ... okay on input line 51.
 \everyMPtoPDFconversion=\toks45
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
-
-(/usr/share/texlive/texmf-dist/tex/latex/grfext/grfext.sty
-Package: grfext 2019/12/03 v1.3 Manage graphics extensions (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
-Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
-Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
-
-(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
-Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
-))
-(/usr/share/texlive/texmf-dist/tex/latex/pdftexcmds/pdftexcmds.sty
-Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
-)
-Package pdftexcmds Info: \pdf@primitive is available.
-Package pdftexcmds Info: \pdf@ifprimitive is available.
-Package pdftexcmds Info: \pdfdraftmode found.
-)
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 85.
-Package grfext Info: Graphics extension search list:
-(grfext)             [.pdf,.png,.jpg,.mps,.jpeg,.jbig2,.jb2,.PDF,.PNG,.JPG,.JPE
-G,.JBIG2,.JB2,.eps]
-(grfext)             \AppendGraphicsExtensions on input line 504.
 
 (/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
@@ -900,20 +864,20 @@ ABD: EveryShipout initializing macros
 Package pgfplots Warning: running in backwards compatibility mode (unsuitable t
 ick labels; missing features). Consider writing \pgfplotsset{compat=1.16} into 
 your preamble.
- on input line 51.
+ on input line 48.
 
-LaTeX Font Info:    Trying to load font information for T1+phv on input line 59
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 56
 .
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
-LaTeX Font Info:    Trying to load font information for U+msa on input line 59.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 56.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 59.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 56.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -926,32 +890,32 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 <hr_0036510053_56.pdf, id=14, 597.23125pt x 845.1575pt>
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf>
-Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 62.
+Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 59.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf>
-Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 62.
+Package pdftex.def Info: hr_0036510053_56.pdf  used on input line 59.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 <hr_0036510053_56.pdf, id=17, page=1, 597.23125pt x 845.1575pt>
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 62.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 59.
 (pdftex.def)             Requested size: 597.22978pt x 845.15544pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 62.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 59.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 62.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 59.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 62.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 59.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
 File: hr_0036510053_56.pdf Graphic file (type pdf)
 <use hr_0036510053_56.pdf, page 1>
-Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 62.
+Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 59.
 (pdftex.def)             Requested size: 597.25711pt x 845.19412pt.
  [1 <./hr_0036510053_56.pdf>] [3]
 (./diplomski.toc [4
@@ -964,7 +928,7 @@ Package pdftex.def Info: hr_0036510053_56.pdf , page1 used on input line 62.
 Chapter 1.
 
 Package natbib Warning: Citation `compeau_pevzner_2015' on page 1 undefined on 
-input line 73.
+input line 70.
 
 [1
 
@@ -972,40 +936,40 @@ input line 73.
 <images/genome_assembly.png, id=52, 491.217pt x 750.513pt>
 File: images/genome_assembly.png Graphic file (type png)
 <use images/genome_assembly.png>
-Package pdftex.def Info: images/genome_assembly.png  used on input line 88.
+Package pdftex.def Info: images/genome_assembly.png  used on input line 85.
 (pdftex.def)             Requested size: 418.96548pt x 640.14928pt.
 
 
 Package natbib Warning: Citation `baker_2012' on page 2 undefined on input line
- 89.
+ 86.
 
 
 Package natbib Warning: Citation `baker_2012' on page 2 undefined on input line
- 89.
+ 86.
 
 
-LaTeX Warning: Float too large for page by 18.08633pt on input line 91.
+LaTeX Warning: Float too large for page by 18.08633pt on input line 88.
 
 [2] [3 <./images/genome_assembly.png>]
 LaTeX Font Info:    Trying to load font information for T1+pcr on input line 10
-3.
+0.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 ) [4] [5] [6] [7] 1,
-2, 3, 4, 5, [8] [9] [10]
-<images/gnn_backprop.png, id=93, 635.37375pt x 823.075pt>
+2, 3, 4, 5, [8] [9] [10] [11]
+<images/gnn_backprop.png, id=98, 635.37375pt x 823.075pt>
 File: images/gnn_backprop.png Graphic file (type png)
 <use images/gnn_backprop.png>
-Package pdftex.def Info: images/gnn_backprop.png  used on input line 306.
+Package pdftex.def Info: images/gnn_backprop.png  used on input line 295.
 (pdftex.def)             Requested size: 441.01773pt x 571.32588pt.
- [11] [12 <./images/gnn_backprop.png>] [13] [14]
-[15]
-Overfull \hbox (1.17206pt too wide) in paragraph at lines 462--463
+ [12] [13 <./images/gnn_backprop.png>] [14]
+[15] [16]
+Overfull \hbox (1.17206pt too wide) in paragraph at lines 458--459
  [][] 
  []
 
-[16] [17] [18]
+[17] [18]
 Chapter 2.
 [19
 
@@ -1013,7 +977,7 @@ Chapter 2.
 <images/graph_example.png, id=127, 1870.99pt x 612.2875pt>
 File: images/graph_example.png Graphic file (type png)
 <use images/graph_example.png>
-Package pdftex.def Info: images/graph_example.png  used on input line 505.
+Package pdftex.def Info: images/graph_example.png  used on input line 488.
 (pdftex.def)             Requested size: 441.01773pt x 144.31735pt.
  [20 <./images/graph_example.png>]
 <images/separated_haplotypes_before_training.png, id=132, 7708.8pt x 3501.08pt>
@@ -1021,7 +985,7 @@ Package pdftex.def Info: images/graph_example.png  used on input line 505.
 File: images/separated_haplotypes_before_training.png Graphic file (type png)
 <use images/separated_haplotypes_before_training.png>
 Package pdftex.def Info: images/separated_haplotypes_before_training.png  used 
-on input line 518.
+on input line 501.
 (pdftex.def)             Requested size: 441.01773pt x 200.2795pt.
  [21 <./images/separated_haplotypes_before_training.png (PNG copy)>] [22]
 Chapter 3.
@@ -1031,13 +995,13 @@ Chapter 3.
 <images/model.png, id=149, 1335.99126pt x 282.05376pt>
 File: images/model.png Graphic file (type png)
 <use images/model.png>
-Package pdftex.def Info: images/model.png  used on input line 585.
+Package pdftex.def Info: images/model.png  used on input line 570.
 (pdftex.def)             Requested size: 441.01773pt x 93.10814pt.
  [26 <./images/model.png>]
 <images/system_architecture.png, id=154, 765.86125pt x 606.265pt>
 File: images/system_architecture.png Graphic file (type png)
 <use images/system_architecture.png>
-Package pdftex.def Info: images/system_architecture.png  used on input line 604
+Package pdftex.def Info: images/system_architecture.png  used on input line 589
 .
 (pdftex.def)             Requested size: 441.01773pt x 349.1177pt.
  [27 <./images/system_architecture.png>] [28] [29] [30]
@@ -1048,12 +1012,12 @@ Chapter 4.
 <images/accuracy_val.png, id=175, 1503.6175pt x 411.5375pt>
 File: images/accuracy_val.png Graphic file (type png)
 <use images/accuracy_val.png>
-Package pdftex.def Info: images/accuracy_val.png  used on input line 708.
+Package pdftex.def Info: images/accuracy_val.png  used on input line 693.
 (pdftex.def)             Requested size: 441.01773pt x 120.70547pt.
 <images/f1_val.png, id=176, 1493.58pt x 406.51875pt>
 File: images/f1_val.png Graphic file (type png)
 <use images/f1_val.png>
-Package pdftex.def Info: images/f1_val.png  used on input line 709.
+Package pdftex.def Info: images/f1_val.png  used on input line 694.
 (pdftex.def)             Requested size: 441.01773pt x 120.03363pt.
 
 
@@ -1062,34 +1026,34 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 <images/accuracy_eg.png, id=177, 1497.595pt x 408.52625pt>
 File: images/accuracy_eg.png Graphic file (type png)
 <use images/accuracy_eg.png>
-Package pdftex.def Info: images/accuracy_eg.png  used on input line 720.
+Package pdftex.def Info: images/accuracy_eg.png  used on input line 705.
 (pdftex.def)             Requested size: 441.01773pt x 120.30225pt.
 <images/f1_eg.png, id=178, 1494.58376pt x 406.51875pt>
 File: images/f1_eg.png Graphic file (type png)
 <use images/f1_eg.png>
-Package pdftex.def Info: images/f1_eg.png  used on input line 721.
+Package pdftex.def Info: images/f1_eg.png  used on input line 706.
 (pdftex.def)             Requested size: 441.01773pt x 119.953pt.
 <images/loss_eg.png, id=179, 1492.57625pt x 410.53375pt>
 File: images/loss_eg.png Graphic file (type png)
 <use images/loss_eg.png>
-Package pdftex.def Info: images/loss_eg.png  used on input line 722.
+Package pdftex.def Info: images/loss_eg.png  used on input line 707.
 (pdftex.def)             Requested size: 441.01773pt x 121.3006pt.
 <images/separated_haplotypes_after_training.png, id=180, 7708.8pt x 3099.58pt>
 File: images/separated_haplotypes_after_training.png Graphic file (type png)
 <use images/separated_haplotypes_after_training.png>
 Package pdftex.def Info: images/separated_haplotypes_after_training.png  used o
-n input line 729.
+n input line 714.
 (pdftex.def)             Requested size: 441.01773pt x 177.31166pt.
 [33]
 <images/precision_eg.png, id=184, 1494.58376pt x 408.52625pt>
 File: images/precision_eg.png Graphic file (type png)
 <use images/precision_eg.png>
-Package pdftex.def Info: images/precision_eg.png  used on input line 742.
+Package pdftex.def Info: images/precision_eg.png  used on input line 727.
 (pdftex.def)             Requested size: 441.01773pt x 120.54536pt.
 <images/recall_eg.png, id=185, 1495.5875pt x 409.53pt>
 File: images/recall_eg.png Graphic file (type png)
 <use images/recall_eg.png>
-Package pdftex.def Info: images/recall_eg.png  used on input line 743.
+Package pdftex.def Info: images/recall_eg.png  used on input line 728.
 (pdftex.def)             Requested size: 441.01773pt x 120.7603pt.
  [34 <./images/accuracy_val.png> <./images/f1_val.png>] [35 <./images/accuracy_
 eg.png> <./images/f1_eg.png> <./images/loss_eg.png>] [36 <./images/separated_ha
@@ -1101,7 +1065,7 @@ Chapter 5.
 ] [39
 
 ] [40]) [41]
-Overfull \hbox (0.37427pt too wide) in paragraph at lines 773--775
+Overfull \hbox (0.37427pt too wide) in paragraph at lines 758--760
 \T1/ptm/b/n/12 Klju£ne ri-je£i: \T1/ptm/m/n/12 Bioin-for-matika, Graf Neu-ronsk
 e Mreºe, GNN, Odva-janje hap-lotipa, Duboko
  []
@@ -1113,13 +1077,13 @@ Package natbib Warning: There were undefined citations.
 
 ] (./diplomski.aux) ) 
 Here is how much of TeX's memory you used:
- 31031 strings out of 483107
- 720829 string characters out of 5964630
+ 30726 strings out of 483107
+ 715146 string characters out of 5964630
  1109756 words of memory out of 5000000
- 45467 multiletter control sequences out of 15000+600000
+ 45191 multiletter control sequences out of 15000+600000
  615174 words of font info for 154 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 63i,19n,103p,1818b,2249s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 63i,19n,103p,2014b,2249s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
 }</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
@@ -1138,7 +1102,7 @@ exmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
 w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on diplomski.pdf (48 pages, 2348317 bytes).
+Output written on diplomski.pdf (48 pages, 2351357 bytes).
 PDF statistics:
  285 PDF objects out of 1000 (max. 8388607)
  181 compressed objects within 2 object streams

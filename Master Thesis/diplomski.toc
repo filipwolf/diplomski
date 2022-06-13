@@ -15,19 +15,19 @@
 \contentsline {subsubsection}{Loss Function \& Stochastic Gradient Descent}{9}%
 \contentsline {subsubsection}{Backpropagation}{10}%
 \contentsline {subsection}{\numberline {1.3.2}Graph Neural Networks}{11}%
-\contentsline {subsubsection}{GNNs and CNNs}{11}%
-\contentsline {subsubsection}{Backpropagation for GNNs}{13}%
-\contentsline {subsubsection}{Graph Covolutional Networks}{13}%
+\contentsline {subsubsection}{GNNs \& CNNs}{12}%
+\contentsline {subsubsection}{Backpropagation for GNNs}{12}%
+\contentsline {subsubsection}{Graph Covolutional Networks}{12}%
 \contentsline {subsubsection}{Graph Attention Networks}{14}%
-\contentsline {subsubsection}{Edge Graph Attention Network}{14}%
+\contentsline {subsubsection}{Edge Graph Attention Network}{15}%
 \contentsline {subsection}{\numberline {1.3.3}Other Functions}{15}%
 \contentsline {subsubsection}{Nonlinearities}{15}%
-\contentsline {subsubsection}{Regularization Functions}{16}%
+\contentsline {subsubsection}{Regularization Functions}{17}%
 \contentsline {chapter}{\numberline {2}Dataset}{19}%
 \contentsline {section}{\numberline {2.1}Introduction}{19}%
 \contentsline {section}{\numberline {2.2}Dataset Creation}{19}%
-\contentsline {subsection}{\numberline {2.2.1}Simulating \& Mutating the Reads}{20}%
-\contentsline {subsection}{\numberline {2.2.2}Assembling the Graph}{21}%
+\contentsline {subsection}{\numberline {2.2.1}Simulating \& Mutating Reads}{19}%
+\contentsline {subsection}{\numberline {2.2.2}Assembling a Graph}{21}%
 \contentsline {chapter}{\numberline {3}Implementation}{23}%
 \contentsline {section}{\numberline {3.1}Technology Stack}{23}%
 \contentsline {section}{\numberline {3.2}Code Structure}{24}%
