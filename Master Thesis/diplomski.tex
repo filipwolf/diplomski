@@ -11,8 +11,9 @@
 \usepackage{subfigure}
 \setcitestyle{numbers}
 \setcitestyle{square}
+\bibliographystyle{unsrtnat}
 \lstset{
-basicstyle=\ttfamily,
+basicstyle=\fontsize{8}{11}\ttfamily,
 breaklines=true,
 backgroundcolor=\color{lightgray}
 }
@@ -73,12 +74,12 @@ We will try to do this using novel algorithms from the field of \textit{deep lea
 
 Bioinformatics is an interdisciplinary field of research that has had a tremendous impact on humanity in the last few decades. Since the completion of the Human Genome Project \cite{HGP1} \cite{HGP2}, the cost of sequencing a human genome has fallen exponentially. We can now reliably sequence a human genome for less than a \$1000 \cite{genome_cost}, all thanks to recent advances in sequencing technology, as well as accompanying algorithms. In section \ref{subsec:the process of sequencing and assembly}, we will briefly explain the general pipeline of genome sequencing and assembly, while in section \ref{subsec:file formats}, we will go through all the file formats used in this thesis for storing data	.
 
-\subsection{The Process of Sequencing and Assembly}
+\subsection{The Process of Sequencing \& Assembly}
 \label{subsec:the process of sequencing and assembly}
 
-In an ideal world, we would extract a human genome in the form of DNA from a cell, input it into a \textit{sequencer}, and get a complete and accurate sequence of a DNA molecule as output with no \textit{base pairs} (adenine, cytosine, guanine and thymine) missing, which we could immediately use for further studying. Unfortunately, this perfect process is not (yet) a reality and it is hard to predict when this might become so. Due to this, we have to make due with sequencers that can only output genomes in the form of thousands of fragmented \textit{reads}, at maximum about 10 kilobases (kb) long, with shorter read sequencers sequencing reads at lengths of around 150 base pairs (bp). This process is called \textit{shotgun sequencing}. An average genome is much longer than that, e.g. the yeast genome is around 12 Mb long \cite{yeast} and the human genome is around 6.4 Gb long \cite{human}, so after sequencing, we need to assemble these short reads into longer ones before going further into analysis.
+In an ideal world, we would extract a human genome in the form of DNA from a cell, input it into a \textit{sequencer}, and get a complete and accurate sequence of a DNA molecule as output with no \textit{base pairs} (adenine, cytosine, guanine and thymine) missing, which we could immediately use for further studying. Unfortunately, this perfect process is not (yet) a reality and it is hard to predict when this might become so. Due to this, we have to make due with sequencers that can only output genomes in the form of thousands of fragmented \textit{reads}, in our case at a median length of between 15 - 25 kilobase pairs (kbp) long, with shorter read sequencers sequencing reads at lengths of around 150 base pairs (bp) long in a process called \textit{shotgun sequencing}. There are also ultra-long reads with a maximum length of around 1 Mbp with a median length of 75 kbp, but these are not used for our experiments, as they are also of a smaller precision, something which is crucial for the success of our application. An average genome is much longer than that, e.g. the yeast genome is around 12 Mb long \cite{yeast} and the human genome is around 6.4 Gb long \cite{human}, so after sequencing, we need to assemble these short reads into longer ones before going further into analysis.
 
-This process of finding longer reads is the first step in the process of \textit{assembly}, depicted as steps one through three in Figure \ref{fig:genome assembly}. These longer reads are called \textit{contigs}. We can use the overlaps between sequences (step two in Figure \ref{fig:genome assembly}) to build graphs in which each read is represented with a node, and each overlap between reads is represented with an edge in the graph. An overlap can be described as a match between two contigs' \textit{ends}, i.e. the contigs' prefix (start) and suffix (end), which can come in the form of a prefix - suffix or an suffix - prefix overlap. The length of this overlap can indicate a stronger similarity between two reads, and therefore a stronger link in the graph between them. Finally, we are tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome. We also need to orient them properly, depicted as step four in Figure \ref{fig:genome assembly}.
+This process of assembling shorter reads into larger structures, called \textit{contigs}, is called \textit{assembly}, depicted as steps one through three in Figure \ref{fig:genome assembly}. We can use the overlaps between sequences (step two in Figure \ref{fig:genome assembly}) to build graphs in which each read is represented with a node, and each overlap between reads is represented with an edge in the graph. An overlap can be described as a match between two reads' \textit{ends}, i.e. the read's prefix (start) and suffix (end), which can come in the form of a prefix - suffix or an suffix - prefix overlap. The length of this overlap can indicate a stronger similarity between two reads, and therefore a stronger link in the graph between them. After we have found enough strong overlaps, we can finally combine reads into contigs. Lastly, we are tasked with finding the longest possible path on this graph to connect the individual contigs and form a complete genome. We also need to orient them properly, depicted as step four in Figure \ref{fig:genome assembly}.
 
 \begin{figure}
 	\centering
@@ -95,11 +96,10 @@ As a distinct subfield that combines computer science and genetics, bioinformati
 \subsubsection{FASTA \& FASTQ}
 \label{subsubsec:fasta and fastq}
 
-The most common file format encountered while working with genomic data is the FASTA format, designated by its .fasta or .fa file extension. It is a text-based format for storing nucleotide sequences and their information. Base pairs of amino acids are stored using letters (A - adenine, C - cytosine, G - guanine, T - thymine) in the form of a long sequence. Every sequence starts with a description line, which is designated with a ">" symbol at the start of the line. The description line can contain various information about the sequence, such as sequence name, sequence length, sequence statistics, etc. In our case, it specified the species and chromosome to which the sequences belonged to (section \ref{sec:introduction}). After generating the reads for our data (Chapter \ref{ch:dataset}), the description contained data such as the read number, strand information (forward or reverse), position on the chromosome, length and the chromosome to which it belonged to, as well as if it was a mutated read or not. Sometimes, we may also encounter a FASTQ file, which is identical to a FASTA file, but with added sequence quality score information added after every sequence. In the following example, we can see a typical line of a FASTA file filled with short reads:
-
+The most common file format encountered while working with genomic data is the FASTA format, designated by its .fasta or .fa file extension. It is a text-based format for storing nucleotide sequences and their information. Base pairs of amino acids are stored using letters (A - adenine, C - cytosine, G - guanine, T - thymine) in the form of a long sequence. Every sequence starts with a description line, which is designated with a ">" symbol at the start of the line. The description line can contain various information about the sequence, such as sequence name, sequence length, sequence statistics, etc. In our case, it specified the species and chromosome to which the sequences belonged to (section \ref{sec:introduction}). After generating the reads for our data (Chapter \ref{ch:dataset}), the description contained data such as the read number, strand information (forward or reverse), position on the chromosome, length and the chromosome to which it belonged to, as well as if it was a mutated read or not. Sometimes, we may want to also store sequence quality information into a FASTA file. For this, we use a FASTQ file. FASTQ files are usually used for storing reads, but as the reads we use are simulated, there is no need to store quality information about them. In the following example, we can see a typical line of a FASTA file filled with short reads:
 \begin{lstlisting}
 >read=1,reverse,position=1004750-1015277,length=10527,NC_001139.9
-AAGCTTGCAGATTTATTAACAGTTCAAACGAGTTTGGCTGATAATGCTCGTGCAGGTATTG
+AAGCTTGCAGATTTATTAACAGTTCAAACGAGTTTGGCTGATAATGCTCGTGCAGGTATTGATCGTACGTACGTAGCTACGTG
 \end{lstlisting}
 
 \subsubsection{CSV}
@@ -108,21 +108,18 @@ AAGCTTGCAGATTTATTAACAGTTCAAACGAGTTTGGCTGATAATGCTCGTGCAGGTATTG
 After generating various information about our dataset, we would store it in a CSV (comma separated values) file. That way, it could be  more easily read by some of the tools we used for extracting data from reads (section \ref{sec:technology stack}). A CSV file can be thought of as a table, where values in a row are separated with a comma sign. The file starts with a header with column names that are also separated with commas.
 
 Another reason why we use the CSV file format is because of the Raven assembler (section \ref{subsec:assembling the graph}) outputting a CSV file with information about sequence overlap lengths. This information is stored in the file in the following way. We start in a descending order of read name. A line with an even index number represents an original read, while a line with an odd index number represents a \textit{virtual} read, i.e. a \textit{reverse complement} or \textit{strand} of the original read. A reverse complement represents the same sequence as the original, but in reverse order and with the base pairs replaced with their complements (A - T, C - G). The original and the reverse complement essentially represent the same genomic data, but on different strands of the DNA, which are either a forward or backward strand. An example of such a file ican be seein in the following example:
-
 \begin{lstlisting}
 6549 [3274] LN:i:9216 RC:i:1,6412 [3206] LN:i:11360 RC:i:1,1,39678 8937 0 0.992832
 6413 [3206] LN:i:11360 RC:i:1,6548 [3274] LN:i:9216 RC:i:1,1,39679 11081 0 0.992832
 6647 [3323] LN:i:10656 RC:i:1,6638 [3319] LN:i:10224 RC:i:1,1,39680 10347 0 0.990291
 6639 [3319] LN:i:10224 RC:i:1,6646 [3323] LN:i:10656 RC:i:1,1,39681 9915 0 0.990291
 \end{lstlisting}
-
-First, we have the index of the first read. Then, in square brackets, we have the index of the original first read (each virtual read forms a pair with an original read). We then have some read information, followed by the second read with which the first one forms an overlap, along with its own information. Lastly, we have three fields that represent the overlap length, the weight of the overlap (not used in this thesis) and its score, measured in the percentage of the overlap match (note: overlaps do not need to be perfect). Each line essentially represents an edge in our graph between two nodes. The first $n$ lines in the file, where $n$ is the number of reads, represent the overlap between the original and virtual file. They are then followed by all other overlaps.
+First, we have the index of the first read. Then, in square brackets, we have the index of the original first read (each virtual read forms a pair with an original read). We then have some read information, followed by the second read with which the first one forms an overlap, along with its own information. Lastly, we have three fields that represent the overlap length, the weight of the overlap (not used in this thesis) and its score, measured in the percentage of the overlap match (note: overlaps do not need to be perfect). Each line essentially represents an edge in our graph between two nodes. The first $n$ lines in the file, where $n$ is the number of reads, represent the overlap between the original and virtual read. They are then followed by all other overlaps.
 
 \subsubsection{GFA}
 \label{subsubsec:gfa}
 
 Another important file Raven outputs is a Graphical Fragment Assembly (GFA)\footnote{https://gfa-spec.github.io/GFA-spec/GFA1.html} file. It contains similar information to the CSV file, but with some notable additions, namely, instead of just specifying read overlaps, it also contains the whole sequences it uses in the assembly process. It also includes the original read names specified before assembly that contain mutation information. Each line in the file starts with an identifier, all the different ones being listed in the following table:
-
 \begin{center}
 	\begin{tabular}{ |c|c| }
 		\hline
@@ -144,14 +141,11 @@ Another important file Raven outputs is a Graphical Fragment Assembly (GFA)\foot
 		\hline
 	\end{tabular}
 \end{center}
-
 For our purposes, the file only contained lines starting with the letters S and L. S denotes a segment (sequence) used in the assembly, along with most of its information that was present before assembly (this is notable because it is missing in the CSV file). The lines starting with an L contain lines about sequence overlaps in a similar manner to the CSV file, with the addition of overlap length and mutation information, the latter being crucial for specifying which parent's haplotypes we are connecting with the overlaps. An example of lines starting with an L is in the following example:
-
 \begin{lstlisting}
-L	read=4158,reverse,position=395590-406211,length=10621,NC_001139.9|mutated	+ read=4884,reverse,position=383506-395832,length=12326,NC_001139.9|mutated	+	101M
-L	read=4832,forward,position=802633-815655,length=13022,NC_001139.9|mutated	-	read=4165,reverse,position=793088-803478,length=10390,NC_001139.9|mutated	+	733M
+L	read=4158,reverse,position=395590-406211,length=10621,NC_001139.9|mutated +	read=4884,reverse,position=383506-395832,length=12326,NC_001139.9|mutated + 101M
+L	read=4832,forward,position=802633-815655,length=13022,NC_001139.9|mutated -	read=4165,reverse,position=793088-803478,length=10390,NC_001139.9|mutated + 733M
 \end{lstlisting}
-
 The S lines are important because we can use them to associate the GFA file with the CSV file. This is due to the fact that the read index of a true read in the CSV file is equal to the line index of a sequence in the GFA file divided by two. So for example, the read with the true index 346 in the CSV file is equal to the sequence in line 173 in the GFA file.
 
 \subsubsection{Miscellaneous}
@@ -160,7 +154,7 @@ Aside from the mentioned file formats, we created numerous other files of our ow
 
 \section{Thesis Task}
 
-The task we are presented with here is slightly different compared to standard genome sequencing. Instead of just finding a path through the assembly graph in order to assemble a complete genome, we are instead tasked with removing edges in the graph that connect contigs belonging to different parents. By doing this, we are essentially separating the two haplotypes that constitute a genome. To give more insight into this, we will explain what graphs are and how we use them in the following section.
+The task we are presented with here is slightly different compared to standard genome assembly. Instead of just finding a path through the assembly graph in order to assemble a complete genome, we are instead tasked with removing edges in the graph that connect contigs belonging to different parents. By doing this, we are essentially separating the two haplotypes that constitute a genome. To give more insight into this, we will explain what graphs are and how we use them in the following section.
 
 \begin{figure}
 	\centering
@@ -191,7 +185,7 @@ Graphs are data structures that can be defined with a set of nodes (vertices) $V
 \[ G = (V, E) \]
 where:
 \[ E \subseteq 	\{ (x, y)|(x, y) \in V^2 \mathrm{\ and\ } x \neq y \} \]
-The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we work with in this thesis. A representation of such a graph can be seen in Figure \ref{fig:example_graph}. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done so because edge direction can encode both suffix - prefix and prefix - suffix overlaps (section \ref{subsec:the process of sequencing and assembly}), which is an useful information for us. Aside from this, both the nodes and edges have weights assigned to them that can represent various information about the graph \cite{trudeau_2017}.
+The above definition is an example of a directed graph, meaning that the edges only go in one direction, which is the type of graph we work with in this thesis. A representation of such a graph can be seen in Figure \ref{fig:example_graph}. For instance, if edge $e$ is connecting nodes $v_1$ and $v_2$ in the direction $v_1 \rightarrow v_2$, then this means that node $v_1$ is connected to node $v_2$, but not the other way around. This is done so because edge direction can encode both suffix - prefix and prefix - suffix overlaps (section \ref{subsec:the process of sequencing and assembly}), which is a useful information for us. Aside from this, both the nodes and edges have weights assigned to them that can represent various information about the graph \cite{trudeau_2017}.
 
 In this thesis, after sequencing and assembly (section \ref{subsec:the process of sequencing and assembly}), we obtain a list of reads connected to each other via overlaps. The reads can be thought of as nodes in a graph, while edges are the links between the nodes. By building such structures, we can more easily use existing graph theory insights to remove unwanted edges and separate the two haplotypes.
 
@@ -260,7 +254,7 @@ SGD can come in multiple forms. Standard SGD, as represented in the above equati
 \subsubsection{Backpropagation}
 \label{subsubsec:backpropagation}
 
-We can now move on explaining the backpropagation algorithm. In essence, it is the idea of SGD applied to neural networks. It tells every weight in our network how to change in order to better predict our data. By correctly propagating these gradient values back through the network, we can successfully make our network learn from data. We will now explain this in more detail.
+We can now move on to explaining the backpropagation algorithm. In essence, it is the idea of SGD applied to neural networks. It tells every weight in our network how to change in order to better predict our data. By correctly propagating these gradient values back through the network, we can successfully make our network learn from data. We will here briefly explain the theoretical background for backpropagation without going into too much detail.
 
 After we obtain a loss value and calculate gradients, we need to somehow pass them back through the network and adjust network weights in accordance with the gradients. The way to do this is different depending on the layer of the network, but can be generally calculated using the partial derivative of the network error function (section \ref{subsec:loss function}) in respect to the weights with the chain rule:
 \[ \frac{\partial E}{\partial w_{ij}} = \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial w_{ij}} = \frac{\partial E}{\partial o_j} \frac{\partial o_j}{\partial net_j} \frac{\partial net_j}{\partial w_{ij}}\]
@@ -279,7 +273,7 @@ Here, $\phi$ is the activation function (section \ref{subsubsec: nonlinearities}
 \subsection{Graph Neural Networks}
 \label{subsec:graph neural networks}
 
-While standard ANNs are great at predicting simple data with no underlying structure (or at least one that isn't known), to successfully make our network learn from assembly graphs, we will need something more refined. Yes, it is true that we can simply represent our graph in the form of a 1-dimensional vector by concatenating all the node and edge information, but we then lose precious structural information about the contig overlaps. By using networks more tailor-made for data representation on graphs, we can take advantage of the graph's underlying structure. The networks in question are called \textit{Graph Neural Networks} (GNNs) \cite{GNN}. Most modern graph neural networks work on the principle of \textit{message passing} \cite{message_passing}. A node accumulates information from adjacent nodes and the edges connecting them and uses it to update its own weights. The information is represented in the form of node and edge features, multidimensional vectors of data that represent some information about the nodes and edges. By repeating this message passing process enough times, we can converge to a stable solution in which the network has learned something about the graph that was previously unseen to us. This can be formalized in the following.
+While standard ANNs are great at predicting simple data with no underlying structure (or at least one that isn't known), to successfully make our network learn from assembly graphs, we will need something more refined. Although we can simply represent our graph in the form of a 1-dimensional vector by concatenating all the node and edge information, we this way lose precious structural information about contig overlaps. By using networks more tailor-made for data representation on graphs, we can take advantage of the graph's underlying structure. The networks in question are called \textit{Graph Neural Networks} (GNNs) \cite{GNN}. Most modern graph neural networks work on the principle of \textit{message passing} \cite{message_passing}. A node accumulates information from adjacent nodes and the edges connecting them and uses it to update its own weights. The information is represented in the form of node and edge features, multidimensional vectors of data that represent some information about the nodes and edges. By repeating this message passing process enough times, we can converge to a stable solution in which the network has learned something about the graph that was previously unseen to us. This can be formalized with following definition.
 
 In graph $\mathcal{E}$, let $x_v \in \mathbf{R}^{d_1}$ be the features for node $v$, $w \in \mathbf{R}^{d_2}$ be the features for edge ($u$, $v$), and $m$ be a message generated by aggregating adjacent node information. The message passing paradigm defines the following edge-wise and node-wise computations at step $t+1$:
 \[ \textrm{Edge-wise: } m_e^{(t+1)} = \phi (x_v^{(t)}, x_u^{(t)}, w_e^{(t)}), (u, v, e) \in \mathcal{E} \]
@@ -307,7 +301,7 @@ We used three different GNNs in this thesis, which we will describe in the follo
 \label{subsubsec:graph convolutional netwroks}
 
 The first network we used was the simplest and oldest one, and it bases its computations on Graph Convolutional Networks (GCN) \cite{GCN}. It aggregates information from neighboring nodes and the edges connecting them and uses them to update the central node's information. It updates node features with the following equation:
-\[ h_i^{(l+1)} = \sigma (b^{(l)} + \sum_{j \in \mathcal{N}(i)} \frac{e_{ji}}{c_{ji}} h_j^{(l)} W^{(l)} ) \]
+\[ h_i^{(l+1)} = \sigma \left(b^{(l)} + \sum_{j \in \mathcal{N}(i)} \frac{e_{ji}}{c_{ji}} h_j^{(l)} W^{(l)} \right) \]
 where:
 \[ c_{ji} = \sqrt{|\mathcal{N}(j)|} \sqrt{|\mathcal{N}(i)|} \]
 Here, $\mathcal{N}(i)$ represents all the neighboring nodes of node $i$, $e_{ji}$ is the scalar weight of the edge connecting nodes $i$ and $j$, and $\sigma$ is an activation function. $b^{(l)}$, $h_j^{(l)}$ and $W^{(l)}$ are the networks bias at step $l$, features of node $j$ at step $l$ and weight of the network at step $l$ respectively. The aggregated information is used to update the features $h$ of node $i$ at step $(l+1)$. We can see that the calculations used are fairly straightforward, as we simply multiply the network weight and node features and add bias before passing it through a nonlinearity. A reader familiar with deep learning may notice that this is similar to an iteration of the backpropagation algorithm, but applied to the graph domain.
@@ -374,7 +368,7 @@ Finally, we have the \textbf{ELU} (Exponential Linear Unit) \cite{elu}, represen
 z & z > 0 \\
 \alpha \cdot (e^z - 1) & z \leq 0
 \end{cases} \]
-For values greater than 0, it emits a constant output just like the ReLU. But for any other value, it slowly smooths out bellow zero where it tends to the value of $- \alpha$. Just like LeakyReLU, it also tries to negate the previously mentioned weakness of ReLU. Both the ELU and the LeakyReLU can be used as strong alternatives to to the ReLU.
+For values greater than 0, it emits a linear output just like the ReLU. But for any other value, it slowly smooths out bellow zero where it tends to the value of $- \alpha$. Just like LeakyReLU, it also tries to negate the previously mentioned weakness of ReLU. Both the ELU and the LeakyReLU can be used as strong alternatives to to the ReLU.
 
 Lastly, for the classification of the network outputs, we need to normalize them into a $[0, 1]$ range so that they can be interpreted as probabilities. For this, we use the \textbf{sigmoid} function, represented with the black line in Figure \ref{fig:nonlinearities} and described with the following equation:
 \[ S(x) = \frac{1}{1 + e^{-x}} \]
@@ -460,9 +454,9 @@ where $e_{jk}$ and $e_{ki}$ are the weights of the edges from node $j$ to node $
 	\label{fig:dropout}
 \end{figure}
 
-More interesting that normalization is \textbf{dropout} \cite{dropout} \cite{dropout2}. Dropout is one of the most popular regularization techniques as it often greatly improves network performance, but at the cost of training speed. It works by randomly omitting some neurons from the neural network along with their connections with some probability $p$. By doing this, neurons get more specialized in detecting different features in the data and don't co-adapt as much, i.e. they don't depend on each other for good classification that much. In practice, these neurons aren't actually removed from the network, but instead their weights are simply reduced by multiplying them with $p$, thereby lessening their importance during training, which has the same effect as removing them but is less computationally expensive. We used a value for $p$ of 0.2 for regular GCN layers (section \ref{subsubsec:graph convolutional netwroks}), and a value of $0.5$ for GAT an EGAT layers (section \ref{subsubsec:graph attention networks}). A visualization of dropout can be seen in Figure \ref{fig:dropout}.
+More interesting than normalization is \textbf{dropout} \cite{dropout} \cite{dropout2}. Dropout is one of the most popular regularization techniques as it often greatly improves network performance, but at the cost of training speed. It works by randomly omitting some neurons from the neural network along with their connections with some probability $p$. By doing this, neurons get more specialized in detecting different features in the data and don't co-adapt as much, i.e. they don't depend on each other for good classification that much. In practice, these neurons aren't actually removed from the network, but instead their weights are simply reduced by multiplying them with $p$, thereby lessening their importance during training, which has the same effect as removing them but is less computationally expensive. We used a value for $p$ of 0.2 for regular GCN layers (section \ref{subsubsec:graph convolutional netwroks}), and a value of $0.5$ for GAT an EGAT layers (section \ref{subsubsec:graph attention networks}). A visualization of dropout can be seen in Figure \ref{fig:dropout}.
 
-Lastly, we employed \textbf{batch normalization} \cite{bn}. As previously described, we normalize input values so that the network can train more easily. However, during training, in deeper layers, some of that normalization gets lost and neurons have to chase a moving target in order to learn properly from data. This slows down training speed ad reduces performance. To alleviate this, batch normalization is used to normalize the outputs of neurons during training so that the next layers can always expect the same range of values as input, thereby stabilizing and greatly improving training times. It also allows for a much wider range of learning rate values to be used without making the model diverge. As a side effect, by making the layer activations less dependent on the current batch, it adds some noise to training, and thereby acts as a regularizer to the network.
+Lastly, we employed \textbf{batch normalization} \cite{bn}. As previously described, we normalize input values so that the network can train more easily. However, during training, in deeper layers, some of that normalization gets lost and neurons have to chase a moving target in order to learn properly from data. This slows down training speed and reduces performance. To alleviate this, batch normalization is used to normalize the outputs of neurons during training so that the next layers can always expect the same range of values as input, thereby stabilizing and greatly improving training times. It also allows for a much wider range of learning rate values to be used without making the model diverge. As a side effect, by making the layer activations less dependent on the current batch, it adds some noise to training, and thereby acts as a regularizer to the network.
 
 \chapter{Dataset}
 \label{ch:dataset}
@@ -477,7 +471,7 @@ When it comes to deep learning, data can often take a central role in determinin
 \section{Dataset Creation}
 \label{sec:dataset creation}
 
-There ar a lot of readily available datasets for experimenting on graphs and genomic data, but for our intents and purposes, we required a custom dataset created from our own data. We will explain in detail how we created this dataset and how we used it in our experiments.
+There are a lot of readily available datasets for experimenting on graphs and genomic data, but for our intents and purposes, we required a custom dataset created from our own data. We will explain in detail how we created this dataset and how we used it in our experiments.
 
 \subsection{Simulating \& Mutating Reads}
 
@@ -510,133 +504,122 @@ We now have a dataset where each edge has a label, as well as a feature in the f
 
 \chapter{Implementation}
 
-In this chapter, we will go over all the different software components we used for our experiments. First, we will go over the software we used for our deep learning models, as well as all the tools we used to help us (section \ref{sec:technology stack}). After that, we will explain the structure of our model and how all the different components come together (section \ref{sec:code structure}).
+In this chapter, we will go over all the different software components we used for our experiments. First, we will go over the software we used for our deep learning models, as well as all the tools we used to help us in train a model (section \ref{sec:technology stack}). After that, we will explain the structure of our implementation and how all the different components come together (section \ref{sec:code structure}).
 
 \section{Technology Stack}
 \label{sec:technology stack}
 
-The main programming language used for this thesis was Python\footnote{https://www.python.org/}, specifically, Python version 3.9. Aside from this, we also used Bash\footnote{https://www.gnu.org/software/bash/} in order to build some scripts to speed up repetitive tasks. Most of the core functionalities of this project were implemented using two Python libraries: PyTorch and DGL. PyTorch\footnote{https://pytorch.org/} probably needs no introduction. It is currently one of the most popular deep learning library used by millions due to its simplicity and versatility \cite{popular_ml}. It is free and open source and maintained by Facebook's AI Research lab. In this project, it was mostly used for its \textit{tensor} data structure, its implementation of nonlinearities such as the ReLU and ELU (section \ref{subsubsec: nonlinearities}), and loss functions such as cross entropy loss and others. It is also used as the underlying architecture for the deep learning layers we used, which will be described in the next paragraph.
+The main programming language used for this thesis was Python\footnote{https://www.python.org/}, specifically, Python version 3.9. Aside from this, we also used Bash\footnote{https://www.gnu.org/software/bash/} in order to build some scripts to automate repetitive tasks. Most of the core functionalities of this project were implemented using two Python libraries: PyTorch and DGL. PyTorch\footnote{https://pytorch.org/} is currently one of the most popular deep learning libraries used by millions due to its simplicity and versatility \cite{popular_ml}. It is free and open source and maintained by Facebook's AI Research lab. In this project, it was mostly used for its \textit{tensor} data structure, its implementation of nonlinearities such as the ReLU and ELU (section \ref{subsubsec: nonlinearities}), and loss functions such as cross entropy loss (section \ref{subsec:loss function}). It is also used as the underlying architecture for DGL, which will be described in the next paragraph.
 
-The Deep Graph Library\footnote{https://www.dgl.ai/} (DGL) \cite{DGL} is an free and open source deep learning library primarily aimed at the graph neural networks domain. It is maintained by a diverse team of contributors, most of the stemming from the Amazon Web Services team. In this project, it proved itself as a crucial addition to the list of used tools due to its numerous graph oriented functions. We used it mainly for the following features. Firstly, it allowed us to effortlessly and efficiently create graphs from our yeast dataset that were then used for training our models. Secondly, its numerous implemented GNN layers (section \ref{subsec:graph neural networks}) were easy to set up and test out, allowing us to more quickly find the best model for our data. Lastly, due to it being built on the previously mentioned PyTorch library, it had seamless integration with it and could use many of PyTorch's built in functions to help us in training.
+The Deep Graph Library\footnote{https://www.dgl.ai/} (DGL) \cite{DGL} is a free and open source deep learning library primarily aimed at the graph neural networks domain. It is maintained by a diverse team of contributors, most of the stemming from the Amazon Web Services team. In this project, it proved itself as a crucial addition to the project due to its numerous graph oriented functionalities. We used it mainly for the following features. Firstly, it allowed us to effortlessly and efficiently load and modify training data from our yeast dataset that was then used for training our models. Secondly, its numerous implemented GNN layers (section \ref{subsec:graph neural networks}) were easy to set up and test out, allowing us to more quickly find the best model for our data. Lastly, due to it being built on the previously mentioned PyTorch library, it had seamless integration with it and could use many of PyTorch's built in functions to further help us in training.
 
-Aside from this, we also used a few other libraries to help us in some tasks. We will here shortly list them and describe them.
-
+Aside from this, we also used a few other libraries to help us in some tasks. We will here shortly list them and describe them:
 \begin{itemize}
-	\item NumPy\footnote{https://numpy.org/} - a popular Python library focused on efficient and easy mathematical calculations. We mostly used it for its implementation of large arrays
-
-	\item Pandas\footnote{https://pandas.pydata.org/} - a Python data science library with numerous data oriented features. We used it for its CSV saving and loading capabilities
-
-	\item Scikit-learn\footnote{https://scikit-learn.org/stable/} - the most popular machine learning library for Python. We used its easy to use performance metrics, such as F1 score and accuracy
-
-	\item TensorBoard\footnote{https://www.tensorflow.org/tensorboard} - a Python library used for easy visualization of the training process and its metrics
+	\item NumPy\footnote{https://numpy.org/} - a popular Python library focused on efficient and easy mathematical calculations. We mostly used it for its implementation of large arrays.
+	\item Pandas\footnote{https://pandas.pydata.org/} - a Python data science library with numerous data oriented features. We used it for its CSV saving and loading capabilities.
+	\item Scikit-learn\footnote{https://scikit-learn.org/stable/} - the most popular machine learning library for Python. We used its easy to use performance metrics, such as F1 score and accuracy.
+	\item TensorBoard\footnote{https://www.tensorflow.org/tensorboard} - a Python library used for easy visualization of training metrics.
 \end{itemize}
 
 \section{Code Structure}
 \label{sec:code structure}
 
-The project contained three main files as well as some helper scripts. In the following sections, we will describe these.
+The project code for this thesis is divided into three main files as well as a few helper scripts. In the following sections, we will describe them in detail.
 
 \subsection{DGLDataset}
 
-The first thing to do was generate a dataset from the data obtained after sequencing. For this, we used DGLs \texttt{dgl.data.DGLDataset} class, which we inherit. It has multiple purposes, after generating a dataset we can save it and load it by calling the \texttt{save} and \texttt{load} functions. We can also check if there already is a previously saved dataset using the \texttt{has\_cache} function. We can also get an instance of the dataset by calling the \texttt{\_\_getitem\_\_} function, as well as its length using the \texttt{\_\_len\_\_} function. But by far its most important purpose is generating the dataset we will use for training. We do this by loading the previously generated node and edge features and using them to generate a graph. We also encode label information, edge features, and node features. Node features are generated by taking the in and out degrees of every node.
+Before we can start training a model and defining all the necessary parameters, we need to load and properly generate a dataset first. After sequencing and assembly (section \ref{subsec:the process of sequencing and assembly}), we are left with a lot of data that needs to be loaded into memory and processed before being input into a model. To do this, we used DGLs \texttt{dgl.data.DGLDataset} class, which we inherit as our own class and implement its functions. The class fulfills multiple needs. After generating a dataset, we can save it and load it by calling the \texttt{save} and \texttt{load} functions. We can also check if there already is a previously saved dataset using the \texttt{has\_cache} function. Another important functionality is that we can get an instance of the dataset by calling the \texttt{\_\_getitem\_\_} function, as well as its length using the \texttt{\_\_len\_\_} function. But its main and largest functionality is generating the dataset which we will use for training. We do this by loading the previously generated edge features and use them to generate a graph structure with the help of various built-in DGL functions. We encode various information into the graph, such as label information, edge features, and node features. Node features are generated during this step by taking the in and out degrees of every node, obtained after generating the graph structure.
 
 \subsection{Models}
 
-The models we used for training are defined by inheriting the \texttt{torch.nn.Module} class. In each model, we define the layers of the network, as well as the \texttt{forward} function for the gradients calculation. An example of the EGAT (section \ref{subsubsec:edge graph attention network}) model definition code is in the following:
-
+To easily define and modify different models, we needed to implement them in a common framework. To do this, we defined them by inheriting the \texttt{torch.nn.Module} class and implementing its functions. In order to create a functional model, we need to define all the different layers of the network, as well as the \texttt{forward} function in which we define how the layers interact to calculate network outputs. This is also useful because it defines how gradients should be calculated. An example of the EGAT (section \ref{subsubsec:edge graph attention network}) model definition code is in the following example:
 \begin{lstlisting}
 class EGATModel(nn.Module):
-def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes, num_heads):
-super(EGATModel, self).__init__()
-self.lin_n = nn.Linear(node_features, lin_dim)
-self.egat1 = EGATConv(lin_dim, edge_features, hidden_dim, hidden_dim, num_heads=num_heads)
-self.egat2 = EGATConv(hidden_dim * num_heads, hidden_dim * num_heads, out_dim, out_dim, num_heads=1)
-self.egat3 = EGATConv(out_dim, out_dim, int(out_dim / 2), int(out_dim / 2), num_heads=1)
-self.egat4 = EGATConv(int(out_dim / 2), int(out_dim / 2), int(out_dim / 4), int(out_dim / 4), num_heads=1)
-self.classify = MLPPredictorEGAT(int(out_dim / 4), n_classes)
-self.dp = nn.Dropout(p=0.5)
+	def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes, num_heads):
+		super(EGATModel, self).__init__()
+		self.lin_n = nn.Linear(node_features, lin_dim)
+		self.egat1 = EGATConv(lin_dim, edge_features, hidden_dim, hidden_dim, num_heads=num_heads)
+		self.egat2 = EGATConv(hidden_dim * num_heads, hidden_dim * num_heads, out_dim, out_dim, num_heads=1)
+		self.egat3 = EGATConv(out_dim, out_dim, int(out_dim / 2), int(out_dim / 2), num_heads=1)
+		self.egat4 = EGATConv(int(out_dim / 2), int(out_dim / 2), int(out_dim / 4), int(out_dim / 4), num_heads=1)
+		self.classify = MLPPredictorEGAT(int(out_dim / 4), n_classes)
+		self.dp = nn.Dropout(p=0.5)
+		self.bn1 = nn.BatchNorm1d(hidden_dim * num_heads)
+		self.bn2 = nn.BatchNorm1d(out_dim)
+		self.bn3 = nn.BatchNorm1d(int(out_dim / 2))
+		self.bn4 = nn.BatchNorm1d(int(out_dim / 4))
 \end{lstlisting}
+First, we initialize a linear layer that transforms the node features (number of in and out node degrees) into a higher dimension of size \texttt{node\_features}. Then, we define four EGAT layers. The first layer is of the largest width \texttt{hidden\_dim} (both for node and edge features), and subsequent layers divide this size by two in each step. Only the first layer used a \texttt{num\_heads} number of attention heads, while the rest used only one. This is done to improve training times, as this network proved much slower than the other ones we used. After all the EGAT layers are done with their computations, we pass everything through a classification layer. This layer works by taking the new calculated node and edge features and concatenating them before passing them into a fully connected ANN layer for the final classification. The network then finally outputs a list of class probabilities for every edge in the graph.
 
-We define the network in the following way. First, we initialize a linear layer that transforms the node features (number of in and out node degrees) into a higher dimension of size \texttt{node\_features}. Then, we define four EGAT layers. The first layer is of the largest width \texttt{hidden\_dim} (both for node and edge features), and subsequent layers divide this size by two in each step. Only the first layer used a \texttt{num\_heads} number of attention heads, the rest used only one. This is done to improve training times, as this network proved much slower than the other ones we used. After all the EGAT layers are done with their computations, we pass everything through a classification layer. This layer works by taking the new calculated node and edge features and concatenating them before passing them into a fully connected classification layer. The network then finally outputs a list of class probabilities for every edge in the graph.
-
-You may have noticed that in some layers, we multiply the input dimension for the EGAT layer with \texttt{num\_heads}. This is done so that the number of attention heads is accounted for correctly while passing the results to the next network. The different layer outputs are \textit{flattened}, i.e. concatenated into a smaller dimensional vector before being passed to the next layer. Aside from this, we also employ the \textit{dropout} (section \ref{subsubsec:regularization functions}) mechanism to reduce overfitting (section \ref{subsec:the training process}).
-
-\subsection{Main}
-
-All of the previously described functions are connected in the \texttt{main} function. First, we define the function for logging parameters such as loss and accuracy for visualization using TensorBoard (section \ref{sec:technology stack}). Then, we define the dataset by calling the \texttt{DGLDataset} module and, if it previously hasn't been generated, create the dataset. We then define the model we will use for training with all its parameters and layer sizes. After that, we define the optimizer for our model, and finally, we start the training process. This process is depicted in Figure \ref{fig:architecture}.
+You may have noticed that in some layers, we multiply the input dimension for the EGAT layer with \texttt{num\_heads}. This is done because we can't just pass through the ensuing vector from the previous EGAT layer due to it having an additional dimension accounting for attention heads. Because of this, it needs to be \textit{flattened}, i.e. concatenated in the dimension of attention heads to form a \texttt{num\_heads} times longer vector in a different dimension before being passed to the next layer. Aside from this, we also employ a few regularization mechanisms such as \textit{dropout} and batch normalization (section \ref{subsubsec:regularization functions}) to reduce overfitting (section \ref{subsec:the training process}). Dropout is dimension agnostic and can be used on any layer, while batch normalization requires a different definition for every layer.
 
 \begin{figure}
 	\centering
-	\includegraphics[width=\textwidth]{images/model.png}
-	\caption[Model]{Graphical representation of the model architecture with EGAT layers. Different layers are represented with different colors and the main model is described within the gray box. This image was constructed using diagrams.net\footnotemark{}}
-	\label{fig:model}
-\end{figure}
-\footnotetext{https://www.diagrams.net/}
-
-\section{Model Description}
-\label{sec:model description}
-
-In Figure \ref{fig:model}, we can see the general structure of one of our models, specifically, the model using the EGAT layers (section \ref{subsubsec:edge graph attention network}). We will explain this model in detail as it is the most complicated one we used and it generalizes well to all other models we used.
-
-In the first step, we take node features, node in and out degrees, as input to a linear layer. The dimension of each of these feature vectors is $n$, where $n$ is the number of nodes in the current graph. The purpose of this linear layer is to increase the size of the features from two to a larger number $m_1$ (usually 64 or 128), thereby extracting useful information from them and successfully representing it with a suitable dimension.
-
-We then have a $n \times m_1$ matrix, which we use as input to the first EGAT layer along with the node features we use (edge overlap lengths) and the graph structure. The EGAT layer uses these to perform its operations and outputs two vectors of size $n \times m_2 \times a$ and $e \times m_2 \times a$, where $m_2$ is the output size of the first EGAT layer (up to four times alrger than $m_1$), $a$ is the number of attention heads (usually three) and $e$ is the number of edges. The two vectors represent the learned features of the nodes and edges respectively. They are then passed through ELU activation function (section \ref{subsubsec: nonlinearities}) which acts as a nonlinearity, followed with the dropout mechanism (section \ref{subsubsec:regularization functions}). This is then finally passed through batch normalization (section \ref{subsubsec:regularization functions}).
-
-This set of operations represents one step of the network, which we perform four times. In each step, we reduce the $m_2$ dimension two times in each step and use only one attention head. After the final layer is done, we pass everything through a classification layer. This layer works by taking the last set of calculated node and edge features and concatenates them in a node feature, edge feature, node feature order. These are then used as input to a fully connected layer which finally outputs logits. To use them in a loss function, we pass them through a sigmoid function to get class probabilities.
-
-\begin{figure}[h]
-	\centering
 	\includegraphics[width=\textwidth]{images/system_architecture.png}
-	\caption[Architecture]{Illustration depicting the architecture of our system. All the different components are joined together in the Main program. This image was constructed using diagrams.net\footnotemark{}}
+	\caption[Architecture]{Illustration depicting the architecture of our system. All the different components we defined are joined together in the Main program, after which we start the training loop and train a model. Within the training loop, we also validate our model (section \ref{subsec:the training process}). This image was constructed using diagrams.net\footnotemark{}.}
 	\label{fig:architecture}
 \end{figure}
 \footnotetext{https://www.diagrams.net/}
 
+\subsection{Main}
+
+All of the previously described functions are connected in the \texttt{main} function. First, we define the function for logging parameters such as loss and accuracy to more easily visualize them using TensorBoard (section \ref{sec:technology stack}). Then, we define the dataset by calling the previously described \texttt{DGLDataset} module and, if it previously hasn't been generated, create the dataset. We then define the model we will use for training with all its parameters and layer sizes. After that, we define the optimizer for our model (section \ref{subsec:optimizer}), and finally, we start the training process. This process is depicted in Figure \ref{fig:architecture}.
+
+\section{Model Description}
+\label{sec:model description}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/model.png}
+	\caption[Model]{Graphical representation of the model architecture when using EGAT layers. Different layers are represented with different colors and the main model is contained within the gray box. We can see that the main building block of the network consists of an EGAT layer, ELU nonlinearity, dropout and batch normalization, and is repeated multiple times before passing its output to a final classification layer. This image was constructed with the help of diagrams.net\footnotemark{}.}
+	\label{fig:model}
+\end{figure}
+\footnotetext{https://www.diagrams.net/}
+
+In Figure \ref{fig:model}, we can see the general structure of one of our models, specifically, the model using the EGAT layers (section \ref{subsubsec:edge graph attention network}). We will explain only this model in detail as it is the most complicated one we used, as well as because all of the other models being fairly similarly defined.
+
+In the first step, we take node features (node in and out degrees) as input to a linear layer. The dimension of each of these feature vectors is $n$, where $n$ is the number of nodes in the current graph being processed. The purpose of this linear layer is to increase the size of the features from two to a larger number $m_1$ (usually 64 or 128), thereby extracting useful information from them and successfully representing it with a suitable dimension.
+
+We then have a $n \times m_1$ matrix, which we use as input to the first EGAT layer along with the node features we use (edge overlap lengths) and the graph structure. After the EGAT layer has performed its calculations, it outputs two vectors of size $n \times m_2 \times a$ and $e \times m_2 \times a$, where $m_2$ is the output size of the first EGAT layer (up to four times larger than $m_1$), $a$ is the number of attention heads (usually three) and $e$ is the number of edges. The two vectors represent the learned features of the nodes and edges respectively. They are then passed through an ELU activation function (section \ref{subsubsec: nonlinearities}) which acts as a nonlinearity, followed with the dropout mechanism (section \ref{subsubsec:regularization functions}). This is then finally passed through batch normalization (section \ref{subsubsec:regularization functions}).
+
+This set of operations represents one step of the network, which we perform four times. In each step, we reduce the $m_2$ dimension two times. Aside from the first layer, we use only one attention head. After the final layer is done, we pass everything through a classification layer. This layer works by taking the last set of calculated node and edge features and concatenates them in a node feature $\rightarrow$ edge feature $\rightarrow$ node feature order, representing two nodes connected by an edge. These are then used as input to a fully connected layer which finally outputs logits (section \ref{subsec:loss function}). To use them in a loss function, we pass them through a sigmoid function (section \ref{fig:nonlinearities}) to get class probabilities.
+
 \subsection{Optimizer}
 \label{subsec:optimizer}
 
-An important element of every machine learning system is the optimizer. An optimizer is a function that controls how the weights of our network are adjusted after we obtain the gradients. The optimizer we used is the popular Adam (Adaptive Moment Estimation) optimizer \cite{adam}. It falls into the adaptive optimizers category and represents a nice balance between speed and performance due to using two different adaptive techniques: momentum and root mean square propagation (RMSProp). Recently, there has been more and more research about the advantages and disadvantages of adaptive optimization techniques compared to standard \textit{Stochastic Gradient Descent} (SGD). However, it is still a good idea to first use Adam as it doesn't require hyperparameter tuning to offer good results \cite{optimizers}. Momentum accelerates gradient descent using the \textit{exponentially weighted average} of the gradients and can be described with the following equations:
-
+An important element of every machine learning system is the optimizer. An optimizer is a function that controls how the weights of our network are adjusted after according to the gradients we obtained. The optimizer we used is the popular Adam (Adaptive Moment Estimation) optimizer \cite{adam}. It falls into the adaptive optimizers category and represents a suitable balance between speed and performance due to using two different adaptive techniques: momentum and root mean square propagation (RMSProp). Recently, there has been more and more research about the advantages and disadvantages of adaptive optimization techniques compared to standard SGD (section \ref{subsubsec: loss function and stochastic gradient descent}). However, it is still a good idea to first use Adam as it doesn't require hyperparameter tuning to offer good results \cite{optimizers}. Momentum accelerates gradient descent using the \textit{exponentially weighted average} of the gradients which can be described with the following equations:
 \[ w_{t+1} = w_t - \alpha m_t \]
-where
-
+where:
 \[ m_t = \beta m_{t-1} + (1 - \beta)  \frac{\partial L}{\partial w_t} \]
-Here, $w_t$ and $w_{t+1}$ are the current and new weights respectively and $\alpha$ is the learning rate. $m_t$ and $m_{t-1}$ are the current and previous moving averages respectively, while $\frac{\partial L}{\partial w_t}$ is the derivative of the loss function by the weights of the network. Lastly, $\beta$ is the moving average parameter or decay value, usually 0.9. Essentially, momentum accumulates previous gradients to speed up its convergence towards an optimum. On the other hand, RMSProp can be described as:
-
+Here, $w_t$ and $w_{t+1}$ are the current and new weights respectively and $\alpha$ is the learning rate, a number usually smaller than 1. $m_t$ and $m_{t-1}$ are the current and previous moving averages respectively, while $\frac{\partial L}{\partial w_t}$ is the derivative of the loss function with respect to network weights. Lastly, $\beta$ is the moving average parameter or decay value. Essentially, momentum accumulates previous gradients to speed up its convergence towards an optimum. On the other hand, RMSProp can be described as:
 \[ w_{t+1} = w_t - \frac{\alpha}{\sqrt{v_t + \epsilon}} \frac{\partial L}{\partial w_t} \]
-where
-
+where:
 \[ v_t = \beta v_{t-1} + (1 - \beta) \left(\frac{\partial L}{\partial w_t}\right)^2 \]
 Here, $v_t$ and $v_{t-1}$ are the current and previous sum of squared gradients (moving averages) and $\epsilon$ is a small value added to avoid division by zero. RMSProp works the same way as momentum, but instead uses the squares of gradients and instead of multiplying $\alpha$ with $v_t$, it divides by it.
 
 Finally, Adam is defined with the following set of equations:
-
 \[ m_i = \beta_1 m_i + (1 - \beta_1) \frac{\partial L}{\partial \theta_i} \]
-
-
 \[ v_i = \beta_2 v_i + (1 - \beta_2) \left(\frac{\partial L}{\partial \theta_i}\right)^2 \]
 then:
-
 \[ \widehat{m_l} = \frac{m_i}{1 - \beta_1}, \widehat{v_l} = \frac{v_i}{1 - \beta_2} \]
-
 \[ \theta_i = \theta_i - \frac{\alpha}{\sqrt{\widehat{v_l}} + \epsilon} \widehat{m_l} \]
-It uses both the first and the second momentum which are divided by one minus the decay factor $\beta$ to account for bias in the estimator. $\epsilon$ is a small value added in order to avoid division by zero and $\alpha$ is the learning rate. $\beta_1$ is almost always 0.9, while $\beta_2$ is usually 0.999. In the first iteration, the moving averages are set to zero. By using techniques from both SGD with momentum and RMSProp, Adam inherits both of their strengths. The main advantages are that Adam takes big enough steps to avoid local optima, while simultaneously oscillating minimally when it reaches the global optimum.
+It uses both the first and the second momentum which are divided by one minus the decay factor $\beta$ to account for bias in the estimator. $\beta_1$ is almost always 0.9, while $\beta_2$ is usually 0.999. In the first iteration, the moving averages are set to zero. By using techniques from both SGD with momentum and RMSProp, Adam inherits both of their strengths. The main advantages are that Adam takes big enough steps to avoid local optima, while simultaneously oscillating minimally when it reaches the global optimum.
 
 During training, we used a version od Adam implemented in PyTorch (section \ref{sec:technology stack}) with default parameters. The learning rate was set to 0.001, the $\beta$ parameters were set to 0.9 an 0.999 respectively, $\epsilon$ was set to 1e-8 and weight decay wasn't used.
 
-\subsection{Training and Validation}
+\subsection{Training \& Validation}
 \label{subsec:the training process}
 
-After we generated our dataset of $n$ graphs (100 for the dataset with only one chromosome), we used 99 graphs for training and one for validation. This is done to prevent \textit{overfitting}. This can be explained in the following way. As our model trains on the training part of the dataset, it starts to memorize the data in our dataset by heart. This may sound good, but it actually leads to poor \textit{generalization}, i.e., it cannot perform well on other similar data, only on the data it was trained on. To alleviate this, we separate a smaller validation dataset from the main one that the model doesn't train on. By validating our performance on it, we can get a more accurate state of the performance of our model. As the model starts overfitting, performance on the train part of the dataset will continue to improve, while on the validation part, it will start to worsen. We can then take the step where the model performed on the validation dataset the best as the best version of our model.
+After we generated our dataset of $n$ graphs (101 for both the dataset with only one chromosome and the whole genome), we used 100 graphs for training and one for validation. This is done to prevent \textit{overfitting}. During overfitting, as our model trains on the training part of the dataset, it starts to memorize the data in our dataset by heart. This may sound good, but it actually leads to poor \textit{generalization}, i.e., it cannot perform well on other similar data, only on the data it was trained on. To alleviate this, we separate a smaller validation dataset from the main one that the model doesn't train on. By validating our performance on it, we can get a more accurate state of the performance of our model. As the model starts overfitting, performance on the train part of the dataset will continue to improve, while on the validation part, it will start to lower. We can then take the step where the model performed best on the validation dataset as the best version of our model.
 
-Aside from this, validation can also be used for tuning \textit{hyperparameters} of our model, i.e. parameters that aren't adjusted during training, but are set before training. In that case, as some of the information from the validation dataset leaks into the training,  we also need to create a test dataset that will now fulfill the role that validation has fulfilled previously: generalization testing. In this thesis, we don't do this as most of the hyperparameters we used are set to default and we aren't concerned with top performance as much as testing out if the concept of haplotype separation works with GNNs and with what models.
+Aside from this, validation can also be used for tuning \textit{hyperparameters} of our model, i.e. parameters that aren't adjusted during training, but are set before it. In that case, as some of the information from the validation dataset leaks into the training,  we also need to create a test dataset that will now fulfill the role that validation has fulfilled previously: generalization testing. In this thesis, we don't do this as most of the hyperparameters we used are set to default values and we aren't concerned with state-of-the-art performance as much as testing out if the concept of haplotype separation works with GNNs, as well as what methods work the best.
 
-The models were trained on a setup with two AMD EPYC 7662 64-Core processors with 32 threads. Training time was shortest for GCNs, with around 30 minutes for 100 epochs. It took up to two times as much time for 100 epochs of GATs and four times as much for EGATs.
+The models were trained on a setup with two AMD EPYC 7662 64-Core processors with 32 threads used at most. Training time was shortest for GCNs, with around 30 minutes for 100 epochs. It took up to two times as much time for 100 epochs for GAT networks and four times as much for EGAT networks.
 
 \subsection{Hyperparameters}
 \label{subsec:hyperparameters}
 
-There are numerous important hyperparameters that can be adjusted to optimize training performance. However, due to time constraints and simplicity reasons, we mostly used default parameters in this thesis. We already mentioned the hyperparameters we used for the Adam optimizer (section \ref{subsec:optimizer}), the network sizes we used (section \ref{sec:model description}), as well as the values used for dropout (section \ref{subsubsec:regularization functions}), but there are others that require an explanation. An important parameter is batch size (section \ref{subsubsec: loss function and stochastic gradient descent}). Batch size determines how much of our data enters our network during one step of training. In GNNs, it translates to the number of separate graphs in an instance of the dataset. The message passing algorithm (section \ref{subsec:graph neural networks}) doesn't pass data over from separate graphs, so batches can be implemented very easily. That being said, the graphs we used for training were of sufficient size and using more than one graph during an instance of training simply wasn't necesary. In addition, some graphs appeared fragmented after assembly anyways, so they acted like mini-batches regardless.
+There are numerous important hyperparameters that can be adjusted to optimize training performance. However, due to time constraints and simplicity reasons, we mostly used default parameters in this thesis. We already mentioned the hyperparameters we used for the Adam optimizer (section \ref{subsec:optimizer}), the network sizes we used (section \ref{sec:model description}), as well as the values used for dropout (section \ref{subsubsec:regularization functions}), but there are others that require an explanation. An important parameter is batch size (section \ref{subsubsec: loss function and stochastic gradient descent}). Batch size determines how much of our data enters our network during one step of training. In GNNs, it translates to the number of separate graphs in an instance of the dataset. The message passing algorithm (section \ref{subsec:graph neural networks}) doesn't pass data over from separate graphs, so batches can be implemented by simply defining separate graphs in one instance of the dataset. That being said, the graphs we used for training were of sufficient size and using more than one graph during an instance of training simply wasn't necessary. In addition, some graphs appeared fragmented after assembly anyways, so they acted like mini-batches regardless.
 
 \chapter{Results}
 \label{ch:results}
@@ -650,7 +633,7 @@ Here, we will briefly explain all the different metrics for evaluating model per
 \subsection{Accuracy}
 \label{subsec:accuracy}
 
-Accuracy is a simple and reliable metric used for assessing model performance that is quite popular and widespread due to its interpretability and easy to understand nature. It can be described as the number of correctly classified examples divided by the total number of examples in the dataset. With that being said, it does have its limits. In the case when the dataset is severely imbalanced, i.e. there are siginificantly more examples of one class compared to the other, e.g. \textit{true} vs. \textit{false}, it will always display a high value by simply always guessing \textit{true}. Fortunately, this is not the case for our dataset, as we have a fairly similar number of correct and incorrect examples (section \ref{ch:dataset}). Accuracy can also be defined with the following equation:
+Accuracy is a simple and reliable metric used for assessing model performance that is quite popular and widespread due to its interpretability and easy to understand nature. It can be described as the number of correctly classified examples divided by the total number of examples in the dataset. With that being said, it does have its limits. In the case when the dataset is severely imbalanced, i.e. there are significantly more examples of one class compared to the other, e.g. \textit{true} vs. \textit{false}, it will always display a high value by simply always guessing \textit{true}. Fortunately, this is not the case for our dataset, as we have a fairly similar number of correct and incorrect examples (section \ref{ch:dataset}). Accuracy can also be defined with the following equation:
 
 \[ \mathrm{Accuracy} = \frac{\mathrm{TP} + \mathrm{TN}}{\mathrm{TP} + \mathrm{TN} + \mathrm{FP} + \mathrm{FN}} \]
 Put into words, it is the number of \textit{true positive} examples (everything our model classified correctly) and \textit{true negative} examples (everything our model did not classify correctly) divided by all examples in the dataset.
