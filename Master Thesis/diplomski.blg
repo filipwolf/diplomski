@@ -1,87 +1,105 @@
 This is BibTeX, Version 0.99d (TeX Live 2019/Debian)
 Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: diplomski.aux
-The style file: abbrv.bst
+The style file: unsrtnat.bst
+Illegal, another \bibstyle command---line 216 of file diplomski.aux
+ : \bibstyle
+ :          {abbrv}
+I'm skipping whatever remains of this command
 Database file #1: literatura.bib
 A bad cross reference---entry "relu"
 refers to entry "conf/icml/2010", which doesn't exist
 Warning--I didn't find a database entry for "conf/icml/2010"
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1049 of file abbrv.bst
+while executing---line 1233 of file unsrtnat.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1049 of file abbrv.bst
+while executing---line 1233 of file unsrtnat.bst
 Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1049 of file abbrv.bst
-Warning--to sort, need editor, organization, or key in bronstein2021geometric
-Warning--to sort, need editor, organization, or key in GCN
-Warning--to sort, need editor, organization, or key in attention
-Warning--to sort, need editor, organization, or key in GATv2
-Warning--to sort, need editor, organization, or key in GAT
+while executing---line 1233 of file unsrtnat.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
-while executing---line 1049 of file abbrv.bst
+while executing---line 1233 of file unsrtnat.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
-while executing---line 1049 of file abbrv.bst
+while executing---line 1233 of file unsrtnat.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
-while executing---line 1049 of file abbrv.bst
+while executing---line 1233 of file unsrtnat.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
-while executing---line 1049 of file abbrv.bst
-Warning--to sort, need editor, organization, or key in dropout
-Warning--to sort, need editor, organization, or key in DGL
+while executing---line 1233 of file unsrtnat.bst
+Warning--empty year in de_novo2
+Warning--empty year in haplotype
+Warning--empty year in haplotype_usage
+Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
+while executing---line 1315 of file unsrtnat.bst
+Warning--empty year in yeast
+Warning--empty year in human
+Warning--empty year in latex_nn
 Warning--empty title in GRL
 Warning--empty publisher in GRL
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1090 of file abbrv.bst
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1090 of file abbrv.bst
-Too many commas in name 1 of "Jumper, J., Evans, R., Pritzel, A. et al." for entry alphafold
-while executing---line 1090 of file abbrv.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
-while executing---line 1090 of file abbrv.bst
+while executing---line 1315 of file unsrtnat.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
-while executing---line 1090 of file abbrv.bst
+while executing---line 1315 of file unsrtnat.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
-while executing---line 1090 of file abbrv.bst
+while executing---line 1315 of file unsrtnat.bst
 Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
-while executing---line 1090 of file abbrv.bst
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1315 of file unsrtnat.bst
+Too many commas in name 1 of "Kamiński K, Ludwiczak J, Jasiński M, Bukala A, Madaj R, Szczepaniak K, Dunin-Horkawicz S" for entry EGAT
+while executing---line 1315 of file unsrtnat.bst
+Warning--empty year in popular_ml
 You've used 41 entries,
-            2118 wiz_defined-function locations,
-            702 strings with 11297 characters,
-and the built_in function-call counts, 13793 in all, are:
-= -- 1180
-> -- 971
-< -- 4
-+ -- 393
+            2481 wiz_defined-function locations,
+            809 strings with 14608 characters,
+and the built_in function-call counts, 16005 in all, are:
+= -- 1173
+> -- 1117
+< -- 27
++ -- 432
 - -- 349
-* -- 1025
-:= -- 2331
-add.period$ -- 102
+* -- 1308
+:= -- 2641
+add.period$ -- 152
 call.type$ -- 41
-change.case$ -- 283
-chr.to.int$ -- 0
-cite$ -- 50
-duplicate$ -- 431
-empty$ -- 992
-format.name$ -- 349
-if$ -- 2800
-int.to.chr$ -- 0
-int.to.str$ -- 41
+change.case$ -- 71
+chr.to.int$ -- 40
+cite$ -- 57
+duplicate$ -- 754
+empty$ -- 1375
+format.name$ -- 393
+if$ -- 3345
+int.to.chr$ -- 2
+int.to.str$ -- 42
 missing$ -- 23
-newline$ -- 179
-num.names$ -- 72
-pop$ -- 392
+newline$ -- 234
+num.names$ -- 106
+pop$ -- 416
 preamble$ -- 1
-purify$ -- 253
+purify$ -- 41
 quote$ -- 0
-skip$ -- 339
+skip$ -- 480
 stack$ -- 0
-substring$ -- 463
-swap$ -- 72
+substring$ -- 344
+swap$ -- 119
 text.length$ -- 4
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 149
+type$ -- 268
 warning$ -- 9
 while$ -- 86
-width$ -- 43
-write$ -- 366
-(There were 15 error messages)
+width$ -- 0
+write$ -- 555
+(There were 23 error messages)

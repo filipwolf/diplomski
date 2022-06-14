@@ -1,214 +1,310 @@
-\begin{thebibliography}{10}
+\begin{thebibliography}{41}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem{dropout}
-{\em Improving neural networks by preventing co-adaptation of feature
-  detectors}. arXiv, 2012.
-
-\bibitem{attention}
-{\em Neural Machine Translation by Jointly Learning to Align and Translate}.
-  arXiv, 2014.
-
-\bibitem{GCN}
-{\em Semi-Supervised Classification with Graph Convolutional Networks}. arXiv,
-  2016.
-
-\bibitem{GAT}
-{\em Graph Attention Networks}. arXiv, 2017.
-
-\bibitem{DGL}
-{\em Deep Graph Library: A Graph-Centric, Highly-Performant Package for Graph
-  Neural Networks}. arXiv, 2019.
-
-\bibitem{bronstein2021geometric}
-{\em Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges},
-  2021.
-
-\bibitem{GATv2}
-{\em How Attentive are Graph Attention Networks?} arXiv, 2021.
-
-\bibitem{baker_2012}
-M.~Baker.
-\newblock De novo genome assembly: What every biologist should know.
-\newblock {\em Nature News}, Mar 2012.
-
-\bibitem{dl_applications}
-M.~Chatterjee.
-\newblock Top 20 applications of deep learning in 2022 across industries, 2022.
-
-\bibitem{elu}
-D.-A. Clevert, T.~Unterthiner, and S.~Hochreiter.
-\newblock Fast and accurate deep network learning by exponential linear units
-  (elus), 2015.
-
-\bibitem{compeau_pevzner_2015}
-P.~Compeau and P.~Pevzner.
-\newblock {\em Bioinformatics algorithms: An active learning approach}.
-\newblock Active Learning Publishers, 2015.
-
-\bibitem{popular_ml}
-S.~. Data.
-\newblock Most popular machine learning libraries – 2014/2021.
-
-\bibitem{message_passing}
-J.~Gilmer, S.~S. Schoenholz, P.~F. Riley, O.~Vinyals, and G.~E. Dahl.
-\newblock Neural message passing for quantum chemistry.
-\newblock In D.~Precup and Y.~W. Teh, editors, {\em Proceedings of the 34th
-  International Conference on Machine Learning}, volume~70 of {\em Proceedings
-  of Machine Learning Research}, pages 1263--1272. PMLR, 06--11 Aug 2017.
-
-\bibitem{Goodfellow-et-al-2016}
-I.~Goodfellow, Y.~Bengio, and A.~Courville.
-\newblock {\em Deep Learning}.
-\newblock MIT Press, 2016.
-\newblock \url{http://www.deeplearningbook.org}.
-
-\bibitem{GRL}
-W.~L. Hamilton.
-\newblock 2020.
-
-\bibitem{uni_approx}
-K.~Hornik, M.~Stinchcombe, and H.~White.
-\newblock Multilayer feedforward networks are universal approximators.
-\newblock {\em Neural Networks}, 2(5):359--366, 1989.
-
-\bibitem{de_novo2}
+\bibitem[Illumina()]{de_novo2}
 Illumina.
 \newblock Assembling novel genomes.
+\newblock URL
+  \url{https://www.illumina.com/techniques/sequencing/dna-sequencing/whole-genome-sequencing/de-novo-sequencing.html}.
 
-\bibitem{bn}
-S.~Ioffe and C.~Szegedy.
-\newblock Batch normalization: Accelerating deep network training by reducing
-  internal covariate shift, 2015.
+\bibitem[Scitable()]{haplotype}
+Scitable.
+\newblock haplotype.
+\newblock URL
+  \url{https://www.nature.com/scitable/definition/haplotype-haplotypes-142/}.
 
-\bibitem{alphafold}
-E.~R. P. A. e.~a. Jumper, J.
-\newblock Highly accurate protein structure prediction with alphafold.
-\newblock {\em Nature}, 2021.
-
-\bibitem{EGAT}
-J.~M. B. A. M. R. S. K. D.-H.~S. Kamiński~K, Ludwiczak~J.
-\newblock Rossmann-toolbox: a deep learning-based protocol for the prediction
-  and design of cofactor specificity in rossmann fold proteins.
-\newblock {\em Brief Bioinform.}, 2022.
-
-\bibitem{adam}
-D.~P. Kingma and J.~Ba.
-\newblock Adam: A method for stochastic optimization, 2014.
-
-\bibitem{CEL}
-K.~E. Koech.
-\newblock Cross-entropy loss function, 2020.
-
-\bibitem{HGP1}
-E.~S. Lander, L.~M. Linton, B.~Birren, C.~Nusbaum, M.~C. Zody, J.~Baldwin,
-  K.~Devon, K.~Dewar, M.~Doyle, and W.~e.~a. FitzHugh.
-\newblock Initial sequencing and analysis of the human genome.
-\newblock {\em Nature}, 409(6822):860--921, 2001.
-
-\bibitem{CNN}
-Y.~Lecun, L.~Bottou, Y.~Bengio, and P.~Haffner.
-\newblock Gradient-based learning applied to document recognition.
-\newblock {\em Proceedings of the IEEE}, 86(11):2278--2324, 1998.
-
-\bibitem{leakyrelu}
-A.~L. Maas, A.~Y. Hannun, and A.~Y. Ng.
-\newblock Rectifier nonlinearities improve neural network acoustic models.
-\newblock In {\em in ICML Workshop on Deep Learning for Audio, Speech and
-  Language Processing}, 2013.
-
-\bibitem{dl_bioinformatics}
-S.~Min, B.~Lee, and S.~Yoon.
-\newblock {Deep learning in bioinformatics}.
-\newblock {\em Briefings in Bioinformatics}, 18(5):851--869, 07 2016.
-
-\bibitem{relu}
-V.~Nair and G.~E. Hinton.
-\newblock Rectified linear units improve restricted boltzmann machines.
-\newblock In {\em ICML}, pages 807--814, 2010.
-
-\bibitem{human}
-NCBI.
-\newblock Homo sapiens.
-
-\bibitem{yeast}
-NCBI.
-\newblock Saccharomyces cerevisiae.
-
-\bibitem{latex_nn}
-I.~Neutelings.
-\newblock Neural networks.
-
-\bibitem{genome_cost}
-NIH.
-\newblock The cost of sequencing a human genome, 2021.
-
-\bibitem{HGP2}
-S.~Nurk, S.~Koren, A.~Rhie, M.~Rautiainen, A.~V. Bzikadze, A.~Mikheenko, M.~R.
-  Vollger, N.~Altemose, L.~Uralsky, A.~Gershman, S.~Aganezov, S.~J. Hoyt,
-  M.~Diekhans, G.~A. Logsdon, M.~Alonge, S.~E. Antonarakis, M.~Borchers, G.~G.
-  Bouffard, S.~Y. Brooks, G.~V. Caldas, N.-C. Chen, H.~Cheng, C.-S. Chin,
-  W.~Chow, L.~G. de~Lima, P.~C. Dishuck, R.~Durbin, T.~Dvorkina, I.~T. Fiddes,
-  G.~Formenti, R.~S. Fulton, A.~Fungtammasan, E.~Garrison, P.~G.~S. Grady,
-  T.~A. Graves-Lindsay, I.~M. Hall, N.~F. Hansen, G.~A. Hartley, M.~Haukness,
-  K.~Howe, M.~W. Hunkapiller, C.~Jain, M.~Jain, E.~D. Jarvis, P.~Kerpedjiev,
-  M.~Kirsche, M.~Kolmogorov, J.~Korlach, M.~Kremitzki, H.~Li, V.~V. Maduro,
-  T.~Marschall, A.~M. McCartney, J.~McDaniel, D.~E. Miller, J.~C. Mullikin,
-  E.~W. Myers, N.~D. Olson, B.~Paten, P.~Peluso, P.~A. Pevzner, D.~Porubsky,
-  T.~Potapova, E.~I. Rogaev, J.~A. Rosenfeld, S.~L. Salzberg, V.~A. Schneider,
-  F.~J. Sedlazeck, K.~Shafin, C.~J. Shew, A.~Shumate, Y.~Sims, A.~F.~A. Smit,
-  D.~C. Soto, I.~Sović, J.~M. Storer, A.~Streets, B.~A. Sullivan,
-  F.~Thibaud-Nissen, J.~Torrance, J.~Wagner, B.~P. Walenz, A.~Wenger, J.~M.~D.
-  Wood, C.~Xiao, S.~M. Yan, A.~C. Young, S.~Zarate, U.~Surti, R.~C. McCoy,
-  M.~Y. Dennis, I.~A. Alexandrov, J.~L. Gerton, R.~J. O’Neill, W.~Timp, J.~M.
-  Zook, M.~C. Schatz, E.~E. Eichler, K.~H. Miga, and A.~M. Phillippy.
-\newblock The complete sequence of a human genome.
-\newblock {\em Science}, 376(6588):44--53, 2022.
-
-\bibitem{haplotype_usage}
+\bibitem[PacBio()]{haplotype_usage}
 PacBio.
 \newblock Sequencing 101: ploidy, haplotypes, and phasing — how to get more
   from your sequencing data.
+\newblock URL \url{https://www.pacb.com/blog/ploidy-haplotypes-and-phasing/}.
 
-\bibitem{optimizers}
-S.~Park.
-\newblock A 2021 guide to improving cnns-optimizers: Adam vs sgd, 2021.
+\bibitem[Compeau and Pevzner(2015)]{compeau_pevzner_2015}
+Phillip Compeau and Pavel Pevzner.
+\newblock \emph{Bioinformatics algorithms: An active learning approach}.
+\newblock Active Learning Publishers, 2015.
 
-\bibitem{rnn_backprop}
-F.~J. Pineda.
-\newblock Generalization of back-propagation to recurrent neural networks.
-\newblock {\em Phys. Rev. Lett.}, 59:2229--2232, Nov 1987.
+\bibitem[Jumper(2021)]{alphafold}
+Evans R. Pritzel A. et~al. Jumper, J.
+\newblock Highly accurate protein structure prediction with alphafold.
+\newblock \emph{Nature}, 2021.
+\newblock \doi{10.1038/s41586-021-03819-2}.
+\newblock URL \url{https://doi.org/10.1038/s41586-021-03819-2}.
 
-\bibitem{dl_growth}
-Z.~M. Research.
+\bibitem[Min et~al.(2016)Min, Lee, and Yoon]{dl_bioinformatics}
+Seonwoo Min, Byunghan Lee, and Sungroh Yoon.
+\newblock {Deep learning in bioinformatics}.
+\newblock \emph{Briefings in Bioinformatics}, 18\penalty0 (5):\penalty0
+  851--869, 07 2016.
+\newblock ISSN 1467-5463.
+\newblock \doi{10.1093/bib/bbw068}.
+\newblock URL \url{https://doi.org/10.1093/bib/bbw068}.
+
+\bibitem[Lander et~al.(2001)Lander, Linton, Birren, Nusbaum, Zody, Baldwin,
+  Devon, Dewar, Doyle, and FitzHugh]{HGP1}
+Eric~S. Lander, Lauren~M. Linton, Bruce Birren, Chad Nusbaum, Michael~C. Zody,
+  Jennifer Baldwin, Keri Devon, Ken Dewar, Michael Doyle, and William et~al.
+  FitzHugh.
+\newblock Initial sequencing and analysis of the human genome.
+\newblock \emph{Nature}, 409\penalty0 (6822):\penalty0 860--921, 2001.
+\newblock \doi{10.1038/35057062}.
+
+\bibitem[Nurk et~al.(2022)Nurk, Koren, Rhie, Rautiainen, Bzikadze, Mikheenko,
+  Vollger, Altemose, Uralsky, Gershman, Aganezov, Hoyt, Diekhans, Logsdon,
+  Alonge, Antonarakis, Borchers, Bouffard, Brooks, Caldas, Chen, Cheng, Chin,
+  Chow, de~Lima, Dishuck, Durbin, Dvorkina, Fiddes, Formenti, Fulton,
+  Fungtammasan, Garrison, Grady, Graves-Lindsay, Hall, Hansen, Hartley,
+  Haukness, Howe, Hunkapiller, Jain, Jain, Jarvis, Kerpedjiev, Kirsche,
+  Kolmogorov, Korlach, Kremitzki, Li, Maduro, Marschall, McCartney, McDaniel,
+  Miller, Mullikin, Myers, Olson, Paten, Peluso, Pevzner, Porubsky, Potapova,
+  Rogaev, Rosenfeld, Salzberg, Schneider, Sedlazeck, Shafin, Shew, Shumate,
+  Sims, Smit, Soto, Sović, Storer, Streets, Sullivan, Thibaud-Nissen,
+  Torrance, Wagner, Walenz, Wenger, Wood, Xiao, Yan, Young, Zarate, Surti,
+  McCoy, Dennis, Alexandrov, Gerton, O’Neill, Timp, Zook, Schatz, Eichler,
+  Miga, and Phillippy]{HGP2}
+Sergey Nurk, Sergey Koren, Arang Rhie, Mikko Rautiainen, Andrey~V. Bzikadze,
+  Alla Mikheenko, Mitchell~R. Vollger, Nicolas Altemose, Lev Uralsky, Ariel
+  Gershman, Sergey Aganezov, Savannah~J. Hoyt, Mark Diekhans, Glennis~A.
+  Logsdon, Michael Alonge, Stylianos~E. Antonarakis, Matthew Borchers,
+  Gerard~G. Bouffard, Shelise~Y. Brooks, Gina~V. Caldas, Nae-Chyun Chen, Haoyu
+  Cheng, Chen-Shan Chin, William Chow, Leonardo~G. de~Lima, Philip~C. Dishuck,
+  Richard Durbin, Tatiana Dvorkina, Ian~T. Fiddes, Giulio Formenti, Robert~S.
+  Fulton, Arkarachai Fungtammasan, Erik Garrison, Patrick G.~S. Grady, Tina~A.
+  Graves-Lindsay, Ira~M. Hall, Nancy~F. Hansen, Gabrielle~A. Hartley, Marina
+  Haukness, Kerstin Howe, Michael~W. Hunkapiller, Chirag Jain, Miten Jain,
+  Erich~D. Jarvis, Peter Kerpedjiev, Melanie Kirsche, Mikhail Kolmogorov, Jonas
+  Korlach, Milinn Kremitzki, Heng Li, Valerie~V. Maduro, Tobias Marschall,
+  Ann~M. McCartney, Jennifer McDaniel, Danny~E. Miller, James~C. Mullikin,
+  Eugene~W. Myers, Nathan~D. Olson, Benedict Paten, Paul Peluso, Pavel~A.
+  Pevzner, David Porubsky, Tamara Potapova, Evgeny~I. Rogaev, Jeffrey~A.
+  Rosenfeld, Steven~L. Salzberg, Valerie~A. Schneider, Fritz~J. Sedlazeck,
+  Kishwar Shafin, Colin~J. Shew, Alaina Shumate, Ying Sims, Arian F.~A. Smit,
+  Daniela~C. Soto, Ivan Sović, Jessica~M. Storer, Aaron Streets, Beth~A.
+  Sullivan, Françoise Thibaud-Nissen, James Torrance, Justin Wagner, Brian~P.
+  Walenz, Aaron Wenger, Jonathan M.~D. Wood, Chunlin Xiao, Stephanie~M. Yan,
+  Alice~C. Young, Samantha Zarate, Urvashi Surti, Rajiv~C. McCoy, Megan~Y.
+  Dennis, Ivan~A. Alexandrov, Jennifer~L. Gerton, Rachel~J. O’Neill, Winston
+  Timp, Justin~M. Zook, Michael~C. Schatz, Evan~E. Eichler, Karen~H. Miga, and
+  Adam~M. Phillippy.
+\newblock The complete sequence of a human genome.
+\newblock \emph{Science}, 376\penalty0 (6588):\penalty0 44--53, 2022.
+\newblock \doi{10.1126/science.abj6987}.
+\newblock URL \url{https://www.science.org/doi/abs/10.1126/science.abj6987}.
+
+\bibitem[NIH(2021)]{genome_cost}
+NIH.
+\newblock The cost of sequencing a human genome, 2021.
+\newblock URL
+  \url{https://www.genome.gov/about-genomics/fact-sheets/Sequencing-Human-Genome-cost}.
+
+\bibitem[NCBI({\natexlab{a}})]{yeast}
+NCBI.
+\newblock Saccharomyces cerevisiae, {\natexlab{a}}.
+\newblock URL
+  \url{https://www.ncbi.nlm.nih.gov/genome/?term=Saccharomyces%20cerevisiae[Organism]&cmd=DetailsSearch#:~:text=The%20Saccharomyces%20cerevisiae%20genome%20is,Mb%2C%20organized%20in%2016%20chromosomes.}
+
+\bibitem[NCBI({\natexlab{b}})]{human}
+NCBI.
+\newblock Homo sapiens, {\natexlab{b}}.
+\newblock URL \url{https://www.ncbi.nlm.nih.gov/genome/?term=Homo+sapiens}.
+
+\bibitem[Baker(2012)]{baker_2012}
+Monya Baker.
+\newblock De novo genome assembly: What every biologist should know.
+\newblock \emph{Nature News}, Mar 2012.
+\newblock URL \url{https://www.nature.com/articles/nmeth.1935#citeas}.
+
+\bibitem[Trudeau(2017)]{trudeau_2017}
+Richard~J. Trudeau.
+\newblock \emph{Introduction to graph theory}.
+\newblock Stanford, 2017.
+
+\bibitem[Chatterjee(2022)]{dl_applications}
+Marina Chatterjee.
+\newblock Top 20 applications of deep learning in 2022 across industries, 2022.
+\newblock URL
+  \url{https://www.mygreatlearning.com/blog/deep-learning-applications/}.
+
+\bibitem[Research(2022)]{dl_growth}
+Zion~Market Research.
 \newblock Outlook on the global deep learning market size, share \& growth 2022
   - 2028 | estimated to achieve a revenue of \$80769.6 million with growing at
   a cagr 38.3% report by zion market research, 2022.
+\newblock URL
+  \url{https://www.prnewswire.com/news-releases/outlook-on-the-global-deep-learning-market-size-share--growth-2022---2028--estimated-to-achieve-a-revenue-of-80769-6-million-with-growing-at-a-cagr-38-3-report-by-zion-market-research-301550212.html#:~:text=As%20per%20the%20analysis%20shared,%25%20(2022%2D2028).}
 
-\bibitem{GNN}
-F.~Scarselli, A.~C. Tsoi, M.~Gori, and M.~Hagenbuchner.
+\bibitem[Hornik et~al.(1989)Hornik, Stinchcombe, and White]{uni_approx}
+Kurt Hornik, Maxwell Stinchcombe, and Halbert White.
+\newblock Multilayer feedforward networks are universal approximators.
+\newblock \emph{Neural Networks}, 2\penalty0 (5):\penalty0 359--366, 1989.
+\newblock ISSN 0893-6080.
+\newblock \doi{https://doi.org/10.1016/0893-6080(89)90020-8}.
+\newblock URL
+  \url{https://www.sciencedirect.com/science/article/pii/0893608089900208}.
+
+\bibitem[Lecun et~al.(1998)Lecun, Bottou, Bengio, and Haffner]{CNN}
+Y.~Lecun, L.~Bottou, Y.~Bengio, and P.~Haffner.
+\newblock Gradient-based learning applied to document recognition.
+\newblock \emph{Proceedings of the IEEE}, 86\penalty0 (11):\penalty0
+  2278--2324, 1998.
+\newblock \doi{10.1109/5.726791}.
+
+\bibitem[Neutelings()]{latex_nn}
+Izaak Neutelings.
+\newblock Neural networks.
+\newblock URL \url{https://tikz.net/neural_networks/}.
+
+\bibitem[Goodfellow et~al.(2016)Goodfellow, Bengio, and
+  Courville]{Goodfellow-et-al-2016}
+Ian Goodfellow, Yoshua Bengio, and Aaron Courville.
+\newblock \emph{Deep Learning}.
+\newblock MIT Press, 2016.
+\newblock \url{http://www.deeplearningbook.org}.
+
+\bibitem[Scarselli et~al.(2004)Scarselli, Tsoi, Gori, and Hagenbuchner]{GNN}
+Franco Scarselli, Ah~Chung Tsoi, Marco Gori, and Markus Hagenbuchner.
 \newblock Graphical-based learning environments for pattern recognition.
-\newblock In A.~Fred, T.~M. Caelli, R.~P.~W. Duin, A.~C. Campilho, and
-  D.~de~Ridder, editors, {\em Structural, Syntactic, and Statistical Pattern
-  Recognition}, pages 42--56, Berlin, Heidelberg, 2004. Springer Berlin
-  Heidelberg.
+\newblock In Ana Fred, Terry~M. Caelli, Robert P.~W. Duin, Aur{\'e}lio~C.
+  Campilho, and Dick de~Ridder, editors, \emph{Structural, Syntactic, and
+  Statistical Pattern Recognition}, pages 42--56, Berlin, Heidelberg, 2004.
+  Springer Berlin Heidelberg.
+\newblock ISBN 978-3-540-27868-9.
 
-\bibitem{haplotype}
-Scitable.
-\newblock haplotype.
+\bibitem[Gilmer et~al.(2017)Gilmer, Schoenholz, Riley, Vinyals, and
+  Dahl]{message_passing}
+Justin Gilmer, Samuel~S. Schoenholz, Patrick~F. Riley, Oriol Vinyals, and
+  George~E. Dahl.
+\newblock Neural message passing for quantum chemistry.
+\newblock In Doina Precup and Yee~Whye Teh, editors, \emph{Proceedings of the
+  34th International Conference on Machine Learning}, volume~70 of
+  \emph{Proceedings of Machine Learning Research}, pages 1263--1272. PMLR,
+  06--11 Aug 2017.
+\newblock URL \url{https://proceedings.mlr.press/v70/gilmer17a.html}.
 
-\bibitem{dropout2}
-N.~Srivastava, G.~Hinton, A.~Krizhevsky, I.~Sutskever, and R.~Salakhutdinov.
+\bibitem[Hamilton(2020)]{GRL}
+William~L. Hamilton.
+\newblock 2020.
+\newblock \doi{10.2200/S01045ED1V01Y202009AIM046}.
+
+\bibitem[bro(2021)]{bronstein2021geometric}
+\emph{Geometric Deep Learning: Grids, Groups, Graphs, Geodesics, and Gauges},
+  2021.
+
+\bibitem[Pineda(1987)]{rnn_backprop}
+Fernando~J. Pineda.
+\newblock Generalization of back-propagation to recurrent neural networks.
+\newblock \emph{Phys. Rev. Lett.}, 59:\penalty0 2229--2232, Nov 1987.
+\newblock \doi{10.1103/PhysRevLett.59.2229}.
+\newblock URL \url{https://link.aps.org/doi/10.1103/PhysRevLett.59.2229}.
+
+\bibitem[GCN(2016)]{GCN}
+\emph{Semi-Supervised Classification with Graph Convolutional Networks}, 2016.
+  arXiv.
+\newblock \doi{10.48550/ARXIV.1609.02907}.
+\newblock URL \url{https://arxiv.org/abs/1609.02907}.
+
+\bibitem[att(2014)]{attention}
+\emph{Neural Machine Translation by Jointly Learning to Align and Translate},
+  2014. arXiv.
+\newblock \doi{10.48550/ARXIV.1409.0473}.
+\newblock URL \url{https://arxiv.org/abs/1409.0473}.
+
+\bibitem[GAT(2021)]{GATv2}
+\emph{How Attentive are Graph Attention Networks?}, 2021. arXiv.
+\newblock \doi{10.48550/ARXIV.2105.14491}.
+\newblock URL \url{https://arxiv.org/abs/2105.14491}.
+
+\bibitem[GAT(2017)]{GAT}
+\emph{Graph Attention Networks}, 2017. arXiv.
+\newblock \doi{10.48550/ARXIV.1710.10903}.
+\newblock URL \url{https://arxiv.org/abs/1710.10903}.
+
+\bibitem[Kamiński~K(2022)]{EGAT}
+Jasiński M Bukala A Madaj R Szczepaniak K Dunin-Horkawicz~S Kamiński~K,
+  Ludwiczak~J.
+\newblock Rossmann-toolbox: a deep learning-based protocol for the prediction
+  and design of cofactor specificity in rossmann fold proteins.
+\newblock \emph{Brief Bioinform.}, 2022.
+\newblock \doi{10.1093/bib/bbab371}.
+
+\bibitem[Nair and Hinton(2010)]{relu}
+Vinod Nair and Geoffrey~E. Hinton.
+\newblock Rectified linear units improve restricted boltzmann machines.
+\newblock In \emph{ICML}, pages 807--814, 2010.
+\newblock URL \url{https://icml.cc/Conferences/2010/papers/432.pdf}.
+
+\bibitem[Maas et~al.(2013)Maas, Hannun, and Ng]{leakyrelu}
+Andrew~L. Maas, Awni~Y. Hannun, and Andrew~Y. Ng.
+\newblock Rectifier nonlinearities improve neural network acoustic models.
+\newblock In \emph{in ICML Workshop on Deep Learning for Audio, Speech and
+  Language Processing}, 2013.
+
+\bibitem[Clevert et~al.(2015)Clevert, Unterthiner, and Hochreiter]{elu}
+Djork-Arné Clevert, Thomas Unterthiner, and Sepp Hochreiter.
+\newblock Fast and accurate deep network learning by exponential linear units
+  (elus), 2015.
+\newblock URL \url{https://arxiv.org/abs/1511.07289}.
+
+\bibitem[dro(2012)]{dropout}
+\emph{Improving neural networks by preventing co-adaptation of feature
+  detectors}, 2012. arXiv.
+\newblock \doi{10.48550/ARXIV.1207.0580}.
+\newblock URL \url{https://arxiv.org/abs/1207.0580}.
+
+\bibitem[Srivastava et~al.(2014)Srivastava, Hinton, Krizhevsky, Sutskever, and
+  Salakhutdinov]{dropout2}
+Nitish Srivastava, Geoffrey Hinton, Alex Krizhevsky, Ilya Sutskever, and Ruslan
+  Salakhutdinov.
 \newblock Dropout: A simple way to prevent neural networks from overfitting.
-\newblock {\em Journal of Machine Learning Research}, 15(56):1929--1958, 2014.
+\newblock \emph{Journal of Machine Learning Research}, 15\penalty0
+  (56):\penalty0 1929--1958, 2014.
+\newblock URL \url{http://jmlr.org/papers/v15/srivastava14a.html}.
 
-\bibitem{trudeau_2017}
-R.~J. Trudeau.
-\newblock {\em Introduction to graph theory}.
-\newblock Stanford, 2017.
+\bibitem[Ioffe and Szegedy(2015)]{bn}
+Sergey Ioffe and Christian Szegedy.
+\newblock Batch normalization: Accelerating deep network training by reducing
+  internal covariate shift, 2015.
+\newblock URL \url{https://arxiv.org/abs/1502.03167}.
 
-\bibitem{Vaser}
-R.~Vaser and M.~{\v S}iki{\'c}.
+\bibitem[Vaser and {\v S}iki{\'c}(2021)]{Vaser}
+Robert Vaser and Mile {\v S}iki{\'c}.
 \newblock Raven: a de novo genome assembler for long reads.
-\newblock {\em bioRxiv}, 2021.
+\newblock \emph{bioRxiv}, 2021.
+\newblock \doi{10.1101/2020.08.07.242461}.
+\newblock URL
+  \url{https://www.biorxiv.org/content/early/2021/02/22/2020.08.07.242461}.
+
+\bibitem[Data()]{popular_ml}
+Statistics \& Data.
+\newblock Most popular machine learning libraries – 2014/2021.
+\newblock URL
+  \url{https://statisticsanddata.org/data/most-popular-machine-learning-libraries/}.
+
+\bibitem[DGL(2019)]{DGL}
+\emph{Deep Graph Library: A Graph-Centric, Highly-Performant Package for Graph
+  Neural Networks}, 2019. arXiv.
+\newblock \doi{10.48550/ARXIV.1909.01315}.
+\newblock URL \url{https://arxiv.org/abs/1909.01315}.
+
+\bibitem[Kingma and Ba(2014)]{adam}
+Diederik~P. Kingma and Jimmy Ba.
+\newblock Adam: A method for stochastic optimization, 2014.
+\newblock URL \url{https://arxiv.org/abs/1412.6980}.
+
+\bibitem[Park(2021)]{optimizers}
+Sieun Park.
+\newblock A 2021 guide to improving cnns-optimizers: Adam vs sgd, 2021.
+\newblock URL
+  \url{https://medium.com/geekculture/a-2021-guide-to-improving-cnns-optimizers-adam-vs-sgd-495848ac6008#:~:text=One%20interesting%20and%20dominant%20argument,results%20in%20improved%20final%20performance.}
+
+\bibitem[Koech(2020)]{CEL}
+Kiprono~Elijah Koech.
+\newblock Cross-entropy loss function, 2020.
+\newblock URL
+  \url{https://towardsdatascience.com/cross-entropy-loss-function-f38c4ec8643e}.
 
 \end{thebibliography}
