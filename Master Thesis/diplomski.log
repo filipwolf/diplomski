@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  14 JUN 2022 21:55
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  15 JUN 2022 14:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1000,48 +1000,54 @@ Chapter 4.
 <images/accuracy_val.png, id=175, 1503.6175pt x 411.5375pt>
 File: images/accuracy_val.png Graphic file (type png)
 <use images/accuracy_val.png>
-Package pdftex.def Info: images/accuracy_val.png  used on input line 669.
+Package pdftex.def Info: images/accuracy_val.png  used on input line 664.
 (pdftex.def)             Requested size: 441.01773pt x 120.70547pt.
 <images/f1_val.png, id=176, 1493.58pt x 406.51875pt>
 File: images/f1_val.png Graphic file (type png)
 <use images/f1_val.png>
-Package pdftex.def Info: images/f1_val.png  used on input line 670.
+Package pdftex.def Info: images/f1_val.png  used on input line 665.
 (pdftex.def)             Requested size: 441.01773pt x 120.03363pt.
- [33 <./images/accuracy_val.png> <./images/f1_val.png>]
-<images/accuracy_eg.png, id=182, 1497.595pt x 408.52625pt>
+<images/loss_val.png, id=177, 1494.58376pt x 408.52625pt>
+File: images/loss_val.png Graphic file (type png)
+<use images/loss_val.png>
+Package pdftex.def Info: images/loss_val.png  used on input line 666.
+(pdftex.def)             Requested size: 441.01773pt x 120.54536pt.
+ [33 <./images/accuracy_val.png> <./images/f1_val.png> <./images/loss_val.png>]
+ [34]
+<images/accuracy_eg.png, id=187, 1497.595pt x 408.52625pt>
 File: images/accuracy_eg.png Graphic file (type png)
 <use images/accuracy_eg.png>
-Package pdftex.def Info: images/accuracy_eg.png  used on input line 683.
+Package pdftex.def Info: images/accuracy_eg.png  used on input line 718.
 (pdftex.def)             Requested size: 441.01773pt x 120.30225pt.
-<images/f1_eg.png, id=183, 1494.58376pt x 406.51875pt>
+<images/f1_eg.png, id=188, 1494.58376pt x 406.51875pt>
 File: images/f1_eg.png Graphic file (type png)
 <use images/f1_eg.png>
-Package pdftex.def Info: images/f1_eg.png  used on input line 684.
+Package pdftex.def Info: images/f1_eg.png  used on input line 719.
 (pdftex.def)             Requested size: 441.01773pt x 119.953pt.
-<images/loss_eg.png, id=184, 1492.57625pt x 410.53375pt>
+<images/loss_eg.png, id=189, 1492.57625pt x 410.53375pt>
 File: images/loss_eg.png Graphic file (type png)
 <use images/loss_eg.png>
-Package pdftex.def Info: images/loss_eg.png  used on input line 685.
+Package pdftex.def Info: images/loss_eg.png  used on input line 720.
 (pdftex.def)             Requested size: 441.01773pt x 121.3006pt.
-<images/separated_haplotypes_after_training.png, id=185, 7708.8pt x 3099.58pt>
+ [35 <./images/accuracy_eg.png> <./images/f1_eg.png> <./images/loss_eg.png>]
+<images/precision_eg.png, id=196, 1494.58376pt x 408.52625pt>
+File: images/precision_eg.png Graphic file (type png)
+<use images/precision_eg.png>
+Package pdftex.def Info: images/precision_eg.png  used on input line 732.
+(pdftex.def)             Requested size: 441.01773pt x 120.54536pt.
+<images/recall_eg.png, id=197, 1495.5875pt x 409.53pt>
+File: images/recall_eg.png Graphic file (type png)
+<use images/recall_eg.png>
+Package pdftex.def Info: images/recall_eg.png  used on input line 733.
+(pdftex.def)             Requested size: 441.01773pt x 120.7603pt.
+ [36 <./images/precision_eg.png> <./images/recall_eg.png>]
+<images/separated_haplotypes_after_training.png, id=203, 7708.8pt x 3099.58pt>
 File: images/separated_haplotypes_after_training.png Graphic file (type png)
 <use images/separated_haplotypes_after_training.png>
 Package pdftex.def Info: images/separated_haplotypes_after_training.png  used o
-n input line 692.
+n input line 745.
 (pdftex.def)             Requested size: 441.01773pt x 177.31166pt.
-<images/precision_eg.png, id=186, 1494.58376pt x 408.52625pt>
-File: images/precision_eg.png Graphic file (type png)
-<use images/precision_eg.png>
-Package pdftex.def Info: images/precision_eg.png  used on input line 704.
-(pdftex.def)             Requested size: 441.01773pt x 120.54536pt.
-<images/recall_eg.png, id=187, 1495.5875pt x 409.53pt>
-File: images/recall_eg.png Graphic file (type png)
-<use images/recall_eg.png>
-Package pdftex.def Info: images/recall_eg.png  used on input line 705.
-(pdftex.def)             Requested size: 441.01773pt x 120.7603pt.
- [34] [35 <./images/accuracy_eg.png> <./images/f1_eg.png> <./images/loss_eg.png
->] [36 <./images/separated_haplotypes_after_training.png (PNG copy)> <./images/
-precision_eg.png> <./images/recall_eg.png>] [37]
+ [37 <./images/separated_haplotypes_after_training.png (PNG copy)>]
 Chapter 5.
 (./diplomski.bbl [38
 
@@ -1178,7 +1184,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 305--309
  []
 
 ) [43]
-Overfull \hbox (0.37427pt too wide) in paragraph at lines 735--737
+Overfull \hbox (0.37427pt too wide) in paragraph at lines 767--769
 \T1/ptm/b/n/12 Klju£ne ri-je£i: \T1/ptm/m/n/12 Bioin-for-matika, Graf Neu-ronsk
 e Mreºe, GNN, Odva-janje hap-lotipa, Duboko
  []
@@ -1187,13 +1193,13 @@ e Mreºe, GNN, Odva-janje hap-lotipa, Duboko
 
 ] (./diplomski.aux) ) 
 Here is how much of TeX's memory you used:
- 30735 strings out of 483107
- 715305 string characters out of 5964630
+ 30745 strings out of 483107
+ 715532 string characters out of 5964630
  1126756 words of memory out of 5000000
- 45199 multiletter control sequences out of 15000+600000
+ 45208 multiletter control sequences out of 15000+600000
  615795 words of font info for 156 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 63i,19n,103p,2015b,2249s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 63i,19n,103p,2185b,2249s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc
 }</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr
 /share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share
@@ -1212,10 +1218,10 @@ exmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
 w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on diplomski.pdf (50 pages, 2360982 bytes).
+Output written on diplomski.pdf (50 pages, 2401765 bytes).
 PDF statistics:
- 292 PDF objects out of 1000 (max. 8388607)
+ 294 PDF objects out of 1000 (max. 8388607)
  186 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
- 103 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 108 words of extra memory for PDF output out of 10000 (max. 10000000)
 

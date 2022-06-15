@@ -2,6 +2,13 @@ from path_utils import PATH
 
 
 def gen(prediction):
+    """Generate file suitable as input to Graphia and separate haplotypes.
+
+    Parameters
+    ----------
+    prediction: list
+        List of predictions for every class and every edge in a graph.
+    """
 
     path = PATH
 

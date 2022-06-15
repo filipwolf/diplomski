@@ -9,17 +9,34 @@ from path_utils import PATH
 from scripts.graphiaGen2 import gen
 
 
-def evaluate(model, graph_list, dataset, yeast_data):
+def evaluate(model, graph_list, yeast_data):
+    """Function used for evaluating model performance.
+
+    Parameters
+    ----------
+    model : nn.Module
+        The model used for training.
+    graph_list : list
+       List of all graphs used for training.
+    yeast_data : YeastDataset
+        The dataset we defined for training, used for fetching various graph features.
+    """
     model.eval()
     with torch.no_grad():
+        # load edge features
         edge_features = yeast_data.edge_features2[100]
+        # select graph for validation
         graph = graph_list[100]
-        node_in_degrees = dataset.node_in_degrees[100]
-        node_out_degrees = dataset.node_out_degrees[100]
+        # load node features
+        node_in_degrees = yeast_data.node_in_degrees[100]
+        node_out_degrees = yeast_data.node_out_degrees[100]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
-        edge_labels = dataset.edge_labels[100]
+        # load edge labels
+        edge_labels = yeast_data.edge_labels[100]
+        # calculate model outputs
         logits = model(graph, node_features, edge_features)
         pred = logits.max(1).indices
+        # calculate loss
         loss = F.cross_entropy(logits, edge_labels)
         # print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
         # print("Eval F1: " + str(f1_score(edge_labels, pred, average="macro")))
@@ -28,54 +45,74 @@ def evaluate(model, graph_list, dataset, yeast_data):
 
 if __name__ == "__main__":
 
+    # select number of threads to be used
     # torch.set_num_threads(32)
 
+    # check if GPU is available
     device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
+    # init writer for storing paramters to TensorBoard
     writer = SummaryWriter()
 
+    # initiate dataset
     yeast_dataset = YeastDataset(PATH, PATH)
 
+    # load dataset or generate if it doesn't exist yet
     if yeast_dataset.has_cache():
         yeast_dataset.load()
     else:
         yeast_dataset.process()
         yeast_dataset.save()
 
+    # load list of graphs
     graph_list = yeast_dataset.graph_list
 
+    # initiate model
     model = GCNModel(2, 1, 128, 64, 64, 2)
     # model = GATModel(2, 1, 128, 512, 256, 2, 3)
     # model = EGATModel(2, 1, 64, 256, 128, 2, 3)
+
+    # move mode to GPU if it's available
     # if device == 'cuda':
     #     model = model.to(device)
+
+    # initiate optimizer
     opt = torch.optim.Adam(model.parameters())
 
     max_f1 = 0
     best_predictions = 0
 
+    # training loop
     for epoch in range(1):
         print("Epoch: " + str(epoch))
         for i, graph in enumerate(graph_list[:100]):
+            # load node features
             node_in_degrees = yeast_dataset.node_in_degrees[i]
             node_out_degrees = yeast_dataset.node_out_degrees[i]
             node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
             # node_features = node_features.to(device)
+            # load edge features
             edge_features = yeast_dataset.edge_features2[i]
             # edge_features = edge_features.resize(19841, 1)
+            # load edge labels
             edge_labels = yeast_dataset.edge_labels[i]
+            # calculate model outputs
             logits = model(graph, node_features, edge_features)
 
             # pred = torch.softmax(logits, dim=1).max(1).indices
+            # calculate loss
             loss = F.cross_entropy(logits, edge_labels)
+            # calculate gradients
             opt.zero_grad()
             loss.backward()
             opt.step()
             # print('Train loss: ' + str(loss.item()))
             # print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
             # print('Train F1: ' + str(f1_score(edge_labels, pred)))
-        loss, acc, f1, precision, recall, predictions = evaluate(model, graph_list, yeast_dataset, yeast_dataset)
+        # validate model
+        loss, acc, f1, precision, recall, predictions = evaluate(model, graph_list, yeast_dataset)
 
+        # save best model so far
         if f1 > max_f1:
             print("Eval acc: " + str(acc / len(edge_labels)))
             print("Eval F1: " + str(f1))
@@ -92,6 +129,7 @@ if __name__ == "__main__":
 
         max_f1 = max(f1, max_f1)
 
+        # add data to TensorBoard
         writer.add_scalar('Loss/val', loss, epoch)
         writer.add_scalar('Accuracy/val', acc / len(edge_labels), epoch)
         writer.add_scalar('F1/val', f1, epoch)

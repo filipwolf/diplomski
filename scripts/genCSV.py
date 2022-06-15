@@ -8,7 +8,21 @@ from path_utils import PATH
 
 
 def gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps):
+    """Function for generating node and edge features.
 
+    Parameters
+    ----------
+    path_graphs : str
+        Path for the modified_graphs_2 folder.
+    path_node_features : str
+        Path for writing node features.
+    path_edge_features : bool
+        Path for writing edge features.
+    path_edge_overlaps : bool
+        Path for reading edge overlap data.
+    """
+
+    # open all of the folders
     f = open(path_graphs, "r")
     f2 = open(path_node_features, "w")
     f3 = open(path_edge_features, "w")
@@ -68,6 +82,7 @@ def gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
     nodes_list = {}
     edge_list = []
 
+    # initialize files
     f2.write("node_name,node_class\n")
     f3.write("node1,node2,edge_overlap,edge_class\n")
 
@@ -80,12 +95,16 @@ def gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
 
     edge_overlaps = [int(x) for x in edge_overlaps]
 
+    # iterate over data lines
     for j, line in enumerate(f.readlines()):
         edge_class = 0
         tab_split = line.split("\t")
+
+        # get read name info
         semicol_split1 = tab_split[0].rstrip().split(";")
         semicol_split2 = tab_split[1].rstrip().split(";")
 
+        # get class info and save reads to dict for later use
         if semicol_split1[1] not in nodes_list.keys():
             nodes_list[semicol_split1[1]] = 1 if semicol_split1[0] == "mut" else 0
         if semicol_split2[1] not in nodes_list.keys():
@@ -108,15 +127,18 @@ def gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
         # else:
         edge_list.append([semicol_split1[1], semicol_split2[1], edge_overlaps[j], edge_class])
 
+    # sort node list, necessary because of DGL
     od = collections.OrderedDict(sorted(nodes_list.items(), key=lambda x: int(x[0])))
 
     nodes_list = {}
     trans_list = {}
 
+    # create mappings between node names in node and edge list
     for j, (key, value) in enumerate(od.items()):
         nodes_list[j] = value
         trans_list[key] = j
 
+    # write edge feature data
     for edge in edge_list:
         f3.write(
             str(trans_list[edge[0]])
@@ -129,6 +151,7 @@ def gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
             + "\n"
         )
 
+    # write node feature data
     for key, value in nodes_list.items():
         f2.write(str(key) + "," + str(value) + "\n")
 
@@ -137,8 +160,7 @@ if __name__ == "__main__":
 
     path = PATH
 
-    # training
-
+    # loop for generating training data
     for i in range(0, 101):
         print(i)
 
@@ -154,8 +176,7 @@ if __name__ == "__main__":
 
         gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
 
-    # validation
-
+    # validation data
     path += 'chr2/'
 
     path_graphs = path + "graph_modified.txt"

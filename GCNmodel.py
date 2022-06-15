@@ -2,9 +2,9 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from dgl.nn.pytorch import GATv2Conv, EdgeWeightNorm, GraphConv, EGATConv
-from sklearn.metrics import f1_score
 
 
+# GCN model definition
 class GCNModel(nn.Module):
     def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes):
         super(GCNModel, self).__init__()
@@ -31,6 +31,7 @@ class GCNModel(nn.Module):
         return h
 
 
+# GAT model definition
 class GATModel(nn.Module):
     def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes, num_heads):
         super(GATModel, self).__init__()
@@ -55,6 +56,7 @@ class GATModel(nn.Module):
         return h
 
 
+# EGAT model definition
 class EGATModel(nn.Module):
     def __init__(self, node_features, edge_features, lin_dim, hidden_dim, out_dim, n_classes, num_heads):
         super(EGATModel, self).__init__()
@@ -87,6 +89,7 @@ class EGATModel(nn.Module):
         return h
 
 
+# classification layer definition
 class MLPPredictor(nn.Module):
     def __init__(self, in_features, out_classes):
         super().__init__()
@@ -99,13 +102,12 @@ class MLPPredictor(nn.Module):
         return {"score": score}
 
     def forward(self, graph, h):
-        # h contains the node representations computed from the GNN defined
-        # in the node classification section (Section 5.1).
         graph.ndata["h"] = h
         graph.apply_edges(self.apply_edges)
         return graph.edata["score"]
 
 
+# classification layer prediction for EGAT
 class MLPPredictorEGAT(nn.Module):
     def __init__(self, in_features, out_classes):
         super().__init__()
@@ -120,8 +122,6 @@ class MLPPredictorEGAT(nn.Module):
         return {"score": score}
 
     def forward(self, graph, hn, he):
-        # h contains the node representations computed from the GNN defined
-        # in the node classification section (Section 5.1).
         graph.ndata["h"] = hn
         graph.edata["e"] = he
         graph.apply_edges(self.apply_edges)

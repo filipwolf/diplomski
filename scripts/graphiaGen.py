@@ -2,11 +2,24 @@ from path_utils import PATH
 
 
 def gen(path_r, path_w, path_w2):
+    """Generate file suitable as input to Graphia.
 
+    Parameters
+    ----------
+    path_r : str
+        Path to modified_graphs folder for reading.
+    path_w : str
+        Path to modified_graphs_2 folder for writing.
+    path_w2 : str
+        Path to modified_graphs_separated folder for writing.
+    """
+
+    # open folders for reading and writing
     f = open(path_r, "r")
     f2 = open(path_w, "w")
     f3 = open(path_w2, "w")
 
+    # iterate over data
     for line in f.readlines():
         elems = line.rstrip().split(',')
         if elems[1] == 'mutated':
@@ -41,8 +54,7 @@ if __name__ == "__main__":
 
     path = PATH
 
-    # training
-
+    # loop for generating training data
     for i in range(0, 101):
         print(i)
 
@@ -52,8 +64,7 @@ if __name__ == "__main__":
 
         gen(path_r, path_w, path_w2)
 
-    # validation
-
+    # validation data
     path += 'chr2/'
 
     path_r = path + 'graph.txt'

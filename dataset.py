@@ -58,16 +58,16 @@ class YeastDataset(DGLDataset):
         self.edge_features2 = []
         self.edge_labels = []
 
-        # training
+        # loop for generating training data
 
         for i in range(0, 101):
             print(i)
-            nodes_data = pd.read_csv(self.raw_dir + "node_features/node_features" + str(i) + ".csv")
-            edges_data = pd.read_csv(self.raw_dir + "edge_features/edge_features" + str(i) + ".csv")
+            nodes_data = pd.read_csv(self.raw_dir + "chr1/node_features/node_features" + str(i) + ".csv")
+            edges_data = pd.read_csv(self.raw_dir + "chr1/edge_features/edge_features" + str(i) + ".csv")
 
             self.generate_graphs(nodes_data, edges_data)
 
-        # validation
+        # validation data
 
         nodes_data = pd.read_csv(self.raw_dir + "chr2/node_features.csv")
         edges_data = pd.read_csv(self.raw_dir + "chr2/edge_features.csv")
@@ -113,20 +113,23 @@ class YeastDataset(DGLDataset):
         self.edge_labels = load_info(info_path)["edge_labels"]
 
     def has_cache(self):
-        # check whether there are processed data in `self.save_path`
+        # check whether there is processed data in `self.save_path`
         graph_path = os.path.join(self.save_dir, "dgl_graph.bin")
         info_path = os.path.join(self.save_dir, "info.pkl")
         return os.path.exists(graph_path) and os.path.exists(info_path)
 
     def generate_graphs(self, nodes_data, edges_data):
 
+        # load destination and source node data and edge overlap data
         src = edges_data["node1"].to_numpy()
         dst = edges_data["node2"].to_numpy()
         overlap = edges_data["edge_overlap"].to_numpy()
         overlaps_tensor = torch.FloatTensor(overlap)
 
+        # generate graph
         g = dgl.graph((src, dst))
 
+        # add overlap data to graph
         g.edata["edge_overlaps"] = overlaps_tensor
 
         mut = nodes_data["node_class"].to_numpy()
@@ -134,8 +137,10 @@ class YeastDataset(DGLDataset):
 
         mut_onehot = F.one_hot(mut_tensor)
 
+        # add node class data to graph
         g.ndata.update({"mut_tensor": mut_tensor, "mut_onehot": mut_onehot})
 
+        # add edge class data to graph, add self loops and modify overlap data for loops
         edge_labels = edges_data["edge_class"].to_numpy()
         edge_tensor = torch.tensor(edge_labels)
         edge_tensor_onehot = F.one_hot(edge_tensor)
@@ -149,6 +154,7 @@ class YeastDataset(DGLDataset):
         node_out_degree_list = []
         node_in_degree_list = []
 
+        # generate node features
         for j in range(g.number_of_nodes()):
             node_out_degree_list.append(g.out_degrees(j))
             node_in_degree_list.append(g.in_degrees(j))
@@ -164,6 +170,7 @@ class YeastDataset(DGLDataset):
         self.edge_labels.append(g.edata["mut_tensor"])
         self.edge_features2.append(g.edata["edge_overlaps"])
 
+        # add node features to graph
         g.ndata.update(
             {"node_out_degrees": node_out_degree_list_tensor, "node_in_degrees": node_in_degree_list_tensor}
         )
@@ -171,6 +178,7 @@ class YeastDataset(DGLDataset):
         self.graph_list.append(g)
 
 
+# helper function for loading the cora dataset
 def load_cora_data():
     dataset = CoraGraphDataset()
     g = dataset[0]
