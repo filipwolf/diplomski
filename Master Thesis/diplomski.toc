@@ -48,5 +48,6 @@
 \contentsline {section}{\numberline {4.3}Experiments on the Whole Genome}{35}%
 \contentsline {subsection}{\numberline {4.3.1}Accuracy, F1-Score \& Model Loss}{36}%
 \contentsline {subsection}{\numberline {4.3.2}Precision \& Recall}{36}%
-\contentsline {chapter}{\numberline {5}Conclusion}{38}%
-\contentsline {chapter}{Bibliography}{39}%
+\contentsline {section}{\numberline {4.4}Experiments on Different Chromosomes}{38}%
+\contentsline {chapter}{\numberline {5}Conclusion}{39}%
+\contentsline {chapter}{Bibliography}{40}%
