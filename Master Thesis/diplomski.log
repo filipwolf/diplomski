@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  16 JUN 2022 11:32
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019/Debian) (preloaded format=pdflatex 2022.5.20)  16 JUN 2022 15:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1080,9 +1080,9 @@ LaTeX Warning: `h' float specifier changed to `ht'.
 [38 <./images/acc_chr.png> <./images/f1_chr.png> <./images/loss_chr.png>]
 [39 <./images/precision_chr.png> <./images/recall_chr.png>] [40]
 Chapter 5.
-(./diplomski.bbl [41
+[41
 
-]
+] (./diplomski.bbl [42]
 Underfull \hbox (badness 10000) in paragraph at lines 9--13
 []\T1/ptm/m/n/12 Illumina.  As-sem-bling novel genomes.  URL $\T1/pcr/m/n/12 ht
 tps : / / www .
@@ -1111,7 +1111,7 @@ Underfull \hbox (badness 1661) in paragraph at lines 21--25
  / www . pacb . com / blog /
  []
 
-[42
+[43
 
 ]
 Underfull \hbox (badness 10000) in paragraph at lines 99--103
@@ -1161,13 +1161,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 133--139
 ] %25 %
  []
 
-[43]
+[44]
 Underfull \hbox (badness 1337) in paragraph at lines 157--160
 []\T1/ptm/m/n/12 Izaak Neutel-ings.  Neu-ral net-works.  URL $\T1/pcr/m/n/12 ht
 tps : / / tikz . net / neural _
  []
 
-[44] [45]
+[45] [46]
 Underfull \hbox (badness 10000) in paragraph at lines 282--286
 []\T1/ptm/m/n/12 Statistics & Data.  Most pop-u-lar ma-chine learn-ing li-brari
 es ^^U
@@ -1214,13 +1214,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 305--309
 /
  []
 
-) [46]
-Overfull \hbox (0.37427pt too wide) in paragraph at lines 799--801
+) [47]
+Overfull \hbox (0.37427pt too wide) in paragraph at lines 807--809
 \T1/ptm/b/n/12 Klju£ne ri-je£i: \T1/ptm/m/n/12 Bioin-for-matika, Graf Neu-ronsk
 e Mreºe, GNN, Odva-janje hap-lotipa, Duboko
  []
 
-[47
+[48
 
 ] (./diplomski.aux) ) 
 Here is how much of TeX's memory you used:
@@ -1249,10 +1249,10 @@ exmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texlive/texmf-dist/fo
 nts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/ur
 w/times/utmb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.
 pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on diplomski.pdf (53 pages, 2622197 bytes).
+Output written on diplomski.pdf (54 pages, 2625830 bytes).
 PDF statistics:
- 313 PDF objects out of 1000 (max. 8388607)
- 192 compressed objects within 2 object streams
+ 316 PDF objects out of 1000 (max. 8388607)
+ 194 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  133 words of extra memory for PDF output out of 10000 (max. 10000000)
 
