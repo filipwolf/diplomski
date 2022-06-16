@@ -9,7 +9,7 @@ from path_utils import PATH
 from scripts.graphiaGen2 import gen
 
 
-def evaluate(model, graph_list, yeast_data):
+def evaluate(model, graph_list, yeast_data, index):
     """Function used for evaluating model performance.
 
     Parameters
@@ -24,15 +24,15 @@ def evaluate(model, graph_list, yeast_data):
     model.eval()
     with torch.no_grad():
         # load edge features
-        edge_features = yeast_data.edge_features2[100]
+        edge_features = yeast_data.edge_features2[index]
         # select graph for validation
-        graph = graph_list[100]
+        graph = graph_list[index]
         # load node features
-        node_in_degrees = yeast_data.node_in_degrees[100]
-        node_out_degrees = yeast_data.node_out_degrees[100]
+        node_in_degrees = yeast_data.node_in_degrees[index]
+        node_out_degrees = yeast_data.node_out_degrees[index]
         node_features = torch.transpose(torch.stack((node_in_degrees, node_out_degrees)), 0, 1)
         # load edge labels
-        edge_labels = yeast_data.edge_labels[100]
+        edge_labels = yeast_data.edge_labels[index]
         # calculate model outputs
         logits = model(graph, node_features, edge_features)
         pred = logits.max(1).indices
@@ -110,11 +110,11 @@ if __name__ == "__main__":
             # print('Train acc: ' + str(torch.sum(pred == edge_labels)/len(edge_labels)))
             # print('Train F1: ' + str(f1_score(edge_labels, pred)))
         # validate model
-        loss, acc, f1, precision, recall, predictions = evaluate(model, graph_list, yeast_dataset)
+        loss, acc, f1, precision, recall, predictions = evaluate(model, graph_list, yeast_dataset, 101)
 
         # save best model so far
         if f1 > max_f1:
-            print("Eval acc: " + str(acc / len(edge_labels)))
+            print("Eval acc: " + str(acc / len(yeast_dataset.edge_labels[101])))
             print("Eval F1: " + str(f1))
             print("Eval loss: " + str(loss))
             print("Eval precision: " + str(precision))
@@ -131,7 +131,7 @@ if __name__ == "__main__":
 
         # add data to TensorBoard
         writer.add_scalar('Loss/val', loss, epoch)
-        writer.add_scalar('Accuracy/val', acc / len(edge_labels), epoch)
+        writer.add_scalar('Accuracy/val', acc / len(yeast_dataset.edge_labels[101]), epoch)
         writer.add_scalar('F1/val', f1, epoch)
         writer.add_scalar('precision/val', precision, epoch)
         writer.add_scalar('recall/val', recall, epoch)

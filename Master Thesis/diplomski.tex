@@ -624,7 +624,7 @@ There are numerous important hyperparameters that can be adjusted to optimize tr
 \chapter{Results}
 \label{ch:results}
 
-In this chapter, we will present the results obtained in the experiments we performed with the purpose of answering this thesis' main question: can GNNs be used to separate haplotypes. First, we will go over the experiments we performed on only one chromosome (Section \ref{sec:experiments on one chromosome}), and then over the experiments we performed on the whole genome (Section \ref{sec:experiments on the whole genome}).
+In this chapter, we will present the results obtained in the experiments we performed with the purpose of answering this thesis' main question: can GNNs be used to separate haplotypes. First, we will go over the experiments we performed on only one chromosome (Section \ref{sec:experiments on one chromosome}), then over the experiments we performed on the whole genome (Section \ref{sec:experiments on the whole genome}), an lastly, we will explain experiments performed on multiple chromosomes to test some assertions we made (Section \ref{sec:experiments on different chromosomes}). But before we go into all of that, we first need to explain some metrics we used in the experiments.
 
 \section{Performance Metrics}
 
@@ -708,11 +708,6 @@ The first three graphs we are going to look at are an accuracy graph, F1-score g
 
 The standout model here is definitely the EGAT model (Section \ref{subsubsec:edge graph attention network}), whose performance can be seen in Figure \ref{fig:accuracy and f1 graph} in pink. It has greatly outperformed the rest of the models, with an accuracy of 87.9\%, F1-score of 85.13\% and loss value of 0.3015. This is because of the completely different way we use edge features here. Instead of just being used as edge weights, they are instead incorporated into the attention mechanism. Although this proved to be a success, it also had the downside of much slower training times. Due to this, we use a much smaller model here, as well as letting it train for fewer epochs in total. Employing batch normalization (Section \ref{subsubsec:regularization functions}) did however improve convergence speed significantly. All the results in the graph, as well as some other ones performed on one chromosome can be seen in Table \ref{tab:results}.
 
-\section{Experiments on the Whole Genome}
-\label{sec:experiments on the whole genome}
-
-In addition to accuracy, F1-score and model loss, which we present in Section \ref{subsec:accuracy, f1-score and model loss}, we also present the recall and precision metrics in Section \ref{subsec:precision and recall}. These additional metrics might provide clarity on how the model trains on the provided data. The model we used for training on the whole genome dataset was the EGAT model (Section \ref{subsubsec:edge graph attention network}) with default parameters due to it being the most effective model from all of the tested models.
-
 \begin{figure}[h!]
 	\centering
 	\includegraphics[width=\textwidth]{images/accuracy_eg.png}
@@ -721,6 +716,11 @@ In addition to accuracy, F1-score and model loss, which we present in Section \r
 	\caption[Accuracy,f1-score and loss graph for the entire genome dataset]{Graphs representing the accuracy (top), F1-score (middle) and model loss (bottom) for the validation part of the entire genome dataset. The model was trained for 500 epochs. The graphs were obtained using TensorBoard (Section \ref{sec:technology stack}).}
 	\label{fig:accuracy, f1 score and loss}
 \end{figure}
+
+\section{Experiments on the Whole Genome}
+\label{sec:experiments on the whole genome}
+
+In addition to accuracy, F1-score and model loss, which we present in Section \ref{subsec:accuracy, f1-score and model loss}, we also present the recall and precision metrics in Section \ref{subsec:precision and recall}. These additional metrics might provide clarity on how the model trains on the provided data. The model we used for training on the whole genome dataset was the EGAT model (Section \ref{subsubsec:edge graph attention network}) with default parameters due to it being the most effective model from all of the tested models.
 
 \subsection{Accuracy, F1-Score \& Model Loss}
 \label{subsec:accuracy, f1-score and model loss}
@@ -735,11 +735,6 @@ In Figure \ref{fig:accuracy, f1 score and loss} we can see the graphs for accura
 	\label{fig:precision and recall}
 \end{figure}
 
-\subsection{Precision \& Recall}
-\label{subsec:precision and recall}
-
-In Figure \ref{fig:precision and recall} we can see the graphs for precision (top) and recall (bottom) for the validation part of the entire genome dataset. An interesting observation we can immediately make is that at the beginning of training, the model has a near perfect recall score with a fairly lower precision score. This means that the model classifies most positive examples in the dataset as indeed positive, while classifying some negative examples incorrectly, i.e. as positive. As training continues, the model starts trading recall for a higher precision value, and this carries on for the entirety of the 500 epochs. The model essentially tries to balance these two metrics as best as it can, with the optimal balance found somewhere around epoch 100. For that balance, recall stands at 93.68\%, while precision is 73.89\%. The dataset is of course not perfectly balanced, and this is somewhat reflected in these numbers, but it is also a testament to the fact that the model is simply better at finding incorrect edges, while simultaneously classifying some correct edges as incorrect. Balancing these parameters depends on the use case for such an application, but we can generalize that the model is quite successful at separating haplotypes with the haplotypes it separates being somewhat incomplete. This can be seen in Figure \ref{fig:separated graph after training}\footnote{Although this graph belongs to a model that trained on only one chromosome, these findings are analogous to a model that trained on the whole genome. This also makes it easier to compare to Figure \ref{fig:separated graph}.}. It is quite similar to Figure \ref{fig:separated graph}, but with some major differences. The large haplotype in the middle in green is somewhat contaminated with orange nodes\footnote{One could say that it was "fuzzy".}, while all the fragmented orange nodes around it don't contain any green nodes. This again confirms our previous recall vs precision findings. Unfortunately, this result is highly dependent on the Raven assembler (Section \ref{subsec:assembling the graph}) properly outputting reads and there isn't much we can do about it as it is outside the scope of this thesis. Looking into how our haplotype separation process could be incorporated into sequencing and assembly could prove as a worthwhile endeavor to further improve results and streamline the whole process.
-
 \begin{figure}
 	\centering
 	\includegraphics[width=\textwidth]{images/separated_haplotypes_after_training.png}
@@ -747,10 +742,42 @@ In Figure \ref{fig:precision and recall} we can see the graphs for precision (to
 	\label{fig:separated graph after training}
 \end{figure}
 
+\subsection{Precision \& Recall}
+\label{subsec:precision and recall}
+
+In Figure \ref{fig:precision and recall} we can see the graphs for precision (top) and recall (bottom) for the validation part of the entire genome dataset. An interesting observation we can immediately make is that at the beginning of training, the model has a near perfect recall score with a fairly lower precision score. This means that the model classifies most positive examples in the dataset as indeed positive, while classifying some negative examples incorrectly, i.e. as positive. As training continues, the model starts trading recall for a higher precision value, and this carries on for the entirety of the 500 epochs. The model essentially tries to balance these two metrics as best as it can, with the optimal balance found somewhere around epoch 100. For that balance, recall stands at 93.68\%, while precision is 73.89\%. The dataset is of course not perfectly balanced, and this is somewhat reflected in these numbers, but it is also a testament to the fact that the model is simply better at finding incorrect edges, while simultaneously classifying some correct edges as incorrect. Balancing these parameters depends on the use case for such an application, but we can generalize that the model is quite successful at separating haplotypes with the haplotypes it separates being somewhat incomplete. This can be seen in Figure \ref{fig:separated graph after training}\footnote{Although this graph belongs to a model that trained on only one chromosome, these findings are analogous to a model that trained on the whole genome. This also makes it easier to compare to Figure \ref{fig:separated graph}.}. It is quite similar to Figure \ref{fig:separated graph}, but with some major differences. The large haplotype in the middle in green is somewhat contaminated with orange nodes\footnote{One could say that it was "fuzzy".}, while all the fragmented orange nodes around it don't contain any green nodes. This again confirms our previous recall vs precision findings. Unfortunately, this result is highly dependent on the Raven assembler (Section \ref{subsec:assembling the graph}) properly outputting reads and there isn't much we can do about it as it is outside the scope of this thesis. Looking into how our haplotype separation process could be incorporated into sequencing and assembly could prove as a worthwhile endeavor to further improve results and streamline the whole process.
+
+\begin{figure}
+	\centering
+	\includegraphics[width=\textwidth]{images/acc_chr.png}
+	\includegraphics[width=\textwidth]{images/f1_chr.png}
+	\includegraphics[width=\textwidth]{images/loss_chr.png}
+	\caption[Accuracy,f1-score and loss graph for different chromosomes]{Graphs representing the accuracy (top), F1-score (middle) and model loss (bottom) for the validation part for two different chromosome experiments. The models were trained for 250 epochs. The graphs were obtained using TensorBoard (Section \ref{sec:technology stack}).}
+	\label{fig:accuracy, f1 score and loss chr}
+\end{figure}
+
 \section{Experiments on Different Chromosomes}
 \label{sec:experiments on different chromosomes}
 
-To better test the claim that chromosomes share data, we ran an experiment where we trained our model on chromosome one of yeast, and validated on chromosome two. We are aware that this is highly specific data and the results may wary between different chromosomes, but testing all chromosome combinations is extremely time consuming and outside the scope of this thesis. Nevertheless, it is an interesting topic of further research.
+To better test the claim that chromosomes share data, we ran an experiment in which we trained our model on one chromosome of yeast, and validated it on another. Specifically, we performed two experiments. In the first one, we trained on chromosome one, and validated on chromosome two, and in the second one, we trained on chromosome three and validated on chromosome two. We are aware that this is highly specific data and the results may be completely different for other chromosomes, but running tests on all chromosome combinations is extremely time consuming and outside the scope of this thesis. Nevertheless, it is an interesting topic of further research.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/precision_chr.png}
+	\includegraphics[width=\textwidth]{images/recall_chr.png}
+	\caption[Precision and recall graph on chromosomes]{Graphs representing the precision (top) and recall (bottom) for the validation part of the chromosome experiments. The graphs were obtained using TensorBoard (Section \ref{sec:technology stack}).}
+	\label{fig:precision and recall chr}
+\end{figure}
+
+\subsection{Accuracy, F1-Score \& Model Loss}
+\label{subsec:accuracy, f1-score and model loss chr}
+
+We again start with the accuracy, F1-score and model loss graphs. In Figure \ref{fig:accuracy, f1 score and loss chr}, we can see two different models. The model in blue represents a model that was trained on chromosome one of yeast, and validated on chromosome two. This way, we essentially "test" the knowledge we obtained on chromosome one on never before seen chromosome two. We can see that, although it obtains a high F1-score, it's accuracy is noticeably lower. We can also see clear signs of overfitting by the end of training. If we compare this to the pink model, we can see that overfitting starts much more early one. This model was trained on chromosome three, and validated on chromosome two. On this experiment, we exhibit noticeably worse performance in all performance metrics, especially accuracy. To better understand this behavior, we should look at the recall and precision graphs.
+
+\subsection{Precision \& Recall}
+\label{subsec:precision and recall chr}
+
+The precision and recall graphs are depicted in Figure \ref{fig:precision and recall chr}. We can see a much more interesting situation here than in the F1-score and accuracy graphs. In terms ov precision, the two models have fairly similar behavior, with the blue model being somewhat better than the pink one. They both oscillate precision in an attempt to optimize it. On the other hand, they are much closer in terms of performance of the recall metric, with the pink graph even somewhat outperforming the blue model, but later during training falling noticeably in performance. This explains how both models can have a high F1-score, but doesn't explain the low accuracy of the pink model.
 
 \chapter{Conclusion}
 
