@@ -50,6 +50,7 @@
 \contentsline {subsection}{\numberline {4.3.2}Precision \& Recall}{36}%
 \contentsline {section}{\numberline {4.4}Experiments on Different Chromosomes}{38}%
 \contentsline {subsection}{\numberline {4.4.1}Accuracy, F1-Score \& Model Loss}{39}%
-\contentsline {subsection}{\numberline {4.4.2}Precision \& Recall}{39}%
+\contentsline {subsection}{\numberline {4.4.2}Precision \& Recall}{40}%
 \contentsline {chapter}{\numberline {5}Conclusion}{41}%
+\contentsline {section}{\numberline {5.1}Future Work}{42}%
 \contentsline {chapter}{Bibliography}{43}%
