@@ -10,7 +10,7 @@ class GCNModel(nn.Module):
         super(GCNModel, self).__init__()
         self.lin_n = nn.Linear(node_features, lin_dim)
         self.lin_e = nn.Linear(edge_features, lin_dim)
-        self.conv1 = GraphConv(lin_dim, 512, norm='none')
+        self.conv1 = GraphConv(lin_dim, 512, norm="none")
         self.conv2 = GraphConv(512, 256)
         self.conv3 = GraphConv(256, 128)
         self.conv4 = GraphConv(128, out_dim)
@@ -39,7 +39,7 @@ class GATModel(nn.Module):
         self.lin_e = nn.Linear(edge_features, lin_dim)
         self.gat1 = GATv2Conv(lin_dim, hidden_dim, num_heads=num_heads)
         self.gat2 = GATv2Conv(hidden_dim * num_heads, out_dim, num_heads=1)
-        self.conv1 = GraphConv(out_dim, int(out_dim / 2), norm='none')
+        self.conv1 = GraphConv(out_dim, int(out_dim / 2), norm="none")
         self.conv2 = GraphConv(int(out_dim / 2), int(out_dim / 4))
         self.classify = MLPPredictor(int(out_dim / 4), n_classes)
         self.dp = nn.Dropout(p=0.5)
@@ -78,13 +78,21 @@ class EGATModel(nn.Module):
         edge_features = edge_features.reshape(len(edge_features), 1)
         node_f = self.lin_n(h)
         hn, he = self.egat1(graph, node_f, edge_features)
-        hn, he = self.bn1(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn1(torch.flatten(self.dp(F.elu(he)), start_dim=1))
+        hn, he = self.bn1(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn1(
+            torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        )
         hn, he = self.egat2(graph, hn, he)
-        hn, he = self.bn2(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn2(torch.flatten(self.dp(F.elu(he)), start_dim=1))
+        hn, he = self.bn2(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn2(
+            torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        )
         hn, he = self.egat3(graph, hn, he)
-        hn, he = self.bn3(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn3(torch.flatten(self.dp(F.elu(he)), start_dim=1))
+        hn, he = self.bn3(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn3(
+            torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        )
         hn, he = self.egat4(graph, hn, he)
-        hn, he = self.bn4(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn4(torch.flatten(self.dp(F.elu(he)), start_dim=1))
+        hn, he = self.bn4(torch.flatten(self.dp(F.elu(hn)), start_dim=1)), self.bn4(
+            torch.flatten(self.dp(F.elu(he)), start_dim=1)
+        )
         h = self.classify(graph, hn, he)
         return h
 

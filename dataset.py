@@ -171,9 +171,7 @@ class YeastDataset(DGLDataset):
         self.edge_features2.append(g.edata["edge_overlaps"])
 
         # add node features to graph
-        g.ndata.update(
-            {"node_out_degrees": node_out_degree_list_tensor, "node_in_degrees": node_in_degree_list_tensor}
-        )
+        g.ndata.update({"node_out_degrees": node_out_degree_list_tensor, "node_in_degrees": node_in_degree_list_tensor})
 
         self.graph_list.append(g)
 

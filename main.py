@@ -40,7 +40,14 @@ def evaluate(model, graph_list, yeast_data, index):
         loss = F.cross_entropy(logits, edge_labels)
         # print("Eval acc: " + str(torch.sum(pred == edge_labels) / len(edge_labels)))
         # print("Eval F1: " + str(f1_score(edge_labels, pred, average="macro")))
-        return loss, torch.sum(pred == edge_labels), f1_score(edge_labels, pred, average="macro"), precision_score(edge_labels, pred), recall_score(edge_labels, pred), pred
+        return (
+            loss,
+            torch.sum(pred == edge_labels),
+            f1_score(edge_labels, pred, average="macro"),
+            precision_score(edge_labels, pred),
+            recall_score(edge_labels, pred),
+            pred,
+        )
 
 
 if __name__ == "__main__":
@@ -49,7 +56,7 @@ if __name__ == "__main__":
     # torch.set_num_threads(32)
 
     # check if GPU is available
-    device = 'cuda' if torch.cuda.is_available() else 'cpu'
+    device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # init writer for storing paramters to TensorBoard
     writer = SummaryWriter()
@@ -120,18 +127,21 @@ if __name__ == "__main__":
             print("Eval precision: " + str(precision))
             print("Eval recall: " + str(recall))
             gen(predictions)
-            torch.save({
-                'epoch': epoch,
-                'model_state_dict': model.state_dict(),
-                'optimizer_state_dict': opt.state_dict(),
-                'f1': f1,
-            }, 'outputs/best_model.pth')
+            torch.save(
+                {
+                    "epoch": epoch,
+                    "model_state_dict": model.state_dict(),
+                    "optimizer_state_dict": opt.state_dict(),
+                    "f1": f1,
+                },
+                "outputs/best_model.pth",
+            )
 
         max_f1 = max(f1, max_f1)
 
         # add data to TensorBoard
-        writer.add_scalar('Loss/val', loss, epoch)
-        writer.add_scalar('Accuracy/val', acc / len(yeast_dataset.edge_labels[101]), epoch)
-        writer.add_scalar('F1/val', f1, epoch)
-        writer.add_scalar('precision/val', precision, epoch)
-        writer.add_scalar('recall/val', recall, epoch)
+        writer.add_scalar("Loss/val", loss, epoch)
+        writer.add_scalar("Accuracy/val", acc / len(yeast_dataset.edge_labels[101]), epoch)
+        writer.add_scalar("F1/val", f1, epoch)
+        writer.add_scalar("precision/val", precision, epoch)
+        writer.add_scalar("recall/val", recall, epoch)

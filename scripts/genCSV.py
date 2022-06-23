@@ -141,14 +141,7 @@ def gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
     # write edge feature data
     for edge in edge_list:
         f3.write(
-            str(trans_list[edge[0]])
-            + ","
-            + str(trans_list[edge[1]])
-            + ","
-            + str(edge[2])
-            + ","
-            + str(edge[3])
-            + "\n"
+            str(trans_list[edge[0]]) + "," + str(trans_list[edge[1]]) + "," + str(edge[2]) + "," + str(edge[3]) + "\n"
         )
 
     # write node feature data
@@ -177,7 +170,7 @@ if __name__ == "__main__":
         gen(path_graphs, path_node_features, path_edge_features, path_edge_overlaps)
 
     # validation data
-    path += 'chr2/'
+    path += "chr2/"
 
     path_graphs = path + "graph_modified.txt"
     path_node_features = path + "node_features.csv"
